@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://by8px5au5uvsg"]
+
+[ext_resource type="Script" uid="uid://b8p2fyve0hsjt" path="res://ui/loadingscreen.gd" id="1_8aal5"]
+
+[node name="Node2D" type="PanelContainer"]
+offset_right = 1152.0
+offset_bottom = 640.0
+script = ExtResource("1_8aal5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.34902, 0.529412, 0.623529, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
