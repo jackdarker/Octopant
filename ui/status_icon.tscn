@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://b80fbqrojg2l0"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4ji2b"]
+
+[node name="StatusIcon" type="Control"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("PlaceholderTexture2D_4ji2b")

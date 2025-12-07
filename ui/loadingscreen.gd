@@ -2,11 +2,11 @@ extends Control
 
 func _ready():
 	if(GlobalRegistry.isInitialized):
-		var _ok = get_tree().change_scene("res://UI/MainMenu/MainMenu.tscn")
+		Global.goto_scene("res://UI/MainMenu/MainMenu.tscn")
 		return
-	OPTIONS.setSupportsVertical(true)
-	var _ok = GlobalRegistry.connect("loadingUpdate", self, "onGlobalRegistryUpdate")
-	var _ok2 = GlobalRegistry.connect("loadingFinished", self, "onGlobalRegistryFinishedUpdate")
+	#OPTIONS.setSupportsVertical(true)
+	var _ok = GlobalRegistry.connect("loadingUpdate", onGlobalRegistryUpdate)
+	var _ok2 = GlobalRegistry.connect("loadingFinished", onGlobalRegistryFinishedUpdate)
 	GlobalRegistry.registerEverything()
 
 func onGlobalRegistryUpdate(percent, whatnext):
@@ -14,4 +14,4 @@ func onGlobalRegistryUpdate(percent, whatnext):
 	$ProgressBar/Label.text = str(whatnext) #str(Util.roundF(percent*100.0, 1))+"% " + 
 
 func onGlobalRegistryFinishedUpdate():
-	var _ok = get_tree().change_scene("res://UI/MainMenu/MainMenu.tscn")
+	Global.goto_scene("res://ui/main_menu.tscn")

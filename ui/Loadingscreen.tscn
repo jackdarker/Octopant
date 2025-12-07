@@ -14,3 +14,8 @@ color = Color(0.34902, 0.529412, 0.623529, 1)
 [node name="ProgressBar" type="ProgressBar" parent="."]
 layout_mode = 2
 size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ProgressBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://sfxsabvmelqu"]
+
+[ext_resource type="Texture2D" uid="uid://bfsnd42fd1rpm" path="res://icon.svg" id="1_lqq4a"]
+[ext_resource type="PackedScene" uid="uid://b80fbqrojg2l0" path="res://ui/status_icon.tscn" id="2_usxaa"]
+
+[sub_resource type="Gradient" id="Gradient_rbyyf"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3h3vf"]
+gradient = SubResource("Gradient_rbyyf")
+width = 20
+height = 128
+fill_from = Vector2(0, 1)
+
+[node name="CharacterHud" type="VBoxContainer"]
+offset_right = 176.0
+offset_bottom = 172.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="icon" type="TextureButton" parent="HBoxContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture_normal = ExtResource("1_lqq4a")
+
+[node name="barHealth" type="TextureProgressBar" parent="HBoxContainer"]
+layout_mode = 2
+value = 90.0
+fill_mode = 3
+texture_progress = SubResource("GradientTexture2D_3h3vf")
+
+[node name="barLust" type="TextureProgressBar" parent="HBoxContainer"]
+layout_mode = 2
+value = 90.0
+fill_mode = 3
+texture_progress = SubResource("GradientTexture2D_3h3vf")
+
+[node name="listStatus" type="HFlowContainer" parent="."]
+layout_mode = 2
+
+[node name="StatusIcon" parent="listStatus" instance=ExtResource("2_usxaa")]
+layout_mode = 2
+
+[node name="StatusIcon2" parent="listStatus" instance=ExtResource("2_usxaa")]
+layout_mode = 2
