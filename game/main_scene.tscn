@@ -6,4 +6,10 @@
 [node name="MainScene" type="Node"]
 script = ExtResource("1_qk4lp")
 
+[node name="MessageHolder" type="Node" parent="."]
+
+[node name="Scene" type="CanvasLayer" parent="."]
+layer = -1
+
 [node name="Hud" parent="." instance=ExtResource("2_bg2q0")]
+layer = 0
