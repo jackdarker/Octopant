@@ -16,15 +16,15 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_50nnf")
 
-[node name="btHome" type="Button" parent="." index="1"]
+[node name="btHome" type="Button" parent="." index="2"]
 layout_mode = 0
-offset_left = 144.0
-offset_top = 480.0
-offset_right = 252.0
-offset_bottom = 544.0
+offset_left = 288.0
+offset_top = 504.0
+offset_right = 396.0
+offset_bottom = 568.0
 text = "go home"
 
-[node name="btExplore" type="Button" parent="." index="2"]
+[node name="btExplore" type="Button" parent="." index="3"]
 layout_mode = 0
 offset_left = 336.0
 offset_top = 384.0

@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://sfxsabvmelqu"]
+[gd_scene load_steps=6 format=3 uid="uid://sfxsabvmelqu"]
 
 [ext_resource type="Texture2D" uid="uid://bfsnd42fd1rpm" path="res://icon.svg" id="1_lqq4a"]
+[ext_resource type="Script" uid="uid://bxem32xyqmvdq" path="res://ui/character_hud.gd" id="1_usxaa"]
 [ext_resource type="PackedScene" uid="uid://b80fbqrojg2l0" path="res://ui/status_icon.tscn" id="2_usxaa"]
 
 [sub_resource type="Gradient" id="Gradient_rbyyf"]
@@ -14,6 +15,7 @@ fill_from = Vector2(0, 1)
 [node name="CharacterHud" type="VBoxContainer"]
 offset_right = 176.0
 offset_bottom = 172.0
+script = ExtResource("1_usxaa")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
