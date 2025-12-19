@@ -10,11 +10,19 @@ var game_version_suffix = ""	#"fix1"
 signal loadingUpdate(percent, whatsnext)
 signal loadingFinished
 
+var modules: Dictionary = {}
+
 var flags = {}
 var flagsCache = null
 var moduleFlags = {}
 var moduleFlagsCache = null
 
+var scenes: Dictionary = {}
+
+var events: Dictionary = {}		#see ES !
+
+var items: Dictionary = {}
+var itemsByTag: Dictionary = {}
 
 var currentUniqueID:int=1
 var isInitialized = false
@@ -29,15 +37,17 @@ func generateUniqueID():
 	currentUniqueID += 1
 	return currentUniqueID - 1
 
+var totalStages = 10.0
 func registerEverything():
 	#createLoadLockFile()
 	var start =  Time.get_ticks_usec()
-	var totalStages = 5.0
 	#loadRegistryCacheFromFile()
+	preinitModulesFolder("res://modules/")
 	emit_signal("loadingUpdate", 18.0/totalStages, "Modules late initialization")
 	#yield(get_tree(), "idle_frame")	await ;is this still required?
 	#yield(get_tree(), "idle_frame")
-
+	
+	registerModules()
 	
 	#saveRegistryCacheToFile()
 	
@@ -48,6 +58,7 @@ func registerEverything():
 	#deleteLoadLockFile()
 	emit_signal("loadingFinished")
 
+#region flags
 func clearFlag(flagID):
 	var splitData = Util.splitOnFirst(flagID, ".")
 	if(splitData.size() > 1):
@@ -110,3 +121,175 @@ func clearModuleFlag(moduleID, flagID):
 	if(!moduleFlags.has(moduleID) || !moduleFlags[moduleID].has(flagID)):
 		return
 	moduleFlags[moduleID].erase(flagID)
+#endregion
+
+
+#region modules
+func preinitModulesFolder(folder: String):
+	var progressBase = 1.0/totalStages
+	var progressStep = 2.0/totalStages
+	var start = Time.get_ticks_usec()
+	
+	var moduleFiles: Array = []
+	var dir = DirAccess.open(folder)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				var full_path = folder.path_join(file_name)
+				#print("FOUND DIR: "+full_path)
+				
+				var modulePath:String = full_path.path_join("Module.gd")
+				if(dir.file_exists(modulePath)):
+					moduleFiles.append([file_name, modulePath])
+			file_name = dir.get_next()
+		var moduleCount = moduleFiles.size()
+		var loadedModuleCount = 0
+		for moduleFile in moduleFiles:
+			var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
+			emit_signal("loadingUpdate", progressValue, "Loading " + moduleFile[0])
+			#yield(get_tree(), "idle_frame")
+			#yield(get_tree(), "idle_frame")
+			preInitModule(moduleFile[1])
+			loadedModuleCount += 1
+	else:
+		#Log.printerr("An error occurred when trying to access the path "+folder)
+		pass
+
+	var end = Time.get_ticks_usec()
+	var worker_time = (end-start)/1000000.0
+	#Log.print("MODULES pre-initialized in: %s seconds" % [worker_time])
+
+func registerModules():
+	var progressBase = 15.0/totalStages
+	var progressStep = 2.0/totalStages
+	var moduleCount = modules.size()
+	var loadedModuleCount = 0
+	for moduleID in modules:
+		var moduleObject = modules[moduleID]
+		var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
+		emit_signal("loadingUpdate", progressValue, moduleObject.id)
+		#yield(get_tree(), "idle_frame")
+		#yield(get_tree(), "idle_frame")
+		
+		moduleObject.register()
+		print("Module "+moduleObject.id+" by "+moduleObject.author+" was registered")
+		loadedModuleCount += 1
+		
+	postInitModules()
+
+func postInitModules():
+	for moduleID in modules:
+		var moduleObject = modules[moduleID]
+		moduleObject.postInit()
+
+func preInitModule(path: String):
+	var module = load(path)
+	var moduleObject = module.new()
+	moduleObject.preInit()
+	modules[moduleObject.id] = moduleObject
+
+func initGameModules():
+	for moduleID in modules:
+		var moduleObject = modules[moduleID]
+		moduleObject.initGame()
+
+func getModules():
+	return modules
+
+func getModule(id):
+	if(!modules.has(id)):
+		#Log.printerr("ERROR: module with the id "+id+" wasn't found")
+		return null
+	return modules[id]
+#endregion
+
+#region events
+func registerEvent(path: String):
+	var item = load(path)
+	var itemObject = item.new()
+	events[itemObject.id] = itemObject
+
+func registerEventFolder(folder: String):
+	var dir = DirAccess.open(folder)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				pass
+				#print("Found directory: " + file_name)
+			else:
+				if(file_name.get_extension() == "gd"):
+					var full_path = folder.path_join(file_name)
+					#print("Registered event: " + full_path)
+					registerEvent(full_path)
+			file_name = dir.get_next()
+	else:
+		Log.printerr("An error occurred when trying to access the path "+folder)
+		
+func getEvent(id: String):
+	if(!events.has(id)):
+		Log.printerr("ERROR: event with the id "+id+" wasn't found")
+		return null
+	return events[id]
+
+func getEvents():
+	return events
+	
+#endregion
+
+#region scenes
+func registerScene(path: String, creator = null):
+	#if(hasCachedPath(CACHE_SCENE, path)):
+	#	scenes[getCachedID(CACHE_SCENE, path)] = null
+	#	return
+	
+	var scene = load(path)
+	if(!scene):
+		#Log.printerr("ERROR: couldn't load scene from path "+path)
+		return
+	var sceneObject = scene.instantiate()
+	scenes[sceneObject.sceneID] = scene
+	#addCacheEntry(CACHE_SCENE, sceneObject.sceneID, path)
+	sceneObject.queue_free()
+#endregion
+
+#region Items
+func registerItem(path: String):
+	var item = load(path)
+	var itemObject = item.new()
+	items[itemObject.id] = item
+	for tag in itemObject.getTags():
+		if(!itemsByTag.has(tag)):
+			itemsByTag[tag] = []
+		itemsByTag[tag].append(itemObject.id)
+
+func registerItemFolder(folder: String):
+	var dir = DirAccess.open(folder)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if dir.current_is_dir():
+				pass
+				#print("Found directory: " + file_name)
+			else:
+				if(file_name.get_extension() == "gd"):
+					var full_path = folder.path_join(file_name)
+					#print("Registered item: " + full_path)
+					registerItem(full_path)
+			file_name = dir.get_next()
+	else:
+		Log.printerr("An error occurred when trying to access the path "+folder)
+
+func createItem(id: String, generateID = true):
+	if(!items.has(id)):
+		Log.printerr("ERROR: item with the id "+id+" wasn't found")
+		return null
+	var newItem = items[id].new()
+	if(generateID):
+		newItem.uniqueID = generateUniqueID()
+	return newItem
+#endregion

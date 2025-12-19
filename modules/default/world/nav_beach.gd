@@ -1,17 +1,15 @@
 extends "res://ui/navigation_scene.gd"
 
 
-const States = {IDLE=1,DIGGING = 2, DIG_FAILED=3 }
+const States = {IDLE=1,DIGGING = 2, DIG_FAILED=3, DIG_SUCCESS=4 }
 
-func _read()-> void:
-	pass
+func _init() -> void:
+	sceneID="nav_beach"
 
 func on_button(i:int):
 	if state==States.DIGGING:
 		digging(i)
 	pass
-
-
 
 func _on_bt_home_pressed() -> void:
 	navigate_home()
@@ -39,6 +37,12 @@ func show_Intro():
 func digging(i:int):
 	Global.main.doTimeProcess(30*60)
 	if i==1:
+		msg=msg_scn.instantiate()
+		state=States.DIG_SUCCESS
+		msg.text= "You found some empty glass-vial."
+		Global.pc.inventory.addItem(GlobalRegistry.createItem("vial_empty"))
+		show_msg()
+	elif i==3:
 		msg=msg_scn.instantiate()
 		state=States.DIG_FAILED
 		msg.text= "There is nothing"

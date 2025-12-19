@@ -1,11 +1,19 @@
 extends Node
 class_name ItemBase
 
-const ITEM_TAG = {Consumable=1,Ingredient = 2, Weapon_Melee=3 }
+const ITEM_TAG = {Consumable=1,
+	Ingredient = 2, 
+	Weapon_Melee=3 }
 
+var uniqueID:int = -1
+var id:String = "Unknown"
 var currentInventory:Inventory
+var amount:int = 1
 
 #override this !
+func _init():
+	pass
+
 func getTags()->Array:
 	return []
 
@@ -13,10 +21,20 @@ func getName()->String:
 	return "Unknown"
 
 func getUID()-> int:
-	return 0
+	return uniqueID
+	
+func getID()-> String:
+	return id
 
 func getInventoryImage():
 	return "res://Images/Items/weapon/shiv.png"   #TODO
+
+func canCombine():
+	return false
+	
+func tryCombine(_otherItem):
+	amount += _otherItem.amount
+	return true
 
 func canUseInCombat():
 	return false
@@ -40,10 +58,11 @@ func destroyMe():
 	currentInventory.removeEquippedItem(self)
 
 func useCharge(amount = 1):
-	charges -= amount
-	if(charges <= 0):
-		charges = 0
+	#charges -= amount
+	#if(charges <= 0):
+	#	charges = 0
 		#destroyMe()
+	pass
 
 func getCharges():
 	return 0

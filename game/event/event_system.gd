@@ -1,12 +1,31 @@
-# 
-#
 extends Node
 class_name EventSystem
 
-var eventTriggers = {}
-var eventChecks = {}
+# most events only need to be checked at certain locations (by location-id) or at locations with tags
+# others might occur anywhere
 
-func _ready():
-	Global.ES = self	
-	#registerEventTriggers()		TODO
-	#registerEvents()
+const TRIGGER = {EnterRoom=1,
+	InSleep=2,
+	PostSleep=3,
+	}
+
+var eventLocation:Dictionary = {}
+var eventOther = {}
+
+func _init():
+	pass
+
+func registerEventTriggers():
+	GlobalRegistry.initGameModules()
+	pass
+
+# location is either null or a location_id or a Tag-check
+func registerEvent(trigger,event:EventBase, location, args):
+	if(location ==null):
+		eventOther[event.id]=event
+	else:
+		eventLocation[{"location":location,"trigger":trigger,"eventid":event.id}]=event
+	pass
+
+#func unregisterEvent(trigger, eventid):
+#	pass

@@ -4,6 +4,8 @@ class_name Module
 var id = "badmodule"
 var author = "no author"
 var scenes = []
+var items = []
+var events = []
 
 var flagsCache = null
 
@@ -15,11 +17,19 @@ func preInit(): # Called before anything gets registered
 
 func postInit(): # Called after everything is registered
 	pass
+	
+func initGame(): # Called when game engine starts
+	pass
 
 func register():
 	for scene in scenes:
 		GlobalRegistry.registerScene(scene, author)
-		
+	
+	for item in items:
+		GlobalRegistry.registerItem(item)
+	
+	for event in events:
+		GlobalRegistry.registerEvent(event)
 
 func registerEventTriggers():
 	pass

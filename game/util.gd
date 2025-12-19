@@ -31,3 +31,15 @@ static func getTimeStringHHMM(t):
 	var _hours = floor(t/3600.0)
 	var time = "%02d:%02d" % [_hours, _minutes]
 	return time
+
+
+#region	Return-Result
+class Result extends RefCounted:
+	var OK:bool = true
+	var msg:String = ""
+
+	func _init(OK:bool=true,msg:String=""):
+		self.OK=OK
+		self.msg=msg
+		
+#endregion

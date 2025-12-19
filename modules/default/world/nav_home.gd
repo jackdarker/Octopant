@@ -1,6 +1,7 @@
 extends "res://ui/navigation_scene.gd"
 
-
+func _init() -> void:
+	sceneID="nav_home"
 
 
 func _on_bt_explore_pressed() -> void:

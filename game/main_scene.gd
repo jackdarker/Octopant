@@ -11,7 +11,11 @@ var timeOfDay = 6*60*60 # seconds since 00:00
 func _ready() -> void:
 	Global.ui = $Hud	# load("res://ui/hud.tscn").instance()	#GameUI
 	Global.main = self
+	Global.ES = EventSystem.new()
 	Global.pc = Player.new()
+	
+	Global.ES.registerEventTriggers()
+	
 	time_passed.connect(Global.ui.on_time_passed)
 	Global.pc.stat_changed.connect(Global.ui.on_pc_stat_update)
 	
