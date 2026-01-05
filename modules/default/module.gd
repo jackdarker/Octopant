@@ -2,14 +2,14 @@ extends Module
 
 func _init()-> void :
 	super()
-	id = "DefaultModule"
+	id = "Default"
 	author = "TheAuthor"
 	
 	scenes = [
 		"res://modules/default/world",
 		]
 	items = [
-		"res://modules/default/Item/vial_empty.gd",
+		"res://modules/default/Item",
 	]
 	events = [
 		"res://modules/default/event/event_nothing.gd",

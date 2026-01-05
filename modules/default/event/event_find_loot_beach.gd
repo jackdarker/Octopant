@@ -22,7 +22,14 @@ func _ignore():
 	pass
 
 func _dig():
-	Global.ui.say("You found some empty glass-vial.")
-	Global.pc.inventory.addItem(GlobalRegistry.createItem("vial_empty"))
+	var i=randi_range(0, 100)
+	if(i>50):
+		Global.ui.say("You found some empty glass-vial.")
+		Global.pc.inventory.addItem(GlobalRegistry.createItem("vial_empty"))
+	elif(i>10):
+		Global.ui.say("You found a pretty seaschell.")
+		Global.pc.inventory.addItem(GlobalRegistry.createItem("seashell"))
+	else:
+		Global.ui.say("There is nothing.")
 	Global.main.getCurrentScene().continueScene()
 	pass

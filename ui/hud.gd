@@ -2,7 +2,10 @@ extends CanvasLayer
 class_name GameUI
 
 signal menu_requested
+signal inventory_requested
 
+@onready var fullhud=$HBoxContainer
+@onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel
@@ -42,6 +45,14 @@ func addButton(text:String,tooltip:String,code:Callable,check=null,id:int=-1):
 			break
 	pass
 
+func toggleHud(show:bool):
+	if show:
+		fullhud.visible=true
+		bt_hud_off.visible=false
+	else:
+		fullhud.visible=false
+		bt_hud_off.visible=true
+
 func _onButton():
 	pass
 
@@ -51,8 +62,12 @@ func _on_button_pressed() -> void:
 
 
 func _on_bt_inventory_pressed() -> void:
-	pass # Replace with function body.
+	inventory_requested.emit()
 
 
 func _on_bt_menu_pressed() -> void:
 	menu_requested.emit()
+
+
+func _on_bt_hud_off_pressed() -> void:
+	toggleHud(bt_hud_off.visible)

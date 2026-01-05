@@ -8,9 +8,9 @@ func _init() -> void:
 
 func enterScene():
 	super()
-	if (GlobalRegistry.getModuleFlag("DefaultModule","Found_Beach",0)<=0):
+	if (GlobalRegistry.getModuleFlag("Default","Found_Beach",0)<=0):
 		Global.ui.say("I found myself at a beach.")
-		GlobalRegistry.increaseModuleFlag("DefaultModule","Found_Beach",1)
+		GlobalRegistry.increaseModuleFlag("Default","Found_Beach",1)
 	Global.ui.addButton("go somewhere else...","",_on_bt_walk_pressed)
 	Global.ui.addButton("explore","",_on_bt_explore_pressed)
 	Global.ui.addButton("search for...","",_on_bt_search_pressed)
@@ -26,7 +26,7 @@ func _on_bt_search_pressed():
 func _on_bt_explore_pressed():
 	Global.ui.clearInput()
 	Global.main.doTimeProcess(30*60)
-	GlobalRegistry.increaseModuleFlag("DefaultModule","Explored_Beach",1)
+	GlobalRegistry.increaseModuleFlag("Default","Explored_Beach",1)
 	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_beach_explore",[]):
 		Global.ui.say("Nothing was found")
 		continueScene()
@@ -41,7 +41,7 @@ func _on_bt_walk_pressed():
 	Global.ui.say("Where would you like to go?")
 	Global.ui.addButton("back","",enterScene)
 	Global.ui.addButton("go home","",navigate_home)
-	if(GlobalRegistry.getModuleFlag("DefaultModule","Found_Cliff",0)>0):
+	if(GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)>0):
 		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
 
 

@@ -44,3 +44,23 @@ func hasItemID(itemID: String):
 
 func getItems():
 	return items
+
+func getItemByID(itemID)->ItemBase:
+	for item in items:
+		if(item.id == itemID):
+			return item
+	return null
+
+func loadData(data):
+	for item in data["items"]:
+		var _item=GlobalRegistry.createItem(item["ID"])
+		_item.loadData(item)
+		addItem(_item)
+	pass
+			
+			
+func saveData()->Variant:
+	var _itemArray:Array = []
+	for item in items:
+		_itemArray.push_back(item.saveData())
+	return({"items":_itemArray})

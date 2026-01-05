@@ -62,13 +62,13 @@ func registerEverything():
 # only need to save flags
 func loadData(data):
 	currentUniqueID=data["uid"]
-	#be aware that there might be modules new/missing or have changed structures
 	#cleanout all present flags
 	var _moduleFlags={}
-	for moduleid in moduleFlags.keys():
+	#for each loaded module restore saved flags
+	#be aware that updated exe might have modules new/missing or have changed structures	
+	for moduleid in modules:
 		var _moduleDic=data.get_or_add(moduleid,{})
-		_moduleFlags[moduleid]=_moduleDic
-	#TODO remove flags that are not in flagscache (=not present anymore)
+		_moduleFlags[moduleid]=modules[moduleid].postLoadCleanupFlags(_moduleDic)
 	moduleFlags=_moduleFlags
 	
 func saveData()->Variant:
@@ -289,27 +289,18 @@ func getModule(id):
 
 #region events
 func registerEvent(path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerEvent(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
 	var item = load(path)
 	var itemObject = item.new()
 	events[itemObject.id] = itemObject
 
-func registerEventFolder(folder: String):
-	var dir = DirAccess.open(folder)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				pass
-				#print("Found directory: " + file_name)
-			else:
-				if(file_name.get_extension() == "gd"):
-					var full_path = folder.path_join(file_name)
-					#print("Registered event: " + full_path)
-					registerEvent(full_path)
-			file_name = dir.get_next()
-	else:
-		Log.printerr("An error occurred when trying to access the path "+folder)
 		
 func getEvent(id: String):
 	if(!events.has(id)):
@@ -323,6 +314,7 @@ func getEvents():
 #endregion
 
 #region scenes
+#path is file or directory
 func registerScene(path: String, creator = null):
 	#if(hasCachedPath(CACHE_SCENE, path)):
 	#	scenes[getCachedID(CACHE_SCENE, path)] = null
@@ -353,13 +345,22 @@ func createScene(id: String):
 	var scene
 	scene = scenes[id].instantiate()
 	scene.name = scene.sceneID
-	scene.uniqueSceneID = GlobalRegistry.generateUniqueID()
+	scene.uniqueSceneID = generateUniqueID()
 	return scene
 	
 #endregion
 
 #region Items
+#path is file or directory
 func registerItem(path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerItem(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
 	var item = load(path)
 	var itemObject = item.new()
 	items[itemObject.id] = item
@@ -368,30 +369,10 @@ func registerItem(path: String):
 			itemsByTag[tag] = []
 		itemsByTag[tag].append(itemObject.id)
 
-func registerItemFolder(folder: String):
-	var dir = DirAccess.open(folder)
-	if dir:
-		dir.list_dir_begin()
-		var file_name = dir.get_next()
-		while file_name != "":
-			if dir.current_is_dir():
-				pass
-				#print("Found directory: " + file_name)
-			else:
-				if(file_name.get_extension() == "gd"):
-					var full_path = folder.path_join(file_name)
-					#print("Registered item: " + full_path)
-					registerItem(full_path)
-			file_name = dir.get_next()
-	else:
-		Log.printerr("An error occurred when trying to access the path "+folder)
-
-func createItem(id: String, generateID = true):
+func createItem(id: String):
 	if(!items.has(id)):
 		Log.printerr("ERROR: item with the id "+id+" wasn't found")
 		return null
 	var newItem = items[id].new()
-	if(generateID):
-		newItem.uniqueID = generateUniqueID()
 	return newItem
 #endregion

@@ -1,0 +1,96 @@
+[gd_scene load_steps=5 format=3 uid="uid://b73d7l6g8hcu1"]
+
+[ext_resource type="Script" uid="uid://crvgbwupgvyr0" path="res://ui/wnd_inventory.gd" id="1_cgda4"]
+[ext_resource type="PackedScene" uid="uid://c8qw0h1nshdir" path="res://ui/image_list_item.tscn" id="2_pk74w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpobv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4oy"]
+bg_color = Color(0.28731307, 0.6124641, 0.9600938, 1)
+
+[node name="WndInventory" type="CanvasLayer"]
+script = ExtResource("1_cgda4")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mpobv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_ga4oy")
+text = "Inventory"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="list" type="HFlowContainer" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+
+[node name="ImageListItem" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem2" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_right = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="lb_desc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "sdfds"
+fit_content = true
+
+[node name="list_actions" type="HFlowContainer" parent="PanelContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer3/VBoxContainer/list_actions"]
+layout_mode = 2
+text = "dasgaret"
+
+[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="bt_back" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Back"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer2/bt_back" to="." method="_on_bt_back_pressed"]

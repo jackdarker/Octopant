@@ -46,6 +46,7 @@ func getFlag(flagID, defaultValue = null):
 func getRandomSceneFor(_sceneType):
 	return []
 
+#override this to return your module-flags!
 func getFlags():
 	return {}
 	
@@ -56,3 +57,8 @@ func flag(type):
 	return {
 		"type": type,
 	}
+
+#override this to fix flags after loading old savegame
+#TODO remove/fix flags that are not in flagscache (=not present anymore)
+func postLoadCleanupFlags(data):
+	return data

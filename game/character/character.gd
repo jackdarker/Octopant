@@ -19,10 +19,12 @@ func _init():
 
 func loadData(data):
 	location=data["location"]
+	inventory.loadData(data["inv"])
 			
 func saveData()->Variant:
 	var data ={
 		"location":location,
+		"inv":inventory.saveData()
 	}
 		
 	return(data)

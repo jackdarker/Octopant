@@ -22,6 +22,15 @@ Panel/styles/panel = SubResource("StyleBoxFlat_546lt")
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_276te")
 
+[node name="bt_hud_on" type="Button" parent="."]
+visible = false
+offset_top = 569.0
+offset_right = 88.0
+offset_bottom = 600.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Show HUD"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +103,11 @@ text = "Log"
 
 [node name="btMenu" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
-text = "Menu"
+text = "Save/Load"
+
+[node name="bt_hud_off" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+text = "Hide Hud"
 
 [node name="Panel" type="Panel" parent="HBoxContainer"]
 layout_mode = 2
@@ -120,7 +133,6 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer"]
-custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -215,6 +227,8 @@ text = "Button #1"
 layout_mode = 2
 text = "Button #1"
 
+[connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btInventory" to="." method="_on_bt_inventory_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btMenu" to="." method="_on_bt_menu_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/bt_hud_off" to="." method="_on_bt_hud_off_pressed"]
 [connection signal="pressed" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid/Button 1" to="." method="_on_button_pressed"]

@@ -8,12 +8,12 @@ func _init():
 	id="EventFindPathCliff"
 
 func react(_triggerID, _args)->bool:
-	GlobalRegistry.setModuleFlag("DefaultModule","Found_Cliff",1)
+	GlobalRegistry.setModuleFlag("Default","Found_Cliff",1)
 	Global.main.runScene("nav_cliff")
 	Global.ui.say("This time you made your way all down the beach until you stand before a high cliff.\n")
 	return true
 	
 func canRun()->bool:
-	if(GlobalRegistry.getModuleFlag("DefaultModule","Explored_Beach",0)>5):
+	if(GlobalRegistry.getModuleFlag("Default","Explored_Beach",0)>5):
 		return true
 	return false

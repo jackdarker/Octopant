@@ -10,6 +10,7 @@ func _ready() -> void:
 	pass
 
 func enterScene():
+	Global.pc.location=self.sceneID
 	Global.ui.clearOutput()
 	Global.ui.clearInput()
 	

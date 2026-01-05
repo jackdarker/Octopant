@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://sjpxi1bjmpxx"]
 
-[ext_resource type="Script" uid="uid://d1s36ljbup4am" path="res://game/wnd_pause.gd" id="1_mpobv"]
+[ext_resource type="Script" uid="uid://d1s36ljbup4am" path="res://ui/wnd_pause.gd" id="1_mpobv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpobv"]
 
@@ -8,6 +8,7 @@
 bg_color = Color(0.28731307, 0.6124641, 0.9600938, 1)
 
 [node name="WndPause" type="CanvasLayer"]
+layer = 100
 script = ExtResource("1_mpobv")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]

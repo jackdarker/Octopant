@@ -14,7 +14,7 @@ func _ready() -> void:
 	Global.main = self
 	Global.ES = EventSystem.new()
 	Global.pc = Player.new()
-	
+	$WndInventory.character=Global.pc
 	Global.ES.registerEventTriggers()
 	
 	time_passed.connect(Global.ui.on_time_passed)
@@ -201,3 +201,6 @@ func loadData(data: Dictionary):
 
 func _on_hud_menu_requested() -> void:
 	$WndPause.visible=true
+
+func _on_hud_inventory_requested() -> void:
+	$WndInventory.visible=true
