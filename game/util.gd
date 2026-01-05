@@ -32,14 +32,20 @@ static func getTimeStringHHMM(t):
 	var time = "%02d:%02d" % [_hours, _minutes]
 	return time
 
+static func getStackFunction(depth = 2):
+	var stack = get_stack()
+	if(stack == null || !(stack is Array) || stack.size() <= (depth + 1)):
+		return "No stack available"
+	var text = "File: "+stack[depth]["source"]+" Line: "+str(stack[depth]["line"])
+	return text
 
 #region	Return-Result
 class Result extends RefCounted:
 	var OK:bool = true
 	var msg:String = ""
 
-	func _init(OK:bool=true,msg:String=""):
-		self.OK=OK
-		self.msg=msg
+	func _init(_OK:bool=true,_msg:String=""):
+		self.OK=_OK
+		self.msg=_msg
 		
 #endregion

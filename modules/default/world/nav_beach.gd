@@ -6,45 +6,44 @@ const States = {IDLE=1,DIGGING = 2, DIG_FAILED=3, DIG_SUCCESS=4 }
 func _init() -> void:
 	sceneID="nav_beach"
 
-func on_button(i:int):
-	if state==States.DIGGING:
-		digging(i)
+func enterScene():
+	super()
+	if (GlobalRegistry.getModuleFlag("DefaultModule","Found_Beach",0)<=0):
+		Global.ui.say("I found myself at a beach.")
+		GlobalRegistry.increaseModuleFlag("DefaultModule","Found_Beach",1)
+	Global.ui.addButton("go somewhere else...","",_on_bt_walk_pressed)
+	Global.ui.addButton("explore","",_on_bt_explore_pressed)
+	Global.ui.addButton("search for...","",_on_bt_search_pressed)
 	pass
 
-func _on_bt_home_pressed() -> void:
-	navigate_home()
+func _on_bt_search_pressed():
+	Global.ui.clearInput()
+	Global.ui.say("What are you looking for?")
+	Global.ui.addButton("back","",enterScene)
+	Global.ui.addButton("anything","",_on_bt_explore_pressed)
 	pass
 
-
-func _on_bt_explore_pressed() -> void:
-	msg=msg_scn.instantiate()
-	if(state==0):
-		show_Intro()
-	else:
-		Global.main.doTimeProcess(30*60)
-		state=States.DIGGING
-		msg.text= "There is something sparkling between seasshells"
-		msg.config_bt(0,"Ignore it")
-		msg.config_bt(1,"Dig it out")
-		show_msg()
-
-func show_Intro():
-	state=States.IDLE
-	msg=msg_scn.instantiate()
-	msg.text= "you wake up at the beach"
-	show_msg()
-
-func digging(i:int):
+func _on_bt_explore_pressed():
+	Global.ui.clearInput()
 	Global.main.doTimeProcess(30*60)
-	if i==1:
-		msg=msg_scn.instantiate()
-		state=States.DIG_SUCCESS
-		msg.text= "You found some empty glass-vial."
-		Global.pc.inventory.addItem(GlobalRegistry.createItem("vial_empty"))
-		show_msg()
-	elif i==3:
-		msg=msg_scn.instantiate()
-		state=States.DIG_FAILED
-		msg.text= "There is nothing"
-		show_msg()
+	GlobalRegistry.increaseModuleFlag("DefaultModule","Explored_Beach",1)
+	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_beach_explore",[]):
+		Global.ui.say("Nothing was found")
+		continueScene()
+	#state=States.DIGGING
+	#msg.text= "There is something sparkling between seasshells"
+	#msg.config_bt(0,"Ignore it")
+	#msg.config_bt(1,"Dig it out")
+	#show_msg()
+
+func _on_bt_walk_pressed():
+	Global.ui.clearInput()
+	Global.ui.say("Where would you like to go?")
+	Global.ui.addButton("back","",enterScene)
+	Global.ui.addButton("go home","",navigate_home)
+	if(GlobalRegistry.getModuleFlag("DefaultModule","Found_Cliff",0)>0):
+		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
+
+
+
 	

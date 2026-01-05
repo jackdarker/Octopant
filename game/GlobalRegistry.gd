@@ -58,6 +58,34 @@ func registerEverything():
 	#deleteLoadLockFile()
 	emit_signal("loadingFinished")
 
+#region save/load
+# only need to save flags
+func loadData(data):
+	currentUniqueID=data["uid"]
+	#be aware that there might be modules new/missing or have changed structures
+	#cleanout all present flags
+	var _moduleFlags={}
+	for moduleid in moduleFlags.keys():
+		var _moduleDic=data.get_or_add(moduleid,{})
+		_moduleFlags[moduleid]=_moduleDic
+	#TODO remove flags that are not in flagscache (=not present anymore)
+	moduleFlags=_moduleFlags
+	
+func saveData()->Variant:
+	var data:Dictionary ={
+		"uid":currentUniqueID,
+	}
+	for flagid in flags.keys():	#Todo there could be colliding moduleid with flagid
+		data[flagid]=flags[flagid]
+	
+	for moduleid in moduleFlags.keys():
+		var _moduleDic=moduleFlags.get_or_add(moduleid,{})
+		for flagid in moduleFlags[moduleid].keys():
+			_moduleDic[flagid]=moduleFlags[moduleid][flagid]
+		data[moduleid]=_moduleDic
+	return(data)
+#endregion
+
 #region flags
 func clearFlag(flagID):
 	var splitData = Util.splitOnFirst(flagID, ".")
@@ -70,13 +98,13 @@ func clearFlag(flagID):
 func hasFlag(flagID:String) -> bool:
 	var splitData = Util.splitOnFirst(flagID, ".")
 	if(splitData.size() > 1):
-		var modules = GlobalRegistry.getModules()
+		var _modules = GlobalRegistry.getModules()
 		var moduleID:String = splitData[0]
-		if(!modules.has(moduleID)):
+		if(!_modules.has(moduleID)):
 			return false
 		var module:Module = modules[moduleID]
-		var moduleFlagsCache:Dictionary = module.getFlagsCache()
-		if(moduleFlagsCache.has(splitData[1])):
+		var _moduleFlagsCache:Dictionary = module.getFlagsCache()
+		if(_moduleFlagsCache.has(splitData[1])):
 			return true
 		return false
 		
@@ -98,17 +126,45 @@ func getFlag(flagID, defaultValue = null):
 		return defaultValue
 	
 	return flags[flagID]
+
+func setFlag(flagID, value):
+	# Handling "ModuleID.FlagID" here
+	var splitData = Util.splitOnFirst(flagID, ".")
+	if(splitData.size() > 1):
+		setModuleFlag(splitData[0], splitData[1], value)
+		return
 	
+	# Handling "DatapackID:FlagID" here
+	#var splitData2 = Util.splitOnFirst(flagID, ":")
+	#if(splitData2.size() > 1):
+	#	setDatapackFlag(splitData2[0], splitData2[1], value)
+	#	return
+	
+	if(!flagsCache.has(flagID)):
+		Log.printerr("setFlag(): Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		return
+	
+	if("type" in flagsCache[flagID]):
+		var flagType = flagsCache[flagID]["type"]
+		if(!FlagType.isCorrectType(flagType, value)):
+			Log.printerr("setFlag(): Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
+			return
+			
+	flags[flagID] = value
+
+func increaseFlag( flagID, addvalue = 1):
+	setFlag( flagID, getFlag( flagID, 0) + addvalue)
+
 func getModuleFlag(moduleID, flagID, defaultValue = null):
-	var modules = GlobalRegistry.getModules()
-	if(!modules.has(moduleID)):
+	var _modules = GlobalRegistry.getModules()
+	if(!_modules.has(moduleID)):
 		#Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return defaultValue
 	
-	var module:Module = modules[moduleID]
-	var moduleFlagsCache = module.getFlagsCache()
+	var module:Module = _modules[moduleID]
+	var _moduleFlagsCache = module.getFlagsCache()
 	
-	if(!moduleFlagsCache.has(flagID)):
+	if(!_moduleFlagsCache.has(flagID)):
 		#Log.printerr("getModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return defaultValue
 	
@@ -116,6 +172,32 @@ func getModuleFlag(moduleID, flagID, defaultValue = null):
 		return defaultValue
 	
 	return moduleFlags[moduleID][flagID]
+
+func setModuleFlag(moduleID, flagID, value):
+	var _modules = GlobalRegistry.getModules()
+	if(!_modules.has(moduleID)):
+		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
+		return
+	
+	var module:Module = modules[moduleID]
+	var moduleFlagsCache = module.getFlagsCache()
+	
+	if(!moduleFlagsCache.has(flagID)):
+		Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		return
+	
+	if("type" in moduleFlagsCache[flagID]):
+		var flagType = moduleFlagsCache[flagID]["type"]
+		if(!FlagType.isCorrectType(flagType, value)):
+			Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
+			return
+	
+	if(!moduleFlags.has(moduleID)):
+		moduleFlags[moduleID] = {}
+	moduleFlags[moduleID][flagID] = value
+
+func increaseModuleFlag(moduleID, flagID, addvalue = 1):
+	setModuleFlag(moduleID, flagID, getModuleFlag(moduleID, flagID, 0) + addvalue)
 
 func clearModuleFlag(moduleID, flagID):
 	if(!moduleFlags.has(moduleID) || !moduleFlags[moduleID].has(flagID)):
@@ -245,6 +327,15 @@ func registerScene(path: String, creator = null):
 	#if(hasCachedPath(CACHE_SCENE, path)):
 	#	scenes[getCachedID(CACHE_SCENE, path)] = null
 	#	return
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="tscn":
+				registerScene(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	path.get_file()
 	
 	var scene = load(path)
 	if(!scene):
@@ -254,6 +345,17 @@ func registerScene(path: String, creator = null):
 	scenes[sceneObject.sceneID] = scene
 	#addCacheEntry(CACHE_SCENE, sceneObject.sceneID, path)
 	sceneObject.queue_free()
+	
+func createScene(id: String):
+	if(!scenes.has(id) ):
+		Log.printerr("ERROR: scene with the id "+id+" wasn't found")
+		return null
+	var scene
+	scene = scenes[id].instantiate()
+	scene.name = scene.sceneID
+	scene.uniqueSceneID = GlobalRegistry.generateUniqueID()
+	return scene
+	
 #endregion
 
 #region Items

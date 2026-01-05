@@ -57,7 +57,7 @@ func destroyMe():
 	currentInventory.removeItem(self)
 	currentInventory.removeEquippedItem(self)
 
-func useCharge(amount = 1):
+func useCharge(_amount = 1):
 	#charges -= amount
 	#if(charges <= 0):
 	#	charges = 0

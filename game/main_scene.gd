@@ -4,7 +4,8 @@ class_name MainScene
 signal time_passed(_secondsPassed)
 signal saveLoadingFinished
 
-var actual_scene
+var sceneStack:Array=[]
+
 var currentDay = 0
 var timeOfDay = 6*60*60 # seconds since 00:00
 
@@ -19,23 +20,75 @@ func _ready() -> void:
 	time_passed.connect(Global.ui.on_time_passed)
 	Global.pc.stat_changed.connect(Global.ui.on_pc_stat_update)
 	
-	goto_scene("res://modules/default/world/nav_beach.tscn")	#todo intro
+	#goto_scene("res://modules/default/world/nav_beach.tscn")	#todo intro
+	runScene("nav_beach")
 
+func runScene(id, _args = [], parentSceneUniqueID = -1):
+	defferedRunScene.call_deferred(id,_args, parentSceneUniqueID )
 
-func goto_scene(path):
-	_deferred_goto_scene.call_deferred(path)
-
-
-func _deferred_goto_scene(path):
-	# It is now safe to remove the current scene.
+func defferedRunScene(id, _args = [], parentSceneUniqueID = -1):
+	var actual_scene = getCurrentScene()
 	if(actual_scene):
 		actual_scene.free()
 	# Load the new scene.
-	var s = ResourceLoader.load(path)
-	# Instance the new scene.
-	actual_scene = s.instantiate()
+	print("Starting scene "+id)
+	#var s = ResourceLoader.load(path)
+	actual_scene = GlobalRegistry.createScene(id)
+	if(parentSceneUniqueID >= 0):
+		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
 	get_node("Scene").add_child(actual_scene)
+	sceneStack.append(actual_scene)
+
+func removeScene(scene, args = []):
+	defferedRemoveScene.call_deferred(scene,args)
+	
+func defferedRemoveScene(scene, args = []):
+	if(sceneStack.has(scene)):
+		var isCurrentScene = (scene == sceneStack.back())
+		var savedParentSceneID = scene.parentSceneUniqueID
+		var savedTag = [] #todo scene.sceneTag
+		
+		sceneStack.erase(scene)
+		
+		var parentScene = getSceneByUniqueID(savedParentSceneID)
+		if(parentScene != null):
+			parentScene.react_scene_end(savedTag, args)
+		
+		#if(isCurrentScene && sceneStack.back() != null):
+		#	sceneStack.back().updateCharacter()
+		#runCurrentScene()
+	if(sceneStack.size() == 0):
+		Log.print("Error: no more scenes in the scenestack")
+		Global.ui.clearInput()
+		Global.ui.say("Error: no more scenes in the scenestack. Please let the developer know")
+		return
+
+func getSceneByUniqueID(uID):
+	if(uID < 0):
+		return null
+	for scene in sceneStack:
+		if(scene.uniqueSceneID == uID):
+			return scene
+	return null
+
+func getCurrentScene():
+	if(sceneStack.size() > 0):
+		return sceneStack.back()
+	return null
+
+func endCurrentScene(keepWorld:bool=true):
+	if(sceneStack.size() == 1 && keepWorld):
+		#IS.stopInteractionsForPawnID("pc")
+		return
+	var currentScene = getCurrentScene()
+	if(currentScene != null):
+		currentScene.endScene()
+
+func clearSceneStack():
+	for scene in sceneStack:
+		scene.queue_free()
+	sceneStack = []
 
 func getTime():
 	return timeOfDay
@@ -125,3 +178,26 @@ func startNewDay() ->int:
 	#SAVE.triggerAutosave()
 	
 	return timediff
+
+func say():
+	pass
+
+#called by save-dialog
+func canSave()->bool:
+	return true
+
+func saveData()->Dictionary:
+	var data={
+		"player": Global.player.saveData(),
+		"world": Global.world.saveData(),
+	}
+	return data
+
+func loadData(data: Dictionary):
+	Global.player.loadData( data["player"])
+	Global.world.loadData( data["world"])
+	#scene restoration triggered in Global.loadData
+
+
+func _on_hud_menu_requested() -> void:
+	$WndPause.visible=true

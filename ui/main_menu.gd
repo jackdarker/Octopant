@@ -14,3 +14,10 @@ func _on_bt_main_pressed() -> void:
 
 func _on_bt_start_pressed() -> void:
 	Global.goto_scene("res://game/main_scene.tscn")
+
+func _on_bt_load_pressed() -> void:
+	$WndPause.visible=true
+
+#called by save-dialog
+func canSave()->bool:
+	return false

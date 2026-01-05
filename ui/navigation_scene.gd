@@ -6,14 +6,23 @@ var msg:MessageBox
 var state:int =0
 
 func _ready() -> void:
+	enterScene()
 	pass
+
+func enterScene():
+	Global.ui.clearOutput()
+	Global.ui.clearInput()
+	
+func continueScene():
+	Global.ui.clearInput()
+	Global.ui.addButton("next","",enterScene)
 
 # override this ! 
 func on_button(i:int):
 	pass
 
 func navigate_home():
-	Global.main.goto_scene("res://modules/default/world/nav_home.tscn")
+	Global.main.runScene("nav_home")
 
 
 func show_msg():
