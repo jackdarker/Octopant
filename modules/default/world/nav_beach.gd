@@ -14,6 +14,7 @@ func enterScene():
 	Global.ui.addButton("go somewhere else...","",_on_bt_walk_pressed)
 	Global.ui.addButton("explore","",_on_bt_explore_pressed)
 	Global.ui.addButton("search for...","",_on_bt_search_pressed)
+	Global.ui.addButton("talk to crab","",_on_bt_crab_pressed)
 	pass
 
 func _on_bt_search_pressed():
@@ -44,6 +45,7 @@ func _on_bt_walk_pressed():
 	if(GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)>0):
 		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
 
-
-
-	
+func _on_bt_crab_pressed():
+	Global.main.runScene("interaction_scene",
+		[load("res://modules/default/interaction/dlg_pc_crab.gd"),
+		$TextureRect.texture],self.uniqueSceneID)

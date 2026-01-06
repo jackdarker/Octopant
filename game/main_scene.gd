@@ -28,12 +28,18 @@ func runScene(id, _args = [], parentSceneUniqueID = -1):
 
 func defferedRunScene(id, _args = [], parentSceneUniqueID = -1):
 	var actual_scene = getCurrentScene()
-	if(actual_scene):
+	if(actual_scene && parentSceneUniqueID!=actual_scene.uniqueSceneID):
 		actual_scene.free()
 	# Load the new scene.
 	print("Starting scene "+id)
 	#var s = ResourceLoader.load(path)
-	actual_scene = GlobalRegistry.createScene(id)
+	if(id=="interaction_scene"):
+		Global.ui.visible=false
+		actual_scene=load("res://ui/interaction_scene.tscn").instantiate()
+		actual_scene.dialogue_gdscript=_args[0]
+		actual_scene.back_image=_args[1]
+	else:
+		actual_scene = GlobalRegistry.createScene(id)
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
@@ -50,11 +56,11 @@ func defferedRemoveScene(scene, args = []):
 		var savedTag = [] #todo scene.sceneTag
 		
 		sceneStack.erase(scene)
-		
+		scene.queue_free()
 		var parentScene = getSceneByUniqueID(savedParentSceneID)
 		if(parentScene != null):
 			parentScene.react_scene_end(savedTag, args)
-		
+			parentScene.enterScene()
 		#if(isCurrentScene && sceneStack.back() != null):
 		#	sceneStack.back().updateCharacter()
 		#runCurrentScene()

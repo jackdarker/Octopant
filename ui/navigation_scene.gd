@@ -11,6 +11,7 @@ func _ready() -> void:
 
 func enterScene():
 	Global.pc.location=self.sceneID
+	Global.ui.visible=true
 	Global.ui.clearOutput()
 	Global.ui.clearInput()
 	

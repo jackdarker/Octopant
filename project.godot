@@ -25,6 +25,10 @@ GlobalRegistry="*res://game/GlobalRegistry.gd"
 window/size/viewport_width=800
 window/size/viewport_height=600
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/rubonnek.dialogue_engine/plugin.cfg")
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
