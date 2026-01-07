@@ -26,8 +26,14 @@ const EQUIP_TAG = { None=0,
 var uniqueID:int = -1
 var id:String = "Unknown"
 var currentInventory:Inventory
-var amount:int = 1
-
+var amount:int = 1:
+	set(value):
+		amount=value
+		if(value<=0):
+			destroyMe()
+	get:
+		return amount
+		
 #override this !
 func _init():
 	pass
@@ -89,7 +95,7 @@ func destroyMe():
 	if(currentInventory == null):
 		return
 	currentInventory.removeItem(self)
-	currentInventory.removeEquippedItem(self)
+	#currentInventory.removeEquippedItem(self)
 
 func useCharge(_amount = 1):
 	#charges -= amount

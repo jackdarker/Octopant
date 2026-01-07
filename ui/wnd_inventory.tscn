@@ -68,7 +68,7 @@ theme_override_constants/separation = 20
 [node name="lb_desc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer3/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "sdfds"
+text = "   "
 fit_content = true
 
 [node name="list_actions" type="HFlowContainer" parent="PanelContainer/VBoxContainer/MarginContainer3/VBoxContainer"]

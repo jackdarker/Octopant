@@ -7,7 +7,9 @@ static func create_item(data)-> ListItem:
 	if(!SceneListItem):
 		SceneListItem = load("res://ui/image_list_item.tscn")
 	var _Item=SceneListItem.instantiate()
-	var image = Image.load_from_file(data.getInventoryImage())
+	#var image = Image.load_from_file(data.getInventoryImage())
+	var _tex:Texture2D = load(data.getInventoryImage())
+	var image = _tex.get_image()
 	var ThumbnailSize = 128	#TODO
 	var Width =0
 	var Height = 0
@@ -38,6 +40,12 @@ var _text:String:
 	get:
 		return($Control/Label.text)
 
+var _text2:String:
+	set(value):
+		$lb_amount.text=value
+	get:
+		return($lb_amount.text)
+
 var texture:
 	set(value):
 		$Control/TextureRect.texture=value	
@@ -51,6 +59,7 @@ func _on_texture_rect_gui_input(event: InputEvent) -> void:
 
 func _refresh():
 	_text=data.getName()
+	_text2=str(data.amount)
 	_resize.call_deferred()
 
 func _resize():

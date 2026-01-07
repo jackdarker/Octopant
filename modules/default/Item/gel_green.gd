@@ -2,16 +2,16 @@ extends ItemBase
 
 func _init():
 	super()
-	id="vial_empty"
+	id="gel_green"
 
 func getTags()->Array:
 	return [ITEM_TAG.Ingredient]
 
 func getName()->String:
-	return "empty vial"
+	return "green gel"
 
 func getDescription()->String:
-	return "A small vial. Could be used to hold some liquid."
+	return "Some suspicious green slime."
 
 func getInventoryImage():
-	return "res://assets/images/items/Drink_S_Empty.svg"
+	return "res://assets/images/items/Gel_S_Green.svg"

@@ -26,6 +26,14 @@ func _input(p_input_event : InputEvent) -> void:
 	if p_input_event.is_action_pressed(&"ui_accept"):
 		dialogue_engine.advance()
 
+func __displayImage(where,path):
+	var _texture=Texture.new()
+	if path!="":
+		_texture= load(path)
+	if(where==1):
+		%img_char_1.texture=_texture
+	else:
+		%img_char_2.texture=_texture
 
 func __on_dialogue_continued(p_dialogue_entry : DialogueEntry) -> void:
 	var label : RichTextLabel = RichTextLabel.new()
@@ -33,8 +41,13 @@ func __on_dialogue_continued(p_dialogue_entry : DialogueEntry) -> void:
 	label.set_fit_content(true)
 	label.set_text("  > " + p_dialogue_entry.get_text())
 	%log.add_child(label)
-	
-	if p_dialogue_entry.has_options():
+
+	if p_dialogue_entry.has_metadata("char1"):
+		__displayImage(1,p_dialogue_entry.get_metadata("char1"))
+	if p_dialogue_entry.has_metadata("char2"):
+		__displayImage(2,p_dialogue_entry.get_metadata("char2"))
+			
+	if p_dialogue_entry.has_options():	#render buttons
 		%bt_next.visible=false
 		for option_id : int in range(0, p_dialogue_entry.get_option_count()):
 			var option_text : String = p_dialogue_entry.get_option_text(option_id)

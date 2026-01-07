@@ -26,12 +26,18 @@ func addItemID(itemID:String):
 	addItem(newItem)
 	return true
 
-func removeItem(item):
+func removeItem(item:ItemBase):
 	if(items.has(item)):
-		items.erase(item)
-		item.currentInventory = null
-		return item
-	return null
+		if item.amount>1:
+			item.amount-=1
+		else:
+			items.erase(item)
+			item.currentInventory = null
+
+func removeItemID(itemID:String):
+	var _item=getItemByID(itemID)
+	if(_item):
+		removeItem(_item)
 
 func hasItem(item):
 	return items.has(item)
