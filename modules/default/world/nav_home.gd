@@ -14,7 +14,7 @@ func _on_bt_walk_pressed():
 	Global.ui.clearInput()
 	Global.ui.say("Where would you like to go?")
 	Global.ui.addButton("back","",enterScene)
-	Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_beach"))
+	Global.ui.addButton("Beach","",Global.main.runScene.bind("nav_beach"))
 	if(GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)>0):
 		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
 

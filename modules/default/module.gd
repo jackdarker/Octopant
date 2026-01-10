@@ -12,16 +12,17 @@ func _init()-> void :
 		"res://modules/default/Item",
 	]
 	events = [
-		"res://modules/default/event/event_nothing.gd",
-		"res://modules/default/event/event_find_loot_beach.gd",
-		"res://modules/default/event/event_find_path_cliff.gd",
+		"res://modules/default/event",		#dont forget to setup events in initGame !
 	]
 
 func getFlags():
 	return {
 		"Found_Beach": flag(FlagType.Number),
 		"Found_Cliff": flag(FlagType.Number),
+		"Found_DeepWoods": flag(FlagType.Number),
 		"Explored_Beach": flag(FlagType.Number),
+		"Explored_Cliff": flag(FlagType.Number),
+		"Explored_DeepWoods": flag(FlagType.Number),
 		}
 
 func initGame():
@@ -29,4 +30,6 @@ func initGame():
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventNothing"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventHurtBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventFindPathDeepWoods"),"nav_beach_explore",[])
 	pass

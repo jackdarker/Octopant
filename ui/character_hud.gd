@@ -1,7 +1,12 @@
 extends VBoxContainer
 
-@onready var pain_bar=$HBoxContainer/barHealth
+@onready var pain_bar=$HBoxContainer/barPain
+@onready var fatigue_bar=$HBoxContainer/barFatigue
 
 func on_stat_update(who:Character):
-	pain_bar.max_value=who.painMax
-	pain_bar.value=who.pain
+	var _n=who.getStat("pain")
+	pain_bar.max_value=_n.ul
+	pain_bar.value=_n.value
+	_n=who.getStat("fatigue")
+	fatigue_bar.max_value=_n.ul
+	fatigue_bar.value=_n.value

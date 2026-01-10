@@ -1,15 +1,15 @@
 extends EventBase
-class_name EventFindPathCliff
+class_name EventFindPathDeepWoods
 
 # an event that gives the player a path to location
 
 func _init():
 	super()
-	id="EventFindPathCliff"
+	id="EventFindPathDeepWoods"
 
 func react(_triggerID, _args)->bool:
-	Global.main.runScene("nav_cliff")
-	Global.ui.say("This time you made your way all down the beach until you stand before a high cliff.\n")
+	Global.main.runScene("nav_deepwood")
+	Global.ui.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\\n")
 	return true
 	
 func canRun()->bool:

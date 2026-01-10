@@ -25,13 +25,13 @@ custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 texture_normal = ExtResource("1_lqq4a")
 
-[node name="barHealth" type="TextureProgressBar" parent="HBoxContainer"]
+[node name="barPain" type="TextureProgressBar" parent="HBoxContainer"]
 layout_mode = 2
 value = 90.0
 fill_mode = 3
 texture_progress = SubResource("GradientTexture2D_3h3vf")
 
-[node name="barLust" type="TextureProgressBar" parent="HBoxContainer"]
+[node name="barFatigue" type="TextureProgressBar" parent="HBoxContainer"]
 layout_mode = 2
 value = 90.0
 fill_mode = 3

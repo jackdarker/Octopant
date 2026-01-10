@@ -14,7 +14,7 @@ func on_time_passed(_time):
 	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getTime())
 	pass
 
-func on_pc_stat_update():
+func on_pc_stat_update(key,data):
 	$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus.on_stat_update(Global.pc)
 
 func say(text):
@@ -35,30 +35,30 @@ func clearInput():
 			bt.pressed.disconnect(evt.callable)
 	pass
 
-func addButton(text:String,tooltip:String,code:Callable,check=null,id:int=-1):
-	for bt:BaseButton in buttons.get_children():
-		if(!bt.visible):
+func addButton(text:String,tooltip:String,code:Callable,check=null):
+	for bt:BaseButton in buttons.get_children():	#TODO more...page if to many buttons
+		#TODO favour undisabled button against disabled
+		if(!bt.visible): #choose the next unused button
 			bt.text=text
+			bt.tooltip_text=tooltip
 			bt.disabled=false
+			if(check):
+				var _res:Result=(check as Callable).call()
+				if !_res.OK:
+					bt.disabled=true
+					bt.tooltip_text=_res.Msg
 			bt.visible=true
 			bt.pressed.connect(code)
 			break
 	pass
 
-func toggleHud(show:bool):
-	if show:
+func toggleHud(_show:bool):
+	if _show:
 		fullhud.visible=true
 		bt_hud_off.visible=false
 	else:
 		fullhud.visible=false
 		bt_hud_off.visible=true
-
-func _onButton():
-	pass
-
-
-func _on_button_pressed() -> void:
-	pass # Replace with function body.
 
 
 func _on_bt_inventory_pressed() -> void:

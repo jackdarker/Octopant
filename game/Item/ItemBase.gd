@@ -86,7 +86,13 @@ func getPossibleActions():
 			#"scene": "UseItemLikeInCombatScene",
 			#"description": "Charge the thing",
 		#}
-	
+
+#TODO target is always Character?
+func canDo(action,target)->Result:
+	return (Result.create(false,""))
+
+func doAction(action:String,target):
+	pass
 
 func getPrice():
 	return 30

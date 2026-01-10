@@ -18,8 +18,8 @@ func _ready() -> void:
 	Global.ES.registerEventTriggers()
 	
 	time_passed.connect(Global.ui.on_time_passed)
-	Global.pc.stat_changed.connect(Global.ui.on_pc_stat_update)
-	
+	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"pain")		#TODO because stats are recreated on load, events also need to be reconnected
+	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"fatigue")
 	#goto_scene("res://modules/default/world/nav_beach.tscn")	#todo intro
 	runScene("nav_beach")
 
