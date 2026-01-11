@@ -4,10 +4,13 @@ class_name Status extends Node
 
 signal changed(ID:String,value:float)
 
-static func create(_key,_data)->Status:
+static func create(_key:StringName,_value:float,_ll:float,_ul:float)->Status:
+	assert(_ul>_ll)
 	var _n=Status.new()
 	_n.key=_key
-	_n.value=_data
+	_n.value=_value
+	_n.ll=_ll
+	_n.ul=_ul
 	return _n
 
 var key:String="UNKNOWN"

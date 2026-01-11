@@ -34,6 +34,8 @@ func _item_selected(id):
 	for _action in _item.getPossibleActions():
 		var _bt=Button.new()
 		_bt.text=_action.name
+		_bt.tooltip_text=_action.description
+		_bt.pressed.connect(_item.doAction.bind(_action.name,self.character))
 		%list_actions.add_child(_bt)
 	
 func _on_bt_back_pressed() -> void:

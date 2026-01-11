@@ -6,16 +6,22 @@ signal stat_changed
 var location:String = ""
 
 var statuslist:StatusList
+var effectlist:EffectsList
 var inventory: Inventory
 
 func _init():
 	inventory=Inventory.new()
 	statuslist=StatusList.new()
-	statuslist.addItem(Status.create("pain",0))
-	statuslist.addItem(Status.create("fatigue",0))
+	statuslist.addItem(Status.create("pain",0,0,100))
+	statuslist.addItem(Status.create("fatigue",0,0,100))
+	effectlist=EffectsList.new()
 
 func getStat(key)->Status:
 	return statuslist.getItemByID(key)
+
+func processTime(_delta:int):
+	for id in effectlist.keys():
+		effectlist[id].processTime(_delta)
 
 func loadData(data):
 	location=data["location"]

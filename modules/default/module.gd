@@ -14,6 +14,9 @@ func _init()-> void :
 	events = [
 		"res://modules/default/event",		#dont forget to setup events in initGame !
 	]
+	effects = [
+		"res://modules/default/effect",
+	]
 
 func getFlags():
 	return {

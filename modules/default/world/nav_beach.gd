@@ -38,6 +38,8 @@ func _on_bt_walk_pressed():
 	Global.ui.addButton("go home","",navigate_home)
 	if(GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)>0):
 		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
+	if(GlobalRegistry.getModuleFlag("Default","Found_DeepWoods",0)>0):
+		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_deepwood"))
 
 func _on_bt_crab_pressed():
 	Global.main.runScene("interaction_scene",

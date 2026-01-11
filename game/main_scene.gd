@@ -7,20 +7,19 @@ signal saveLoadingFinished
 var sceneStack:Array=[]
 
 var currentDay = 0
-var timeOfDay = 6*60*60 # seconds since 00:00
+var timeOfDay:int = 6*60*60 # seconds since 00:00
 
 func _ready() -> void:
-	Global.ui = $Hud	# load("res://ui/hud.tscn").instance()	#GameUI
+	Global.ui = $Hud
 	Global.main = self
 	Global.ES = EventSystem.new()
 	Global.pc = Player.new()
 	$WndInventory.character=Global.pc
-	Global.ES.registerEventTriggers()
 	
+	Global.ES.registerEventTriggers()
 	time_passed.connect(Global.ui.on_time_passed)
-	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"pain")		#TODO because stats are recreated on load, events also need to be reconnected
-	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"fatigue")
-	#goto_scene("res://modules/default/world/nav_beach.tscn")	#todo intro
+	postLoad()
+	#todo intro
 	runScene("nav_beach")
 
 func runScene(id, _args = [], parentSceneUniqueID = -1):
@@ -29,6 +28,7 @@ func runScene(id, _args = [], parentSceneUniqueID = -1):
 func defferedRunScene(id, _args = [], parentSceneUniqueID = -1):
 	var actual_scene = getCurrentScene()
 	if(actual_scene && parentSceneUniqueID!=actual_scene.uniqueSceneID):
+		sceneStack.erase(actual_scene)
 		actual_scene.free()
 	# Load the new scene.
 	print("Starting scene "+id)
@@ -96,19 +96,19 @@ func clearSceneStack():
 		scene.queue_free()
 	sceneStack = []
 
-func getTime():
+func getTime()->int:
 	return timeOfDay
 
-func getDayTimeEnd():
+func getDayTimeEnd()->int:
 	return 23 * 60 * 60
 	
-func getDayTimeStart():
+func getDayTimeStart()->int:
 	return 7 * 60 * 60
 
-func isVeryLate():
+func isVeryLate()->bool:
 	return timeOfDay >= getDayTimeEnd()
 
-func getDays():
+func getDays()->int:
 	return currentDay
 
 func doTimeProcess(_seconds):
@@ -120,12 +120,13 @@ func doTimeProcess(_seconds):
 	var copySeconds = _seconds
 	while(copySeconds > 0):
 		var clippedSeconds = min(60*60, copySeconds)
-		#GM.pc.processTime(clippedSeconds)
+		Global.pc.processTime(clippedSeconds)
 		
 		#for characterID in charactersToUpdate:
 		#	var character = getCharacter(characterID)
 		#	if(character != null):
 		#		character.processTime(clippedSeconds)
+		
 		
 		copySeconds -= clippedSeconds
 	
@@ -156,19 +157,16 @@ func processTimeUntil(newseconds):
 	doTimeProcess(timeDiff)
 	return timeDiff
 
-func startNewDay() ->int:
+func startNewDay():
 	#IS.beforeNewDay()
 	#GM.CS.optimize()
 	
 	# We assume that you always go to sleep at 23:00
 	if(timeOfDay > getDayTimeEnd()):
-		timeOfDay = getDayTimeEnd()
+		timeOfDay = getDayTimeEnd()				#TODO this causes to wakeup later !
 	
 	var newtime = getDayTimeStart()
 	var timediff = 24 * 60 * 60 - timeOfDay + newtime
-	
-	#currentDay += 1
-	#timeOfDay = newtime
 	
 	#Flag.resetFlagsOnNewDay()
 	#roomMemoriesProcessDay()
@@ -182,28 +180,22 @@ func startNewDay() ->int:
 	#RS.onNewDay()
 	
 	#SAVE.triggerAutosave()
-	
-	return timediff
 
-func say():
-	pass
+func gotoSleep():
+	Global.ui.fade()
+	#TODO sleep event
+	Global.pc.post_sleep()
+	startNewDay()
 
 #called by save-dialog
 func canSave()->bool:
 	return true
 
-func saveData()->Dictionary:
-	var data={
-		"player": Global.player.saveData(),
-		"world": Global.world.saveData(),
-	}
-	return data
 
-func loadData(data: Dictionary):
-	Global.player.loadData( data["player"])
-	Global.world.loadData( data["world"])
-	#scene restoration triggered in Global.loadData
-
+func postLoad():
+	# because stats are recreated on load, events also need to be reconnected
+	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"pain")		
+	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"fatigue")
 
 func _on_hud_menu_requested() -> void:
 	$WndPause.visible=true

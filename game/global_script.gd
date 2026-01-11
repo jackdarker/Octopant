@@ -78,9 +78,10 @@ func loadFromFile(slot):
 	Global.goto_scene("res://game/main_scene.tscn",json.data)
 
 func loadData(data):
-	#TODO Global.settings.loadData(data.settings)
+	#TODO Global.settings.loadData(data.settings)		store settings in separate file?
 	GlobalRegistry.loadData(data.globalregistry)
 	Global.pc.loadData(data.pc)
+	Global.main.postLoad()
 			
 func saveData()->Variant:
 	var data ={

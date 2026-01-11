@@ -22,6 +22,7 @@ func say(text):
 	pass
 
 func clearOutput():
+	$img_fade.visible=false
 	msg.text=""
 
 # hide buttons
@@ -51,6 +52,9 @@ func addButton(text:String,tooltip:String,code:Callable,check=null):
 			bt.pressed.connect(code)
 			break
 	pass
+
+func fade():
+	$anim_fade.play("fade")
 
 func toggleHud(_show:bool):
 	if _show:

@@ -20,7 +20,7 @@ func _on_bt_walk_pressed():
 
 
 func _on_bt_sleep_pressed() -> void:
-	Global.main.startNewDay()
+	Global.main.gotoSleep()
 
 func _on_bt_craft_pressed() -> void:
 	pass

@@ -10,7 +10,7 @@ var game_version_suffix = ""	#"fix1"
 signal loadingUpdate(percent, whatsnext)
 signal loadingFinished
 
-var modules: Dictionary = {}
+var modules: Dictionary [String,Module]= {}
 
 var flags = {}
 var flagsCache = null
@@ -24,11 +24,10 @@ var events: Dictionary = {}		#see ES !
 var items: Dictionary = {}
 var itemsByTag: Dictionary = {}
 
+var effects: Dictionary = {}
+
 var currentUniqueID:int=1
 var isInitialized = false
-
-func _init():
-	pass
 
 func getGameVersionString():
 	return str(game_version_major)+"."+str(game_version_minor)+"."+str(game_version_revision)+str(game_version_suffix)
@@ -37,7 +36,7 @@ func generateUniqueID():
 	currentUniqueID += 1
 	return currentUniqueID - 1
 
-var totalStages = 10.0
+var totalStages = 10.0	#TODO
 func registerEverything():
 	#createLoadLockFile()
 	var start =  Time.get_ticks_usec()
@@ -53,7 +52,7 @@ func registerEverything():
 	
 	var end = Time.get_ticks_usec()
 	var worker_time = (end-start)/1000000.0
-	#Log.print("GlobalRegistry fully initialized in: %s seconds" % [worker_time])
+	Log.print("GlobalRegistry fully initialized in: %s seconds" % [worker_time])
 	isInitialized = true
 	#deleteLoadLockFile()
 	emit_signal("loadingFinished")
@@ -87,6 +86,7 @@ func saveData()->Variant:
 #endregion
 
 #region flags
+#TODO there are only Module-flags no general flags?
 func clearFlag(flagID):
 	var splitData = Util.splitOnFirst(flagID, ".")
 	if(splitData.size() > 1):
@@ -203,6 +203,12 @@ func clearModuleFlag(moduleID, flagID):
 	if(!moduleFlags.has(moduleID) || !moduleFlags[moduleID].has(flagID)):
 		return
 	moduleFlags[moduleID].erase(flagID)
+
+func resetFlagsOnNewDay():
+	for moduleID in modules:
+		var moduleObject = modules[moduleID]
+		moduleObject.resetFlagsOnNewDay()
+		
 #endregion
 
 
@@ -277,7 +283,7 @@ func initGameModules():
 		var moduleObject = modules[moduleID]
 		moduleObject.initGame()
 
-func getModules():
+func getModules()->Dictionary:
 	return modules
 
 func getModule(id):
@@ -369,10 +375,34 @@ func registerItem(path: String):
 			itemsByTag[tag] = []
 		itemsByTag[tag].append(itemObject.id)
 
-func createItem(id: String):
+func createItem(id: String)->ItemBase:
 	if(!items.has(id)):
 		Log.printerr("ERROR: item with the id "+id+" wasn't found")
 		return null
 	var newItem = items[id].new()
 	return newItem
+#endregion
+
+#region effects
+func registerEffect(path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerEffect(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item.new()
+	effects[itemObject.ID] = item
+
+
+func createEffect(id: String)->Effect:
+	if(!effects.has(id)):
+		Log.printerr("ERROR: effect with the id "+id+" wasn't found")
+		return null
+	var newItem = effects[id].new()
+	return newItem
+	
 #endregion

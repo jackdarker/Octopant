@@ -6,6 +6,7 @@ var author = "no author"
 var scenes = []
 var items = []
 var events = []
+var effects = []
 
 var flagsCache = null
 
@@ -30,6 +31,9 @@ func register():
 	
 	for event in events:
 		GlobalRegistry.registerEvent(event)
+	
+	for effect in effects:
+		GlobalRegistry.registerEffect(effect)
 
 func registerEventTriggers():
 	pass

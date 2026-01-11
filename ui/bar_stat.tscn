@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://cdl8clus04ra4"]
+
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="1_hytq8"]
+[ext_resource type="Script" uid="uid://yygx72tbd1yv" path="res://ui/bar_stat.gd" id="2_svxqm"]
+
+[sub_resource type="Gradient" id="Gradient_svxqm"]
+colors = PackedColorArray(0.7176471, 0.7176471, 0.7176471, 0.4745098, 0.7176471, 0.7176471, 0.7176471, 0.4745098)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nx3wa"]
+gradient = SubResource("Gradient_svxqm")
+width = 20
+height = 128
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_rbyyf"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3h3vf"]
+gradient = SubResource("Gradient_rbyyf")
+width = 20
+height = 128
+fill_from = Vector2(0, 1)
+
+[node name="barPain" type="TextureProgressBar"]
+theme = ExtResource("1_hytq8")
+value = 20.0
+fill_mode = 3
+texture_under = SubResource("GradientTexture2D_nx3wa")
+texture_progress = SubResource("GradientTexture2D_3h3vf")
+script = ExtResource("2_svxqm")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 128.0
+offset_right = 32.0
+offset_bottom = 151.0
+rotation = -1.5707964
+text = "Pain"
