@@ -23,4 +23,7 @@ func _on_bt_sleep_pressed() -> void:
 	Global.main.gotoSleep()
 
 func _on_bt_craft_pressed() -> void:
-	pass
+	Global.ui.clearInput()
+	Global.main.doTimeProcess(120*60)
+	Global.ui.say("You rummage through your collection of sticks and stones but have no idea how to connect them together.")
+	continueScene()

@@ -1,6 +1,7 @@
 extends Node
 
 var ui: GameUI
+var toolTip:CanvasLayer
 var main: MainScene
 var pc: Player
 var world: GameWorld

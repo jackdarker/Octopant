@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7n4ylquto1qx"]
+
+[ext_resource type="Script" uid="uid://dggpyaspw50nj" path="res://ui/ui_effects_list.gd" id="1_e7bm5"]
+[ext_resource type="PackedScene" uid="uid://b80fbqrojg2l0" path="res://ui/ui_effect_icon.tscn" id="2_20gkj"]
+
+[node name="listEffects" type="HFlowContainer"]
+script = ExtResource("1_e7bm5")
+
+[node name="StatusIcon" parent="." instance=ExtResource("2_20gkj")]
+layout_mode = 2
+
+[node name="StatusIcon2" parent="." instance=ExtResource("2_20gkj")]
+layout_mode = 2

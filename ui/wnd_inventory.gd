@@ -8,6 +8,9 @@ func _ready() -> void:
 func _on_visibility_changed() -> void:
 	if !%list:
 		return
+	update_list()
+
+func update_list():
 	var list=%list
 	for item in list.get_children():
 		list.remove_child(item)
@@ -21,8 +24,7 @@ func _on_visibility_changed() -> void:
 		for item in character.inventory.getItems():
 			var _item=ListItem.create_item(item)
 			_item.selected.connect(_item_selected)
-			list.add_child(_item)
-		
+			list.add_child(_item)		
 		
 func _item_selected(id):
 	var _item=character.inventory.getItemByID(id)
@@ -35,8 +37,13 @@ func _item_selected(id):
 		var _bt=Button.new()
 		_bt.text=_action.name
 		_bt.tooltip_text=_action.description
-		_bt.pressed.connect(_item.doAction.bind(_action.name,self.character))
+		_bt.pressed.connect(doAction.bind(_item,_action.name))
 		%list_actions.add_child(_bt)
+
+func doAction(_item,_name):
+	_item.doAction(_name,self.character)
+	update_list()
+	
 	
 func _on_bt_back_pressed() -> void:
 	visible = false

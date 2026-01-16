@@ -7,7 +7,7 @@ class_name StatusList extends Node
 var items:Dictionary={}	# using dictionary, might be faster then array
 
 func addItem(item: Status):	
-	items[item.key]=item
+	items[item.ID]=item
 
 func addItemID(itemID:String):
 	var newItem = GlobalRegistry.createStat(itemID)
@@ -17,39 +17,41 @@ func addItemID(itemID:String):
 	return true
 
 func removeItem(item:Status):
-	if(items.has(item)):
-		items.erase(item)
+	if(items.has(item.ID)):
+		items.erase(item.ID)
 
 func removeItemID(itemID:String):
 	var _item=getItemByID(itemID)
 	if(_item):
 		removeItem(_item)
 
-func hasItem(item):
-	return items.has(item)
+func hasItem(item:Status):
+	return items.has(item.ID)
 
 func hasItemID(itemID: String):
 	for item in items.keys():
-		if(items[item].key == itemID):
+		if(items[item].ID == itemID):
 			return true
 	return false
 
 func getItems():
-	return items
+	return items.values()
 
 func getItemByID(itemID)->Status:
 	for item in items.keys():
-		if(items[item].key == itemID):
+		if(items[item].ID == itemID):
 			return items[item]
 	return null
 
-func registerSignalStatChanged(callable:Callable,Stat:String):
-	var item=getItemByID(Stat)
+# register callback when stat is modified
+func registerSignalItemChanged(callable:Callable,ID:String):
+	var item=getItemByID(ID)
 	if item:
-		item.changed.connect(callable)
+		if !item.changed.is_connected(callable):
+			item.changed.connect(callable)
 
-func unregisterSignalStatChanged(callable:Callable,Stat:String):
-	var item=getItemByID(Stat)
+func unregisterSignalItemChanged(callable:Callable,ID:String):
+	var item=getItemByID(ID)
 	if item:
 		if item.changed.is_connected(callable):
 			item.changed.disconnect(callable)

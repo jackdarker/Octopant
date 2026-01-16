@@ -2,13 +2,21 @@ class_name Effect extends Node
 
 # some temporary effect applied to character
 
+signal changed(ID:String)	#! you need to send changed to update UI
+#onApply,onRemove,onFightStart,onFightEnd also onProcessTime and onCombatProcessTurn if some value is modified
+
+enum HIDE {NONE=0, NAME=1, VALUE=2, DURATION=4, ALL=255}	#bitmask !
+
+
 var ID:String="UNKNOWN"
 var uniqueID:int = -1
 var character:Character=null
-var timeStart:int
-var timeDelta:int = 0
-var timeLast:int = 0
-var duration:int = 60*60
+var hidden:int=0
+var timeStart:int		#when the effect was first applied
+var timeLast:int = 0	#the last time the effect was executed again
+var timeDelta:int = 0	#incremental count of seconds since timeLast
+
+var duration:int = 60*60	#after this time remove the effect
 
 #override this !
 func _init():
@@ -47,29 +55,41 @@ func onFightStart(_contex = {}):
 
 func onFightEnd(_contex = {}):
 	pass
-	
+
+#override ! see examples for details	
+#dont use Global.main.getTime() as it might not have updated yet!
+#_delta might be any time-length, you need to scale your status-change by this length!
 func processTime(_delta:int):
 	pass
 
-func combine(_newEffect:Effect):
-	pass
+#override!  if this effect is already present we can modify it or replace it with the new
+func combine(_newEffect:Effect)->Effect:
+	return self
 
 func applyTo(_char:Character):
 	character=_char
 	character.effectlist.addItem(self)
 	self.timeStart=Global.main.getTime()
+	self.timeLast=timeStart
 	onApply()
 
 func onApply():
+	changed.emit(ID)
 	pass
 
 func onRemove():
+	changed.emit(ID)
 	pass
 
+# you can call destroyMe or list.removeItem, it will passby here anyway
+var __destroyInProcess:int=0
 func destroyMe():
-	onRemove()
-	character.effectlist.removeItem(self)
-	queue_free()
+	if __destroyInProcess<=0:
+		onRemove()
+		__destroyInProcess=1
+		character.effectlist.removeItem(self)
+		changed.emit(ID)
+		queue_free()
 
 func loadData(data):
 	uniqueID=data["UID"]

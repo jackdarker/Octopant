@@ -9,14 +9,17 @@ signal inventory_requested
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel
+@onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
 
 func on_time_passed(_time):
 	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getTime())
 	pass
 
-func on_pc_stat_update(key,data):
-	$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus.on_stat_update(Global.pc)
+func on_pc_stat_update(_key,_data):
+	playerHud.on_stat_update(Global.pc)
 
+func on_pc_effect_update(_key):
+	playerHud.on_effect_update(Global.pc,_key)
 func say(text):
 	msg.text=msg.text+"\n"+text
 	pass
@@ -31,9 +34,15 @@ func clearInput():
 		bt.disabled=true
 		bt.visible=false
 		bt.text=""
-		var pressed=bt.pressed.get_connections()
+		var pressed=bt.pressed.get_connections()			#Todo make lambda
 		for evt in pressed:
 			bt.pressed.disconnect(evt.callable)
+		var mouse_entered=bt.mouse_entered.get_connections()
+		for evt in mouse_entered:
+			bt.mouse_entered.disconnect(evt.callable)
+		var mouse_exited=bt.mouse_exited.get_connections()
+		for evt in mouse_exited:
+			bt.mouse_exited.disconnect(evt.callable)
 	pass
 
 func addButton(text:String,tooltip:String,code:Callable,check=null):
@@ -41,7 +50,7 @@ func addButton(text:String,tooltip:String,code:Callable,check=null):
 		#TODO favour undisabled button against disabled
 		if(!bt.visible): #choose the next unused button
 			bt.text=text
-			bt.tooltip_text=tooltip
+			#bt.tooltip_text=tooltip
 			bt.disabled=false
 			if(check):
 				var _res:Result=(check as Callable).call()
@@ -50,6 +59,8 @@ func addButton(text:String,tooltip:String,code:Callable,check=null):
 					bt.tooltip_text=_res.Msg
 			bt.visible=true
 			bt.pressed.connect(code)
+			bt.mouse_entered.connect(Global.toolTip.showTooltip.bind(bt,text,tooltip))
+			bt.mouse_exited.connect(Global.toolTip.hideTooltip.bind(bt))
 			break
 	pass
 

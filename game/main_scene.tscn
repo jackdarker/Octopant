@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn3bc54cdibds"]
+[gd_scene load_steps=6 format=3 uid="uid://bn3bc54cdibds"]
 
 [ext_resource type="Script" uid="uid://2y302sd0k6ap" path="res://game/main_scene.gd" id="1_qk4lp"]
 [ext_resource type="PackedScene" uid="uid://deyv2v8gvtbsu" path="res://ui/hud.tscn" id="2_bg2q0"]
 [ext_resource type="PackedScene" uid="uid://sjpxi1bjmpxx" path="res://ui/wnd_pause.tscn" id="3_w8ko4"]
+[ext_resource type="PackedScene" uid="uid://bg7r17yt0ibm5" path="res://ui/tooltip_system.tscn" id="3_yrdys"]
 [ext_resource type="PackedScene" uid="uid://b73d7l6g8hcu1" path="res://ui/wnd_inventory.tscn" id="4_qinjo"]
 
 [node name="MainScene" type="Node"]
@@ -15,6 +16,9 @@ layer = -2
 
 [node name="Hud" parent="." instance=ExtResource("2_bg2q0")]
 layer = -1
+
+[node name="TooltipSystem" parent="." instance=ExtResource("3_yrdys")]
+layer = 2
 
 [node name="WndPause" parent="." instance=ExtResource("3_w8ko4")]
 visible = false

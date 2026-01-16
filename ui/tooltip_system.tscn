@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg7r17yt0ibm5"]
+
+[ext_resource type="Script" uid="uid://bix75mrtwiopa" path="res://ui/tooltip_system.gd" id="1_7ohwl"]
+[ext_resource type="PackedScene" uid="uid://rykwxhxhel7" path="res://ui/tooltip_display.tscn" id="2_mmfcs"]
+
+[node name="TooltipSystem" type="CanvasLayer"]
+script = ExtResource("1_7ohwl")
+
+[node name="TooltipDisplay" parent="." instance=ExtResource("2_mmfcs")]

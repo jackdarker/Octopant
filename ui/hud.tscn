@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=16 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
@@ -24,6 +24,33 @@ offsets = PackedFloat32Array(0, 0.8933333)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_546lt"]
 gradient = SubResource("Gradient_276te")
+
+[sub_resource type="Animation" id="Animation_en2x2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("img_fade:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("img_fade:texture:gradient:colors")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7ihmi"]
 resource_name = "fade"
@@ -53,38 +80,13 @@ tracks/1/keys = {
 "values": [PackedColorArray(0, 0, 0, 1, 0.5689727, 0.56897277, 0.5689727, 1), PackedColorArray(0, 0, 0, 1, 0.20152658, 0.20152658, 0.20152658, 1), PackedColorArray(0, 0, 0, 1, 0.5689727, 0.56897277, 0.5689727, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_en2x2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("img_fade:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("img_fade:texture:gradient:colors")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1v5rv"]
 _data = {
 &"RESET": SubResource("Animation_en2x2"),
 &"fade": SubResource("Animation_7ihmi")
 }
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_276te"]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_276te")
@@ -304,7 +306,8 @@ texture = SubResource("GradientTexture1D_546lt")
 
 [node name="anim_fade" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_1v5rv")
+&"": SubResource("AnimationLibrary_1v5rv"),
+&"ui_anim": SubResource("AnimationLibrary_276te")
 }
 
 [connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]

@@ -27,7 +27,7 @@ static func create_item(data)-> ListItem:
 
 	return _Item
 
-var data:
+var data:ItemBase:
 	set(value):
 		data=value
 		_refresh()
@@ -79,3 +79,11 @@ func _on_focus_entered() -> void:
 func _on_focus_exited() -> void:
 	$Focus.visible=false #$Panel.remove_theme_color_override("normal")
 	pass # Replace with function body.
+
+
+func _on_mouse_entered() -> void:
+	Global.toolTip.showTooltip(self,data.getName(),data.getDescription())
+
+
+func _on_mouse_exited() -> void:
+	Global.toolTip.hideTooltip(self)

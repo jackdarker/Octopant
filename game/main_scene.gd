@@ -11,6 +11,7 @@ var timeOfDay:int = 6*60*60 # seconds since 00:00
 
 func _ready() -> void:
 	Global.ui = $Hud
+	Global.toolTip=$TooltipSystem
 	Global.main = self
 	Global.ES = EventSystem.new()
 	Global.pc = Player.new()
@@ -112,11 +113,7 @@ func getDays()->int:
 	return currentDay
 
 func doTimeProcess(_seconds):
-	# This splits long sleeping times into 1 hour chunks
-	#if(!PS):
-		#IS.processTime(_seconds)
-		#SCI.processTime(_seconds)
-	
+	# This splits long sleeping times into 1 hour chunks	
 	var copySeconds = _seconds
 	while(copySeconds > 0):
 		var clippedSeconds = min(60*60, copySeconds)
@@ -184,8 +181,8 @@ func startNewDay():
 func gotoSleep():
 	Global.ui.fade()
 	#TODO sleep event
-	Global.pc.post_sleep()
 	startNewDay()
+	Global.pc.post_sleep()
 
 #called by save-dialog
 func canSave()->bool:
@@ -194,8 +191,10 @@ func canSave()->bool:
 
 func postLoad():
 	# because stats are recreated on load, events also need to be reconnected
-	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"pain")		
-	Global.pc.statuslist.registerSignalStatChanged(Global.ui.on_pc_stat_update,"fatigue")
+	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"pain")		
+	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"fatigue")
+	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,StatEnum.Lust)
+	Global.pc.effectlist.registerSignalItemsChanged(Global.ui.on_pc_effect_update)
 
 func _on_hud_menu_requested() -> void:
 	$WndPause.visible=true

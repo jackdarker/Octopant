@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://bfsnd42fd1rpm" path="res://icon.svg" id="1_lqq4a"]
 [ext_resource type="Script" uid="uid://bxem32xyqmvdq" path="res://ui/character_hud.gd" id="1_usxaa"]
-[ext_resource type="PackedScene" uid="uid://b80fbqrojg2l0" path="res://ui/status_icon.tscn" id="2_usxaa"]
 [ext_resource type="PackedScene" uid="uid://cdl8clus04ra4" path="res://ui/bar_stat.tscn" id="3_3h3vf"]
+[ext_resource type="PackedScene" uid="uid://b7n4ylquto1qx" path="res://ui/ui_effects_list.tscn" id="4_3h3vf"]
 
 [node name="CharacterHud" type="VBoxContainer"]
 offset_right = 176.0
@@ -24,11 +24,8 @@ layout_mode = 2
 [node name="barFatigue" parent="HBoxContainer" instance=ExtResource("3_3h3vf")]
 layout_mode = 2
 
-[node name="listStatus" type="HFlowContainer" parent="."]
+[node name="barLust" parent="HBoxContainer" instance=ExtResource("3_3h3vf")]
 layout_mode = 2
 
-[node name="StatusIcon" parent="listStatus" instance=ExtResource("2_usxaa")]
-layout_mode = 2
-
-[node name="StatusIcon2" parent="listStatus" instance=ExtResource("2_usxaa")]
+[node name="listEffects" parent="." instance=ExtResource("4_3h3vf")]
 layout_mode = 2
