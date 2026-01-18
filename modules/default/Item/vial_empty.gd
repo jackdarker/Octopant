@@ -2,10 +2,8 @@ extends ItemBase
 
 func _init():
 	super()
-	id="vial_empty"
-
-func getTags()->Array:
-	return [ITEM_TAG.Ingredient]
+	ID="vial_empty"
+	tags.push_back(ItemTagEnum.Ingredient)
 
 func getName()->String:
 	return "empty vial"

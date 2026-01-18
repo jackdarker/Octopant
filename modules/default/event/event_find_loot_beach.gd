@@ -5,7 +5,7 @@ class_name EventFindLootBeach
 
 func _init():
 	super()
-	id="EventFindLootBeach"
+	ID="EventFindLootBeach"
 
 func react(_triggerID, _args)->bool:
 	Global.ui.say("There is something sparkling between seasshells")

@@ -5,7 +5,7 @@ class_name EventNothing
 
 func _init():
 	super()
-	id="EventNothing"
+	ID="EventNothing"
 
 func react(_triggerID, _args)->bool:
 	return false

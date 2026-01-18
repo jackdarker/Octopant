@@ -2,10 +2,8 @@ extends ItemBase
 
 func _init():
 	super()
-	id="vial_pink"
-
-func getTags()->Array:
-	return [ITEM_TAG.Ingredient]
+	ID="vial_pink"
+	tags.push_back(ItemTagEnum.Ingredient)
 
 func getName()->String:
 	return "pink vial"
@@ -19,11 +17,10 @@ func getInventoryImage():
 func getPossibleActions():
 	return [ 
 		{	"name": "drink",
-			"scene": "UseItemLikeInCombatScene",
 			"description": "drink it",
 		}]
 		
-func canDo(action,target)->Result:
+func canDo(action,_target)->Result:
 	if(action=="drink"):
 		return Result.create(true,"")
 	else:
@@ -32,6 +29,6 @@ func canDo(action,target)->Result:
 func doAction(action:String,target):
 	if(action=="drink"):
 		if target is Character:
-			target
+			pass
 		self.destroyMe()
 	

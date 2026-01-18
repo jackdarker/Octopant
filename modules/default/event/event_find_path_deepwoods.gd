@@ -5,7 +5,7 @@ class_name EventFindPathDeepWoods
 
 func _init():
 	super()
-	id="EventFindPathDeepWoods"
+	ID="EventFindPathDeepWoods"
 
 func react(_triggerID, _args)->bool:
 	Global.main.runScene("nav_deepwood")

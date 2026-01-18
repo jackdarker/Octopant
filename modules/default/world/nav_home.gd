@@ -26,4 +26,5 @@ func _on_bt_craft_pressed() -> void:
 	Global.ui.clearInput()
 	Global.main.doTimeProcess(120*60)
 	Global.ui.say("You rummage through your collection of sticks and stones but have no idea how to connect them together.")
+	Global.pc.inventory.addItem(GlobalRegistry.createItem("knife_seashell"))
 	continueScene()

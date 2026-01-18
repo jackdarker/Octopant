@@ -44,9 +44,9 @@ func _on_bt_pressed(bt_id) -> void:
 	close()
 	pass # Replace with function body.
 
-func config_bt(id:int,_text:String,enabled:int=1,tooltip:String=""):
+func config_bt(id:int,_text:String,enabled:int=1,_tooltip:String=""):
 	if id==0:
-		bt1Text=text
+		bt1Text=text		#TODO connect to tooltip
 		bt1Enabled=enabled
 	elif id==1:	
 		bt2Text=text

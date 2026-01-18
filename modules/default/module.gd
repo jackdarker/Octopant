@@ -2,7 +2,7 @@ extends Module
 
 func _init()-> void :
 	super()
-	id = "Default"
+	ID = "Default"
 	author = "TheAuthor"
 	
 	scenes = [

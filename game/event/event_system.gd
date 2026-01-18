@@ -22,12 +22,12 @@ func registerEventTriggers():
 # location is either null or a location_id or a Tag-check
 func registerEvent(trigger,event:EventBase, location, args):
 	if(location==null):
-		eventOther[event.id]=event
+		eventOther[event.ID]=event
 	else:
-		eventLocation[{"location":location,"trigger":trigger,"eventid":event.id}]=event
+		eventLocation[{"location":location,"trigger":trigger,"eventID":event.ID}]=event
 	pass
 
-#func unregisterEvent(trigger, eventid):
+#func unregisterEvent(trigger, eventID):
 #	pass
 
 func triggerEvent(trigger,location,args):

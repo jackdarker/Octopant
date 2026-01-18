@@ -4,10 +4,10 @@ class_name Status extends Node
 
 signal changed(ID:String,value:float)
 
-static func create(ID:StringName,_value:float,_ll:float,_ul:float)->Status:
+static func create(_ID:StringName,_value:float,_ll:float,_ul:float)->Status:
 	assert(_ul>_ll)
 	var _n=Status.new()
-	_n.ID=ID
+	_n.ID=_ID
 	_n.value=_value
 	_n.ll=_ll
 	_n.ul=_ul

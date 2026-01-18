@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://subwswcg7fvb" path="res://ui/tooltip_display.gd" id="1_01or2"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_r80qv"]
 
-[sub_resource type="Animation" id="Animation_ojsk0"]
-resource_name = "fade"
+[sub_resource type="Animation" id="Animation_4c2pk"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -18,8 +18,8 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_4c2pk"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_ojsk0"]
+resource_name = "fade"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

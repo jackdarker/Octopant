@@ -1,31 +1,8 @@
-extends Node
-class_name ItemBase
-
-const ITEM_TAG = {Consumable=1,
-	Ingredient = 2, 
-	Weapon_Melee=3,
-	Weapon_Ranged=4,
-	Weapon_Throw=5,
-	Shield=6,
-	Tool_Cut=7,
-	Quest=100   }
-
-const EQUIP_TAG = { None=0,
-	Hand_Right=1,
-	Hand_Left=2,
-	Hand_Both=3,
-	Hand_Any=4,
-	Feet=11,
-	Torso=12,
-	Legs=13,
-	Arms=14,
-	Head=15,
-	Neck=16,
-}
+class_name ItemBase extends Node
 
 var uniqueID:int = -1
-var id:String = "Unknown"
-var currentInventory:Inventory
+var ID:String = "Unknown"
+var currentInventory:Inventory=null
 var amount:int = 1:
 	set(value):
 		amount=value
@@ -33,14 +10,13 @@ var amount:int = 1:
 			destroyMe()
 	get:
 		return amount
+
+var bonus:Array=[]	#buff or curses
+var tags:Array=[]
 		
 #override this !
 func _init():
 	pass
-
-#override this !
-func getTags()->Array:
-	return []
 	
 func isEquipable()->bool:
 	return (getEquipable().size()>0)
@@ -61,7 +37,19 @@ func getUID()-> int:
 	return uniqueID
 	
 func getID()-> String:
-	return id
+	return ID
+
+func getTags()->Array:
+	return tags
+
+
+func hasTags(_tags:Array)->bool:
+	var _res=true
+	for tag in _tags:
+		_res=_res && tags.has(tag)
+	
+	return(_res);
+
 
 #override this !
 func getInventoryImage():
@@ -88,10 +76,10 @@ func getPossibleActions():
 		#}
 
 #TODO target is always Character?
-func canDo(action,target)->Result:
+func canDo(_action:String,_target:Character)->Result:
 	return (Result.create(false,""))
 
-func doAction(action:String,target):
+func doAction(_action:String,_target:Character):
 	pass
 
 func getPrice():
@@ -101,7 +89,6 @@ func destroyMe():
 	if(currentInventory == null):
 		return
 	currentInventory.removeItem(self)
-	#currentInventory.removeEquippedItem(self)
 
 func useCharge(_amount = 1):
 	#charges -= amount
@@ -126,7 +113,7 @@ func saveData()->Variant:
 		#"scene" : get_scene_file_path(),
 		#"parent" : get_parent().get_path(),
 		"UID":uniqueID,
-		"ID": id,
+		"ID": ID,
 		"cnt": amount,
 	}
 	return(data)

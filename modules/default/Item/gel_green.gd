@@ -2,10 +2,8 @@ extends ItemBase
 
 func _init():
 	super()
-	id="gel_green"
-
-func getTags()->Array:
-	return [ITEM_TAG.Ingredient]
+	ID="gel_green"
+	tags.push_back(ItemTagEnum.Ingredient)
 
 func getName()->String:
 	return "green gel"
@@ -23,7 +21,7 @@ func getPossibleActions():
 			"description": "eat it",
 		}]
 		
-func canDo(action,target)->Result:
+func canDo(action,_target)->Result:
 	if(action=="eat"):
 		return Result.create(true,"")
 	else:

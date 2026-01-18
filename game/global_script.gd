@@ -55,9 +55,9 @@ var SAVE_FILE="user://Savegame_"
 
 func saveToFile(slot):
 	var _path=SAVE_FILE+str(slot)
-	var saveData = saveData()
+	var _saveData = saveData()
 	var save_game=FileAccess.open(_path, FileAccess.WRITE)
-	save_game.store_string(JSON.stringify(saveData))
+	save_game.store_string(JSON.stringify(_saveData))
 	save_game.close()
 	
 func loadFromFile(slot):

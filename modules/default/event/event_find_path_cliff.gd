@@ -5,7 +5,7 @@ class_name EventFindPathCliff
 
 func _init():
 	super()
-	id="EventFindPathCliff"
+	ID="EventFindPathCliff"
 
 func react(_triggerID, _args)->bool:
 	Global.main.runScene("nav_cliff")

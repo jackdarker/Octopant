@@ -1,7 +1,7 @@
 extends Node
 class_name EventBase
 
-var id:String = "unknown"
+var ID:String = "unknown"
 
 func _init():
 	pass

@@ -15,7 +15,7 @@ var modules: Dictionary [String,Module]= {}
 var flags = {}
 var flagsCache = null
 var moduleFlags = {}
-var moduleFlagsCache = null
+#var moduleFlagsCache = null
 
 var scenes: Dictionary = {}
 
@@ -180,14 +180,14 @@ func setModuleFlag(moduleID, flagID, value):
 		return
 	
 	var module:Module = modules[moduleID]
-	var moduleFlagsCache = module.getFlagsCache()
+	var _moduleFlagsCache = module.getFlagsCache()
 	
-	if(!moduleFlagsCache.has(flagID)):
+	if(!_moduleFlagsCache.has(flagID)):
 		Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return
 	
-	if("type" in moduleFlagsCache[flagID]):
-		var flagType = moduleFlagsCache[flagID]["type"]
+	if("type" in _moduleFlagsCache[flagID]):
+		var flagType = _moduleFlagsCache[flagID]["type"]
 		if(!FlagType.isCorrectType(flagType, value)):
 			Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
 			return
@@ -257,12 +257,12 @@ func registerModules():
 	for moduleID in modules:
 		var moduleObject = modules[moduleID]
 		var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
-		emit_signal("loadingUpdate", progressValue, moduleObject.id)
+		emit_signal("loadingUpdate", progressValue, moduleObject.ID)
 		#yield(get_tree(), "idle_frame")
 		#yield(get_tree(), "idle_frame")
 		
 		moduleObject.register()
-		print("Module "+moduleObject.id+" by "+moduleObject.author+" was registered")
+		print("Module "+moduleObject.ID+" by "+moduleObject.author+" was registered")
 		loadedModuleCount += 1
 		
 	postInitModules()
@@ -276,7 +276,7 @@ func preInitModule(path: String):
 	var module = load(path)
 	var moduleObject = module.new()
 	moduleObject.preInit()
-	modules[moduleObject.id] = moduleObject
+	modules[moduleObject.ID] = moduleObject
 
 func initGameModules():
 	for moduleID in modules:
@@ -286,11 +286,11 @@ func initGameModules():
 func getModules()->Dictionary:
 	return modules
 
-func getModule(id):
-	if(!modules.has(id)):
-		#Log.printerr("ERROR: module with the id "+id+" wasn't found")
+func getModule(ID):
+	if(!modules.has(ID)):
+		#Log.printerr("ERROR: module with the ID "+ID+" wasn't found")
 		return null
-	return modules[id]
+	return modules[ID]
 #endregion
 
 #region events
@@ -305,14 +305,14 @@ func registerEvent(path: String):
 	#-------------------------------------------------------------------
 	var item = load(path)
 	var itemObject = item.new()
-	events[itemObject.id] = itemObject
+	events[itemObject.ID] = itemObject
 
 		
-func getEvent(id: String):
-	if(!events.has(id)):
-		Log.printerr("ERROR: event with the id "+id+" wasn't found")
+func getEvent(ID: String):
+	if(!events.has(ID)):
+		Log.printerr("ERROR: event with the ID "+ID+" wasn't found")
 		return null
-	return events[id]
+	return events[ID]
 
 func getEvents():
 	return events
@@ -344,12 +344,12 @@ func registerScene(path: String, creator = null):
 	#addCacheEntry(CACHE_SCENE, sceneObject.sceneID, path)
 	sceneObject.queue_free()
 	
-func createScene(id: String):
-	if(!scenes.has(id) ):
-		Log.printerr("ERROR: scene with the id "+id+" wasn't found")
+func createScene(ID: String):
+	if(!scenes.has(ID) ):
+		Log.printerr("ERROR: scene with the ID "+ID+" wasn't found")
 		return null
 	var scene
-	scene = scenes[id].instantiate()
+	scene = scenes[ID].instantiate()
 	scene.name = scene.sceneID
 	scene.uniqueSceneID = generateUniqueID()
 	return scene
@@ -369,17 +369,17 @@ func registerItem(path: String):
 	#-------------------------------------------------------------------
 	var item = load(path)
 	var itemObject = item.new()
-	items[itemObject.id] = item
+	items[itemObject.ID] = item
 	for tag in itemObject.getTags():
 		if(!itemsByTag.has(tag)):
 			itemsByTag[tag] = []
-		itemsByTag[tag].append(itemObject.id)
+		itemsByTag[tag].append(itemObject.ID)
 
-func createItem(id: String)->ItemBase:
-	if(!items.has(id)):
-		Log.printerr("ERROR: item with the id "+id+" wasn't found")
+func createItem(ID: String)->ItemBase:
+	if(!items.has(ID)):
+		Log.printerr("ERROR: item with the ID "+ID+" wasn't found")
 		return null
-	var newItem = items[id].new()
+	var newItem = items[ID].new()
 	return newItem
 #endregion
 
@@ -398,11 +398,11 @@ func registerEffect(path: String):
 	effects[itemObject.ID] = item
 
 
-func createEffect(id: String)->Effect:
-	if(!effects.has(id)):
-		Log.printerr("ERROR: effect with the id "+id+" wasn't found")
+func createEffect(ID: String)->Effect:
+	if(!effects.has(ID)):
+		Log.printerr("ERROR: effect with the ID "+ID+" wasn't found")
 		return null
-	var newItem = effects[id].new()
+	var newItem = effects[ID].new()
 	return newItem
 	
 #endregion

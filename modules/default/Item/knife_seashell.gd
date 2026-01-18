@@ -1,8 +1,7 @@
-extends ItemBase
+extends EquipmentBase
 
 func _init():
 	super()
-	id="knife_seashell"
-
-func getTags()->Array:
-	return [ITEM_TAG.Tool_Cut]
+	ID="knife_seashell"
+	tags=[ItemTagEnum.Tool_Cut]
+	slotUse=[BodySlotEnum.RHand]

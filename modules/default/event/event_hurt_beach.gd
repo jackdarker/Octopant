@@ -4,7 +4,7 @@ extends EventBase
 
 func _init():
 	super()
-	id="EventHurtBeach"
+	ID="EventHurtBeach"
 
 func react(_triggerID, _args)->bool:
 	Global.ui.say("Accidently you hurt yourself by stepping on some pointed seashell hidden in the wet sand.")

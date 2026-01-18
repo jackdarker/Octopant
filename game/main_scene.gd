@@ -23,24 +23,24 @@ func _ready() -> void:
 	#todo intro
 	runScene("nav_beach")
 
-func runScene(id, _args = [], parentSceneUniqueID = -1):
-	defferedRunScene.call_deferred(id,_args, parentSceneUniqueID )
+func runScene(ID, _args = [], parentSceneUniqueID = -1):
+	defferedRunScene.call_deferred(ID,_args, parentSceneUniqueID )
 
-func defferedRunScene(id, _args = [], parentSceneUniqueID = -1):
+func defferedRunScene(ID, _args = [], parentSceneUniqueID = -1):
 	var actual_scene = getCurrentScene()
 	if(actual_scene && parentSceneUniqueID!=actual_scene.uniqueSceneID):
 		sceneStack.erase(actual_scene)
 		actual_scene.free()
 	# Load the new scene.
-	print("Starting scene "+id)
+	print("Starting scene "+ID)
 	#var s = ResourceLoader.load(path)
-	if(id=="interaction_scene"):
+	if(ID=="interaction_scene"):
 		Global.ui.visible=false
 		actual_scene=load("res://ui/interaction_scene.tscn").instantiate()
 		actual_scene.dialogue_gdscript=_args[0]
 		actual_scene.back_image=_args[1]
 	else:
-		actual_scene = GlobalRegistry.createScene(id)
+		actual_scene = GlobalRegistry.createScene(ID)
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
@@ -52,7 +52,7 @@ func removeScene(scene, args = []):
 	
 func defferedRemoveScene(scene, args = []):
 	if(sceneStack.has(scene)):
-		var isCurrentScene = (scene == sceneStack.back())
+		#var isCurrentScene = (scene == sceneStack.back())
 		var savedParentSceneID = scene.parentSceneUniqueID
 		var savedTag = [] #todo scene.sceneTag
 		
@@ -112,7 +112,7 @@ func isVeryLate()->bool:
 func getDays()->int:
 	return currentDay
 
-func doTimeProcess(_seconds):
+func doTimeProcess(_seconds:int):
 	# This splits long sleeping times into 1 hour chunks	
 	var copySeconds = _seconds
 	while(copySeconds > 0):
@@ -127,9 +127,10 @@ func doTimeProcess(_seconds):
 		
 		copySeconds -= clippedSeconds
 	
-	
-	var oldHours = int((timeOfDay - _seconds) / 60 / 60)
-	var newHours = int(timeOfDay / 60 / 60)
+	@warning_ignore("integer_division")
+	var oldHours = floor((timeOfDay - _seconds) / 3600)
+	@warning_ignore("integer_division")
+	var newHours = floor(timeOfDay / 3600)
 	var hoursPassed = newHours - oldHours
 
 	if(hoursPassed > 0):

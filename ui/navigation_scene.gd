@@ -20,7 +20,7 @@ func continueScene():
 	Global.ui.addButton("next","",enterScene)
 
 # override this ! 
-func on_button(i:int):
+func on_button(_i:int):
 	pass
 
 func navigate_home():

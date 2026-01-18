@@ -1,7 +1,7 @@
 extends Node
 class_name Module
 
-var id = "badmodule"
+var ID = "badmodule"
 var author = "no author"
 var scenes = []
 var items = []

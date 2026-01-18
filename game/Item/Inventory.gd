@@ -1,5 +1,4 @@
-extends Node
-class_name Inventory
+class_name Inventory extends Node
 
 # something to store items in
 
@@ -11,7 +10,7 @@ func addItem(item: ItemBase):
 	
 	if(item.canCombine()):
 		for myitem in items:
-			if(myitem.id == item.id):
+			if(myitem.ID == item.ID):
 				if(myitem.tryCombine(item)):
 					#item.queue_free()
 					return
@@ -44,7 +43,7 @@ func hasItem(item):
 
 func hasItemID(itemID: String):
 	for item in items:
-		if(item.id == itemID):
+		if(item.ID == itemID):
 			return true
 	return false
 
@@ -53,7 +52,7 @@ func getItems():
 
 func getItemByID(itemID)->ItemBase:
 	for item in items:
-		if(item.id == itemID):
+		if(item.ID == itemID):
 			return item
 	return null
 
