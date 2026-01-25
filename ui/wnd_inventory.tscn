@@ -56,6 +56,36 @@ layout_mode = 2
 [node name="ImageListItem2" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
 layout_mode = 2
 
+[node name="ImageListItem3" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem4" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem5" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem6" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem7" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem8" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem9" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem10" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem11" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
+[node name="ImageListItem12" parent="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/list" instance=ExtResource("2_pk74w")]
+layout_mode = 2
+
 [node name="MarginContainer3" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 30

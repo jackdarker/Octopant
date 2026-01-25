@@ -20,6 +20,7 @@ func on_pc_stat_update(_key,_data):
 
 func on_pc_effect_update(_key):
 	playerHud.on_effect_update(Global.pc,_key)
+	
 func say(text):
 	msg.text=msg.text+"\n"+text
 	pass

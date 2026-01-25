@@ -2,7 +2,6 @@ extends Node
 class_name MainScene
 
 signal time_passed(_secondsPassed)
-signal saveLoadingFinished
 
 var sceneStack:Array=[]
 
@@ -189,14 +188,31 @@ func gotoSleep():
 func canSave()->bool:
 	return true
 
-
+#region save/load
+func loadData(data):
+	timeOfDay=data["time"]
+	currentDay=data["day"]
+			
+func saveData()->Variant:
+	#Note: data["info"] used by save-UI !
+	var data ={
+		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getTime()),
+		"day":currentDay,
+		"time": timeOfDay,
+	}
+	return(data)
+	
 func postLoad():
 	# because stats are recreated on load, events also need to be reconnected
 	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"pain")		
 	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"fatigue")
 	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,StatEnum.Lust)
 	Global.pc.effectlist.registerSignalItemsChanged(Global.ui.on_pc_effect_update)
-
+	#TODO force update HUD, also restore the running event ?
+	time_passed.emit(0)
+	Global.ui.on_pc_stat_update("pain",0)	#todo Global.pc.effectList.forceUpdate()
+	
+#endregion
 func _on_hud_menu_requested() -> void:
 	$WndPause.visible=true
 
