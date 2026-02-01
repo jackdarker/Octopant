@@ -15,9 +15,20 @@ static func create(_ID:StringName,_value:float,_ll:float,_ul:float)->Status:
 
 var ID:String="UNKNOWN"
 var value:float=0
-var ll:float= -100
-var ul:float= 100
+var ll:float= -100	#lower limit
+var ul:float= 100	#upper limit
+var atUL:bool:
+	set(value):
+		pass
+	get:
+		return(value>=ul)
 
+var atLL:bool:
+	set(value):
+		pass
+	get:
+		return(value<=ll)
+		
 func modify(change:float):
 	value=min(ul,max(ll,value+change))
 	changed.emit(ID,value)

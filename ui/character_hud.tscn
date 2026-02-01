@@ -6,26 +6,44 @@
 [ext_resource type="PackedScene" uid="uid://b7n4ylquto1qx" path="res://ui/ui_effects_list.tscn" id="4_3h3vf"]
 
 [node name="CharacterHud" type="VBoxContainer"]
-offset_right = 176.0
-offset_bottom = 172.0
+offset_right = 96.0
+offset_bottom = 108.0
 script = ExtResource("1_usxaa")
+
+[node name="lbl_name" type="RichTextLabel" parent="."]
+layout_mode = 2
+bbcode_enabled = true
+text = "My NameMy "
+fit_content = true
+autowrap_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="icon" type="TextureButton" parent="HBoxContainer"]
-custom_minimum_size = Vector2(128, 128)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture_normal = ExtResource("1_lqq4a")
+ignore_texture_size = true
+stretch_mode = 4
 
 [node name="barPain" parent="HBoxContainer" instance=ExtResource("3_3h3vf")]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 
 [node name="barFatigue" parent="HBoxContainer" instance=ExtResource("3_3h3vf")]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 
 [node name="barLust" parent="HBoxContainer" instance=ExtResource("3_3h3vf")]
+custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 
 [node name="listEffects" parent="." instance=ExtResource("4_3h3vf")]
 layout_mode = 2

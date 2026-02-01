@@ -68,7 +68,7 @@ func combine(_newEffect:Effect)->Effect:
 
 func applyTo(_char:Character):
 	character=_char
-	character.effectlist.addItem(self)
+	character.effects.addItem(self)
 	self.timeStart=Global.main.getTime()
 	self.timeLast=timeStart
 	onApply()
@@ -87,7 +87,7 @@ func destroyMe():
 	if __destroyInProcess<=0:
 		onRemove()
 		__destroyInProcess=1
-		character.effectlist.removeItem(self)
+		character.effects.removeItem(self)
 		changed.emit(ID)
 		queue_free()
 

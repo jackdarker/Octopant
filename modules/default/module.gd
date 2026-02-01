@@ -17,6 +17,12 @@ func _init()-> void :
 	effects = [
 		"res://modules/default/effect",
 	]
+	skills = [
+		"res://modules/default/skill",
+	]
+	characters = [
+		"res://modules/default/character",
+	]
 
 func getFlags():
 	return {

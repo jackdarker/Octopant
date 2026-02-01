@@ -1,8 +1,18 @@
-extends CanvasLayer
-class_name GameUI
+class_name Hud extends CanvasLayer
 
 signal menu_requested
 signal inventory_requested
+
+enum HUDMODE { Explore=0, Combat=1}
+
+@export var hudMode:HUDMODE=HUDMODE.Explore:
+	set(value):
+		if(value==HUDMODE.Combat):
+			enemyList.visible=true
+		else:
+			Util.delete_children(enemyList)	#cleanup list after combat
+			enemyList.visible=false
+		hudMode=value
 
 @onready var fullhud=$HBoxContainer
 @onready var bt_hud_off=$bt_hud_on
@@ -10,6 +20,10 @@ signal inventory_requested
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
+@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer
+
+func _ready() -> void:
+	hudMode=HUDMODE.Explore
 
 func on_time_passed(_time):
 	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getTime())

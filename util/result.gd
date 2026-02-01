@@ -8,3 +8,7 @@ static func create(ok,msg)->Result:
 	_n.OK=ok
 	_n.Msg=msg
 	return _n
+
+func setRes(ok,msg):
+	OK=ok
+	Msg=msg

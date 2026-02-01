@@ -11,13 +11,13 @@ func _ready() -> void:
 
 func enterScene():
 	Global.pc.location=self.sceneID
-	Global.ui.visible=true
-	Global.ui.clearOutput()
-	Global.ui.clearInput()
+	Global.hud.visible=true
+	Global.hud.clearOutput()
+	Global.hud.clearInput()
 	
 func continueScene():
-	Global.ui.clearInput()
-	Global.ui.addButton("next","",enterScene)
+	Global.hud.clearInput()
+	Global.hud.addButton("next","",enterScene)
 
 # override this ! 
 func on_button(_i:int):

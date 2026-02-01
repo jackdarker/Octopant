@@ -7,6 +7,9 @@ var scenes = []
 var items = []
 var events = []
 var effects = []
+var skills = []
+var characters = []
+
 
 var flagsCache = null
 
@@ -34,10 +37,18 @@ func register():
 	
 	for effect in effects:
 		GlobalRegistry.registerEffect(effect)
+	
+	for skill in skills:
+		GlobalRegistry.registerSkill(skill)
+	
+	for character in characters:
+		GlobalRegistry.registerCharacter(character)
 
+#override this !
 func registerEventTriggers():
 	pass
 
+#override this !
 func resetFlagsOnNewDay():
 	pass
 

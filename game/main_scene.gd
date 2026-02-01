@@ -9,7 +9,7 @@ var currentDay = 0
 var timeOfDay:int = 6*60*60 # seconds since 00:00
 
 func _ready() -> void:
-	Global.ui = $Hud
+	Global.hud = $Hud
 	Global.toolTip=$TooltipSystem
 	Global.main = self
 	Global.ES = EventSystem.new()
@@ -17,7 +17,7 @@ func _ready() -> void:
 	$WndInventory.character=Global.pc
 	
 	Global.ES.registerEventTriggers()
-	time_passed.connect(Global.ui.on_time_passed)
+	time_passed.connect(Global.hud.on_time_passed)
 	postLoad()
 	#todo intro
 	runScene("nav_beach")
@@ -34,10 +34,13 @@ func defferedRunScene(ID, _args = [], parentSceneUniqueID = -1):
 	print("Starting scene "+ID)
 	#var s = ResourceLoader.load(path)
 	if(ID=="interaction_scene"):
-		Global.ui.visible=false
+		Global.hud.visible=false
 		actual_scene=load("res://ui/interaction_scene.tscn").instantiate()
 		actual_scene.dialogue_gdscript=_args[0]
 		actual_scene.back_image=_args[1]
+	elif(ID=="combat_scene"):
+		actual_scene=load("res://ui/combat_scene.tscn").instantiate()
+		actual_scene.setupScene(_args[0])
 	else:
 		actual_scene = GlobalRegistry.createScene(ID)
 	if(parentSceneUniqueID >= 0):
@@ -66,8 +69,8 @@ func defferedRemoveScene(scene, args = []):
 		#runCurrentScene()
 	if(sceneStack.size() == 0):
 		Log.print("Error: no more scenes in the scenestack")
-		Global.ui.clearInput()
-		Global.ui.say("Error: no more scenes in the scenestack. Please let the developer know")
+		Global.hud.clearInput()
+		Global.hud.say("Error: no more scenes in the scenestack. Please let the developer know")
 		return
 
 func getSceneByUniqueID(uID):
@@ -179,7 +182,7 @@ func startNewDay():
 	#SAVE.triggerAutosave()
 
 func gotoSleep():
-	Global.ui.fade()
+	Global.hud.fade()
 	#TODO sleep event
 	startNewDay()
 	Global.pc.post_sleep()
@@ -204,13 +207,13 @@ func saveData()->Variant:
 	
 func postLoad():
 	# because stats are recreated on load, events also need to be reconnected
-	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"pain")		
-	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,"fatigue")
-	Global.pc.statuslist.registerSignalItemChanged(Global.ui.on_pc_stat_update,StatEnum.Lust)
-	Global.pc.effectlist.registerSignalItemsChanged(Global.ui.on_pc_effect_update)
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"pain")		
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"fatigue")
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Lust)
+	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
-	Global.ui.on_pc_stat_update("pain",0)	#todo Global.pc.effectList.forceUpdate()
+	Global.hud.on_pc_stat_update("pain",0)	#todo Global.pc.effects.forceUpdate()
 	
 #endregion
 func _on_hud_menu_requested() -> void:

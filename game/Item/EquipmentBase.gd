@@ -3,7 +3,6 @@ class_name EquipmentBase extends ItemBase
 # see BodySlotEnum
 var slotUse:Array[int] = []	#which slot is used by the equip
 var slotCover:Array[int] = []  #which other slots are invisible by this "uses Breast, covers bBreast,bNipples"
-var wrefCharacter:WeakRef=null
 var equipped:bool=false
 var durability:float=-2	#in %; -2= unbreakable
 

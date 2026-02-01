@@ -197,6 +197,26 @@ theme_override_constants/margin_right = 20
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
 
+[node name="ScrollContainer2" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CharacterHud" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer" instance=ExtResource("2_276te")]
+layout_mode = 2
+
+[node name="CharacterHud2" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer" instance=ExtResource("2_276te")]
+layout_mode = 2
+
+[node name="CharacterHud3" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer" instance=ExtResource("2_276te")]
+layout_mode = 2
+
+[node name="CharacterHud4" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer" instance=ExtResource("2_276te")]
+layout_mode = 2
+
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -238,62 +258,77 @@ columns = 5
 
 [node name="Button 1" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 2" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 3" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 4" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 5" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 6" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 7" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 8" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 9" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 10" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 11" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 12" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 13" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 14" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="Button 15" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Button #1"
 
 [node name="img_fade" type="TextureRect" parent="."]

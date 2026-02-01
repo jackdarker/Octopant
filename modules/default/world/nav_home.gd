@@ -5,26 +5,26 @@ func _init() -> void:
 
 func enterScene():
 	super()
-	Global.ui.addButton("go somewhere else...","",_on_bt_walk_pressed)
-	Global.ui.addButton("craft...","",_on_bt_craft_pressed)
-	Global.ui.addButton("sleep until morning","",_on_bt_sleep_pressed)
+	Global.hud.addButton("go somewhere else...","",_on_bt_walk_pressed)
+	Global.hud.addButton("craft...","",_on_bt_craft_pressed)
+	Global.hud.addButton("sleep until morning","",_on_bt_sleep_pressed)
 	pass
 
 func _on_bt_walk_pressed():
-	Global.ui.clearInput()
-	Global.ui.say("Where would you like to go?")
-	Global.ui.addButton("back","",enterScene)
-	Global.ui.addButton("Beach","",Global.main.runScene.bind("nav_beach"))
+	Global.hud.clearInput()
+	Global.hud.say("Where would you like to go?")
+	Global.hud.addButton("back","",enterScene)
+	Global.hud.addButton("Beach","",Global.main.runScene.bind("nav_beach"))
 	if(GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)>0):
-		Global.ui.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
+		Global.hud.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
 
 
 func _on_bt_sleep_pressed() -> void:
 	Global.main.gotoSleep()
 
 func _on_bt_craft_pressed() -> void:
-	Global.ui.clearInput()
+	Global.hud.clearInput()
 	Global.main.doTimeProcess(120*60)
-	Global.ui.say("You rummage through your collection of sticks and stones but have no idea how to connect them together.")
+	Global.hud.say("You rummage through your collection of sticks and stones but have no idea how to connect them together.")
 	Global.pc.inventory.addItem(GlobalRegistry.createItem("knife_seashell"))
 	continueScene()

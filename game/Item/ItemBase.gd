@@ -1,8 +1,17 @@
 class_name ItemBase extends Node
 
+#Note: this is also baseclass for skills and equip !
+
 var uniqueID:int = -1
 var ID:String = "Unknown"
-var currentInventory:Inventory=null
+var wrefInventory:WeakRef=null
+var wrefCharacter:WeakRef=null 
+var user:Character:
+	set(value):
+		wrefCharacter=weakref(value)
+	get:
+		return(wrefCharacter.get_ref())
+		
 var amount:int = 1:
 	set(value):
 		amount=value
@@ -64,7 +73,7 @@ func tryCombine(_otherItem):
 	amount += _otherItem.amount
 	return true
 
-func canUseInCombat():
+func canUseInCombat()->bool:
 	return false
 
 # gives a list of actions when in inventory-ui
@@ -86,9 +95,9 @@ func getPrice():
 	return 30
 	
 func destroyMe():
-	if(currentInventory == null):
+	if(wrefInventory == null):
 		return
-	currentInventory.removeItem(self)
+	wrefInventory.get_ref().removeItem(self)
 
 func useCharge(_amount = 1):
 	#charges -= amount

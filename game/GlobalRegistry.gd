@@ -25,6 +25,8 @@ var items: Dictionary = {}
 var itemsByTag: Dictionary = {}
 
 var effects: Dictionary = {}
+var skills: Dictionary = {}
+var characters: Dictionary = {}
 
 var currentUniqueID:int=1
 var isInitialized = false
@@ -403,6 +405,54 @@ func createEffect(ID: String)->Effect:
 		Log.printerr("ERROR: effect with the ID "+ID+" wasn't found")
 		return null
 	var newItem = effects[ID].new()
+	return newItem
+	
+#endregion
+
+#region skills
+func registerSkill(path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerSkill(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item.new()
+	skills[itemObject.ID] = item
+
+
+func createSkill(ID: String)->Skill:
+	if(!skills.has(ID)):
+		Log.printerr("ERROR: skill with the ID "+ID+" wasn't found")
+		return null
+	var newItem = skills[ID].new()
+	return newItem
+	
+#endregion
+
+#region characters
+func registerCharacter(path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerCharacter(path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item.new()
+	characters[itemObject.ID] = item
+
+#TODO Unique characters should not be created multiple times
+func createCharacter(ID: String)->Character:
+	if(!characters.has(ID)):
+		Log.printerr("ERROR: character with the ID "+ID+" wasn't found")
+		return null
+	var newItem = characters[ID].new()
 	return newItem
 	
 #endregion

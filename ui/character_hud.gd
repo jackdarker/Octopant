@@ -21,7 +21,7 @@ func on_stat_update(who:Character):
 	lust_bar.value=_n.value
 
 func on_effect_update(who:Character,effectID:String):
-	var _item=who.effectlist.getItemByID(effectID)
+	var _item=who.effects.getItemByID(effectID)
 	if(_item):
 		listEffects.addOrReplaceItem(_item)
 	else:

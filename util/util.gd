@@ -1,8 +1,12 @@
-extends Object
-class_name Util
+class_name Util extends Object
 
 # collection of static utility functions
 
+static func delete_children(node):
+	for n in node.get_children():
+		node.remove_child(n)
+		n.queue_free()
+		
 static func join(arr: Array, separator: String = "") -> String:
 	var output = ""
 	for s in arr:

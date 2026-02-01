@@ -9,7 +9,7 @@ func _init():
 
 func react(_triggerID, _args)->bool:
 	Global.main.runScene("nav_cliff")
-	Global.ui.say("This time you made your way all down the beach until you stand before a high cliff.\n")
+	Global.hud.say("This time you made your way all down the beach until you stand before a high cliff.\n")
 	return true
 	
 func canRun()->bool:

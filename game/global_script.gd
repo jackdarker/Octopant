@@ -1,6 +1,6 @@
 extends Node
 
-var ui: GameUI
+var hud: Hud
 var toolTip:CanvasLayer
 var main: MainScene
 var pc: Player
@@ -53,12 +53,12 @@ var SAVE_DIR="user://Save/"
 # it is assumed the filename looks like: yyyy_mm_dd_hhmmss.save
 #  Time.get_datetime_string_from_system(true,false)
 
-var saves_info:Array = []
+
 func newSaveFileName()->String:
 	var _newfile=(Time.get_datetime_string_from_system(true,true)+".save").replace(":","")
 	return _newfile
 	
-	
+var saves_info:Array = []	#this holds data for save-UI so that we dont need to parse all files if it updates
 func getAllSaves()->Array:
 	saves_info = []
 	DirAccess.make_dir_absolute(SAVE_DIR)

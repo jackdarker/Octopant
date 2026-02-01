@@ -9,7 +9,7 @@ func _init():
 
 func react(_triggerID, _args)->bool:
 	Global.main.runScene("nav_deepwood")
-	Global.ui.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\\n")
+	Global.hud.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\\n")
 	return true
 	
 func canRun()->bool:

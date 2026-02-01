@@ -1,6 +1,9 @@
 extends Character
 class_name Player
 
+func _init():
+	super()
+	self.ID="Player"
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)

@@ -19,6 +19,7 @@ layer = -1
 
 [node name="TooltipSystem" parent="." instance=ExtResource("3_yrdys")]
 layer = 2
+visible = false
 
 [node name="WndPause" parent="." instance=ExtResource("3_w8ko4")]
 visible = false

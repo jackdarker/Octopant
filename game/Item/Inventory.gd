@@ -3,9 +3,15 @@ class_name Inventory extends Node
 # something to store items in
 
 var items:Array[ItemBase]=[]
+var wrefCharacter:WeakRef=null
+var user:Character:
+	set(value):
+		wrefCharacter=weakref(value)
+	get:
+		return(wrefCharacter.get_ref())
 
 func addItem(item: ItemBase):
-	if(item.currentInventory != null):
+	if(item.wrefInventory != null):
 		assert(false)
 	
 	if(item.canCombine()):
@@ -16,7 +22,8 @@ func addItem(item: ItemBase):
 					return
 		
 	items.append(item)
-	item.currentInventory = self
+	item.wrefInventory = weakref(self)
+	item.user=user
 
 func addItemID(itemID:String):
 	var newItem = GlobalRegistry.createItem(itemID)
@@ -31,7 +38,7 @@ func removeItem(item:ItemBase):
 			item.amount-=1
 		else:
 			items.erase(item)
-			item.currentInventory = null
+			item.wrefInventory = null
 
 func removeItemID(itemID:String):
 	var _item=getItemByID(itemID)
