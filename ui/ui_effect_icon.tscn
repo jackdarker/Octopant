@@ -16,3 +16,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("PlaceholderTexture2D_4ji2b")
 expand_mode = 1
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

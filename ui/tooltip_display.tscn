@@ -42,9 +42,9 @@ _data = {
 [node name="TooltipDisplay" type="PanelContainer"]
 custom_minimum_size = Vector2(250, 0)
 offset_right = 250.0
-offset_bottom = 89.0
+offset_bottom = 135.0
 pivot_offset = Vector2(0, 20)
-size_flags_vertical = 0
+theme = ExtResource("2_r80qv")
 script = ExtResource("1_01or2")
 
 [node name="Panel" type="MarginContainer" parent="."]

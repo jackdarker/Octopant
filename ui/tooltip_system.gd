@@ -1,12 +1,13 @@
 extends CanvasLayer
 
 # to make use of the tooltip you have to call showTooltip onMouseEnter
+# and hideTooltip onMouseLeave
 
 @onready var tooltip = $TooltipDisplay
 
 var nodeRef:WeakRef
 
-func _readyxx() -> void:
+func _ready() -> void:
 	resetTooltips()
 
 func showTooltip(theControl, title: String, text: String, _showBelow: bool = false, wideTooltip: bool = false):

@@ -13,6 +13,7 @@ height = 128
 fill_to = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_rbyyf"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_3h3vf"]
 gradient = SubResource("Gradient_rbyyf")
@@ -21,12 +22,13 @@ height = 128
 fill_from = Vector2(0, 1)
 
 [node name="barPain" type="TextureProgressBar"]
+self_modulate = Color(0.27450982, 0.34509805, 1, 1)
 offset_right = 20.0
 offset_bottom = 116.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme = ExtResource("1_hytq8")
-value = 20.0
+value = 80.0
 fill_mode = 3
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture2D_nx3wa")
@@ -38,8 +40,11 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -23.0
-offset_right = 34.0
+offset_left = -2.0
+offset_top = -3.0
+offset_right = 32.0
+offset_bottom = 20.0
 grow_vertical = 0
 rotation = -1.5707964
+theme = ExtResource("1_hytq8")
 text = "Pain"

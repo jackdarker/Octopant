@@ -2,11 +2,12 @@ class_name CombatScene extends DefaultScene
 
 # this scene implements some turnbased combat logic
 # - call setup to define combatants and arena settings
+#   also define what happens afterward ("on...()" 
 # - runScene
 # - wait for the finished signal
 # - depending on the outcome switch scene
 
-signal fight_ended(outcome)
+
 signal fight_next
 
 var scene_charWidget = preload("res://ui/character_hud.tscn")
@@ -17,6 +18,8 @@ var playerParty:Array[Character]=[]
 var enemyParty:Array[Character]=[]
 var turnStack:Array=[]
 var turnCount:int=0
+var playerFleeing:bool
+var playerSubmitting:bool
 var actor:Character
 var target:Character
 var skill:Skill
@@ -48,16 +51,22 @@ func next():
 		execSkill()
 	elif(next_state==STATE.battleEnd):
 		battleEnd()
-	
+	else:
+		assert(false,str(next_state))
+
 func setupScene(_combatSetup:CombatSetup):
 	combatSetup=_combatSetup
 	turnCount=0
+	playerFleeing=false
+	playerSubmitting=false
 	playerParty=combatSetup.playerParty.duplicate()
 	enemyParty=combatSetup.enemyParty.duplicate()
 	Global.hud.hudMode = Hud.HUDMODE.Combat
 	next_state=STATE.battleInit
 
 func battleInit():
+	Global.hud.clearOutput()
+	Global.hud.clearInput()
 	var _allChars=playerParty+enemyParty
 	#trigger Effect.onFightStart
 	for _char:Character in _allChars:
@@ -68,20 +77,30 @@ func battleInit():
 
 func battleEnd():
 	var _allChars=playerParty+enemyParty
-	#trigger Effect.onFightEnd
-	for _char:Character in _allChars:
+	for _char:Character in _allChars:		#trigger Effect.onFightEnd
 		var _effs = _char.effects.getItems()
 		for _eff in _effs:
 			_eff.onFightEnd()
-	Global.main.removeScene(self)	#TODO
-
+	Global.hud.hudMode=Hud.HUDMODE.Explore		
+	if(playerFleeing==true): 
+		combatSetup.onFlee.call(self)
+	elif(playerSubmitting==true): 
+		combatSetup.onSubmit.call(self);
+	elif(isPartyDefeated(enemyParty)):
+		combatSetup.onVictory.call(self);
+	elif(isPartyDefeated(playerParty)):
+		combatSetup.onDefeat.call()
 
 func preTurn():
 	turnCount+=1
+	var _allChars=playerParty+enemyParty
 	#remove knockedout spawned chars
 	
-	#trigger Effect.processCombatTurn
-	
+	for _char:Character in _allChars:		#trigger Effect.processCombatTurn
+		var _effs = _char.effects.getItems()
+		for _eff in _effs:
+			_eff.processCombatTurn()
+			
 	_calcTurnOrder()
 	_createEnemyWidgets()
 	next_state=STATE.checkDefeat
@@ -90,9 +109,7 @@ func preTurn():
 func checkDefeat():
 	#handle player fleeing
 	#is any party down?
-	if(isPartyDefeated(enemyParty)):
-		next_state=STATE.battleEnd
-	elif(isPartyDefeated(playerParty)):
+	if(isPartyDefeated(enemyParty) || isPartyDefeated(playerParty)):
 		next_state=STATE.battleEnd
 	else:
 		next_state=STATE.selectActor
@@ -162,10 +179,39 @@ func _calcTurnOrder():
 	turnStack=playerParty+enemyParty
 
 func _createEnemyWidgets():
-	var widget =scene_charWidget.instantiate()
 	#this creates/removes widgets depending on the parts-lists
-	Global.hud.enemyList.add_child()
-	pass
+	var i
+	var _actual=[]
+	var _actualI=[]
+	var _remove=[]
+	
+	i=0
+	for _char in enemyParty:
+		_actual.push_back(_char.getName())
+		_actualI.push_back(i)
+		i+=1
+	
+	for _widget in Global.hud.enemyList.get_children():
+		i=_actual.find(_widget.characterName)
+		if(i<0):
+			_remove.push_back(_widget)
+		else:
+			_actual.remove_at(i)
+			_actualI.remove_at(i)
+	
+	for _char in _remove:
+		Global.hud.enemyList.remove_child(_char)
+		
+	for _index in _actualI:
+		var _char=enemyParty[_index]
+		var widget =scene_charWidget.instantiate()
+		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),"pain")		
+		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),"fatigue")
+		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),StatEnum.Lust)
+		_char.effects.registerSignalItemsChanged(func(ID):widget.on_effect_update(_char,ID))
+		widget.on_stat_update.call_deferred(_char)
+		Global.hud.enemyList.add_child(widget)
+
 
 func isPartyDefeated(party:Array[Character]):
 	for _char:Character in party:

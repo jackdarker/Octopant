@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=20 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
@@ -16,8 +16,22 @@ bg_color = Color(0.38431373, 0.38431373, 0.38431373, 0.8627451)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_546lt"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q43x7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en2x2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srpbi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1v5rv"]
+bg_color = Color(0.73384637, 0.44077763, 0.9599053, 1)
+
 [sub_resource type="Theme" id="Theme_7ihmi"]
 Panel/styles/panel = SubResource("StyleBoxFlat_546lt")
+RichTextLabel/colors/default_color = Color(0.17641911, 0.17641908, 0.17641908, 1)
+RichTextLabel/styles/background = SubResource("StyleBoxFlat_q43x7")
+RichTextLabel/styles/fill = SubResource("StyleBoxFlat_en2x2")
+RichTextLabel/styles/focus = SubResource("StyleBoxFlat_srpbi")
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_1v5rv")
 
 [sub_resource type="Gradient" id="Gradient_276te"]
 offsets = PackedFloat32Array(0, 0.8933333)
@@ -234,6 +248,7 @@ fit_content = true
 scroll_following = true
 
 [node name="Panel" type="Panel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme = SubResource("Theme_7ihmi")
@@ -250,83 +265,101 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="ButtonGrid" type="GridContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
+
+[node name="ButtonGrid" type="HFlowContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
-columns = 5
 
-[node name="Button 1" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 1" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Button #1 super logn text"
+
+[node name="Button 2" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 2" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 3" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 3" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 4" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 4" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 5" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 5" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 6" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Button #1is also very long"
+
+[node name="Button 7" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Button#1ff"
+
+[node name="Button 8" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 6" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 9" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 7" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 10" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 8" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 11" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 9" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 12" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 10" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 13" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 11" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 14" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
 
-[node name="Button 12" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Button #1"
-
-[node name="Button 13" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Button #1"
-
-[node name="Button 14" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Button #1"
-
-[node name="Button 15" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid"]
+[node name="Button 15" type="Button" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid"]
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Button #1"
@@ -349,4 +382,4 @@ libraries = {
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btInventory" to="." method="_on_bt_inventory_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btMenu" to="." method="_on_bt_menu_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/bt_hud_off" to="." method="_on_bt_hud_off_pressed"]
-[connection signal="pressed" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid/Button 1" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid/Button 1" to="." method="_on_button_pressed"]

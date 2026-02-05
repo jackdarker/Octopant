@@ -8,16 +8,16 @@ enum HUDMODE { Explore=0, Combat=1}
 @export var hudMode:HUDMODE=HUDMODE.Explore:
 	set(value):
 		if(value==HUDMODE.Combat):
-			enemyList.visible=true
+			enemyList.get_parent_control().visible=true
 		else:
 			Util.delete_children(enemyList)	#cleanup list after combat
-			enemyList.visible=false
+			enemyList.get_parent_control().visible=false
 		hudMode=value
 
 @onready var fullhud=$HBoxContainer
 @onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
-@onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ButtonGrid
+@onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
 @onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer

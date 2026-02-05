@@ -4,6 +4,7 @@ class_name Player
 func _init():
 	super()
 	self.ID="Player"
+	self.skills.addItem(GlobalRegistry.createSkill("Skill_Slash"))
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)

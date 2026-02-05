@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://sfxsabvmelqu"]
+[gd_scene load_steps=6 format=3 uid="uid://sfxsabvmelqu"]
 
 [ext_resource type="Texture2D" uid="uid://bfsnd42fd1rpm" path="res://icon.svg" id="1_lqq4a"]
 [ext_resource type="Script" uid="uid://bxem32xyqmvdq" path="res://ui/character_hud.gd" id="1_usxaa"]
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_mhkh6"]
 [ext_resource type="PackedScene" uid="uid://cdl8clus04ra4" path="res://ui/bar_stat.tscn" id="3_3h3vf"]
 [ext_resource type="PackedScene" uid="uid://b7n4ylquto1qx" path="res://ui/ui_effects_list.tscn" id="4_3h3vf"]
 
@@ -11,7 +12,9 @@ offset_bottom = 108.0
 script = ExtResource("1_usxaa")
 
 [node name="lbl_name" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("2_mhkh6")
 bbcode_enabled = true
 text = "My NameMy "
 fit_content = true
@@ -21,6 +24,7 @@ autowrap_mode = 2
 layout_mode = 2
 
 [node name="icon" type="TextureButton" parent="HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 texture_normal = ExtResource("1_lqq4a")
