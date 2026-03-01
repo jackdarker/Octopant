@@ -90,8 +90,8 @@ func addItem(item:EquipmentBase)->Result:		#TODO force:bool=false?
 		
 	var _item=item
 	#if item is from wardrobe/Inventory, remove it there
-	if(item.currentInventory):
-		item.currentInventory.removeItem(item);
+	if(item.wrefInventory):
+		item.wrefInventory.get_ref().removeItem(item);
 		_item=item.duplicate()	#you might have multiple helmets in inventory, we need a separate instance	
 	#Todo currently we have 2 copies of equipment - 1 for wardrobe 1 for outfit otherwise this will not work
 	list.push_back({"item":_item, "slots":_item.slotUse})

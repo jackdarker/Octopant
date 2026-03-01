@@ -11,20 +11,18 @@ var characterName:String="unknown":
 		%lbl_name.text=value
 
 func _ready() -> void:
+	pain_bar.text="pain"
 	fatigue_bar.text="fatigue"
 	lust_bar.text="lust"
 
 func on_stat_update(who:Character):
 	on_bust_update(who)
 	var _n=who.getStat("pain")
-	pain_bar.max_value=_n.ul
-	pain_bar.value=_n.value
+	pain_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("fatigue")
-	fatigue_bar.max_value=_n.ul
-	fatigue_bar.value=_n.value
+	fatigue_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("lust")
-	lust_bar.max_value=_n.ul
-	lust_bar.value=_n.value
+	lust_bar.setValue(_n.value,_n.ul)
 
 func on_effect_update(who:Character,effectID:String):
 	var _item=who.effects.getItemByID(effectID)

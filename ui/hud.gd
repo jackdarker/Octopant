@@ -18,9 +18,9 @@ enum HUDMODE { Explore=0, Combat=1}
 @onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
-@onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer/RichTextLabel
+@onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
-@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/ScrollContainer2/HFlowContainer
+@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
 
 func _ready() -> void:
 	hudMode=HUDMODE.Explore
@@ -37,7 +37,7 @@ func on_pc_effect_update(_key):
 	
 func say(text):
 	msg.text=msg.text+"\n"+text
-	pass
+	#msg.typewrite("\n"+text)	doeant work with keeping old text
 
 func clearOutput():
 	$img_fade.visible=false

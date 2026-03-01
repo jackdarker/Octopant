@@ -7,6 +7,7 @@ class_name CombatScene extends DefaultScene
 # - wait for the finished signal
 # - depending on the outcome switch scene
 
+#TODO load/save
 
 signal fight_next
 
