@@ -1,0 +1,7 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bmrbm8b3of6ow"]
+
+[ext_resource type="Script" uid="uid://cxu6r1qjpbcar" path="res://modules/default/world/map_beach.gd" id="1_4siy8"]
+
+[resource]
+script = ExtResource("1_4siy8")
+metadata/_custom_type_script = "uid://cowjttc7h6y4l"

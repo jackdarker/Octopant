@@ -14,7 +14,8 @@ func enterScene():
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
-	
+
+# call this after event finishs to continue previous scene	
 func continueScene():
 	Global.hud.clearInput()
 	Global.hud.addButton("next","",enterScene)

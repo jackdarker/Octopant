@@ -1,6 +1,8 @@
 class_name Hud extends CanvasLayer
 
 signal menu_requested
+signal log_requested
+signal map_requested
 signal inventory_requested
 
 enum HUDMODE { Explore=0, Combat=1}
@@ -101,3 +103,7 @@ func _on_bt_menu_pressed() -> void:
 
 func _on_bt_hud_off_pressed() -> void:
 	toggleHud(bt_hud_off.visible)
+
+
+func _on_bt_map_pressed() -> void:
+	map_requested.emit()

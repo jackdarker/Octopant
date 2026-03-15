@@ -167,7 +167,7 @@ func getModuleFlag(moduleID, flagID, defaultValue = null):
 	var _moduleFlagsCache = module.getFlagsCache()
 	
 	if(!_moduleFlagsCache.has(flagID)):
-		#Log.printerr("getModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		Log.printerr("getModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return defaultValue
 	
 	if(!moduleFlags.has(moduleID) || !moduleFlags[moduleID].has(flagID)):

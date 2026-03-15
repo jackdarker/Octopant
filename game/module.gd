@@ -52,11 +52,11 @@ func registerEventTriggers():
 func resetFlagsOnNewDay():
 	pass
 
-func setFlag(flagID, value):
-	GlobalRegistry.setFlag(flagID, value)
+#func setFlag(flagID, value):
+#	GlobalRegistry.setFlag(flagID, value)
 
-func getFlag(flagID, defaultValue = null):
-	return GlobalRegistry.getFlag(flagID, defaultValue)
+#func getFlag(flagID, defaultValue = null):
+#	return GlobalRegistry.getFlag(flagID, defaultValue)
 
 func getRandomSceneFor(_sceneType):
 	return []

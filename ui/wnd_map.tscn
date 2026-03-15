@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3jgutn4jlo6x"]
+
+[ext_resource type="Script" uid="uid://cv6yag7rrdiir" path="res://ui/wnd_map.gd" id="1_0sq2l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_he8bp"]
+
+[node name="Map" type="CanvasLayer"]
+script = ExtResource("1_0sq2l")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_he8bp")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="map_base" type="Sprite2D" parent="Panel/MarginContainer2"]
+
+[node name="map_fog" type="Sprite2D" parent="Panel/MarginContainer2"]
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="bt_back" type="Button" parent="Panel/MarginContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Back"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Panel/MarginContainer2/MarginContainer/HBoxContainer/bt_back" to="." method="_on_bt_back_pressed"]

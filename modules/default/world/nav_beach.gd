@@ -1,8 +1,10 @@
 extends "res://ui/navigation_scene.gd"
 
+var map:Map
 
 func _init() -> void:
 	sceneID="nav_beach"
+	map=load("res://modules/default/world/map_beach.tres")
 
 func enterScene():
 	super()
