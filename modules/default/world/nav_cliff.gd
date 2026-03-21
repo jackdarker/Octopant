@@ -5,9 +5,9 @@ func _init() -> void:
 
 func enterScene():
 	super()
-	if (GlobalRegistry.getModuleFlag("Default","Found_Cliff",0)<=0):
+	if (GR.getModuleFlag("Default","Found_Cliff",0)<=0):
 		Global.hud.say("Your walk at the beach finally brings you to a high cliff.")
-		GlobalRegistry.increaseModuleFlag("Default","Found_Cliff",1)
+		GR.increaseModuleFlag("Default","Found_Cliff",1)
 	Global.hud.say("The cliff looks climbable even for your poor abilitys.")
 	Global.hud.say("As long as you have some rope with you it should be safe enough.")
 	

@@ -131,7 +131,7 @@ func loadData(data):
 		slots.push_back(slot)
 		
 	for item in data["items"]:
-		var _item=GlobalRegistry.createItem(item["ID"])
+		var _item=GR.createItem(item["ID"])
 		_item.loadData(item)
 		_item.wrefCharacter=wrefCharacter
 		list.push_back({"item":_item,"slots":_item.slotUse})	#using addItem would retrigger equip()

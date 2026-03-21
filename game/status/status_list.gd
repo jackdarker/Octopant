@@ -10,7 +10,7 @@ func addItem(item: Status):
 	items[item.ID]=item
 
 func addItemID(itemID:String):
-	var newItem = GlobalRegistry.createStat(itemID)
+	var newItem = GR.createStat(itemID)
 	if(newItem == null):
 		return false
 	addItem(newItem)

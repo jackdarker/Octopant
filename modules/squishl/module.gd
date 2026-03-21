@@ -5,9 +5,9 @@ func _init()-> void :
 	ID = "Squishl"
 	author = "TheAuthor"
 	
-	#scenes = [
-	#	"res://modules/squishl/world",
-	#	]
+	scenes = [
+		"res://modules/squishl/world",
+		]
 	#items = [
 	#	"res://modules/squishl/Item",
 	#]
@@ -27,8 +27,14 @@ func _init()-> void :
 func getFlags():
 	return {
 		"Squishl_Saved": flag(FlagType.Number),
+		"Delve_State": flag(FlagType.Number),
+		"Daily_Treasure": flag(FlagType.Number),
 	}
+
+func resetFlagsOnNewDay():
+	GR.setModuleFlag(ID,"Daily_Treasure",0)
 
 func initGame():
 	#setup triggers for events
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GlobalRegistry.getEvent("EventMeetSquishlBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventMeetSquishlBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventDelveBeach"),"nav_beach_explore",[])

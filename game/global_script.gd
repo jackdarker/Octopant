@@ -109,14 +109,14 @@ func loadFromFile(slot):
 func loadData(data):
 	#TODO Global.settings.loadData(data.settings)		store settings in separate file?
 	#Note: data["info"] used by save-UI !
-	GlobalRegistry.loadData(data.globalregistry)
+	GR.loadData(data.globalregistry)
 	Global.main.loadData(data.main)
 	Global.pc.loadData(data.pc)
 	Global.main.postLoad()
 			
 func saveData()->Variant:
 	var data ={
-		"globalregistry":GlobalRegistry.saveData(),
+		"globalregistry":GR.saveData(),
 		"main":Global.main.saveData(),
 		"pc": Global.pc.saveData(),
 	}

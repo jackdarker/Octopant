@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://buqec3xvinici"]
+
+[ext_resource type="Script" uid="uid://dmeuhbxywuthx" path="res://modules/default/world/nav_beach_ext.gd" id="1_ckndx"]
+
+[resource]
+script = ExtResource("1_ckndx")

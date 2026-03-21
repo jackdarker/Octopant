@@ -42,7 +42,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 		actual_scene=load("res://ui/combat_scene.tscn").instantiate()
 		actual_scene.setupScene(_args[0])
 	else:
-		actual_scene = GlobalRegistry.createScene(ID)
+		actual_scene = GR.createScene(ID)
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.

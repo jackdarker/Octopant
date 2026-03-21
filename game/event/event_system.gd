@@ -4,9 +4,9 @@ class_name EventSystem
 # most events only need to be checked at certain locations (by location-id) or at locations with tags
 # others might occur anywhere
 
-const TRIGGER = {EnterRoom=1,
-	InSleep=2,
-	PostSleep=3,
+const TRIGGER = {EnterRoom=1,		#when exploring
+	InSleep=2,						#while sleeping (dream)
+	PostSleep=3,					#when waking
 	}
 
 var eventLocation:Dictionary = {}
@@ -16,7 +16,7 @@ func _init():
 	pass
 
 func registerEventTriggers():
-	GlobalRegistry.initGameModules()
+	GR.initGameModules()
 	pass
 
 # location is either null or a location_id or a Tag-check

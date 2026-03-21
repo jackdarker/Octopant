@@ -1,13 +1,13 @@
 extends Control
 
 func _ready():
-	if(GlobalRegistry.isInitialized):
+	if(GR.isInitialized):
 		Global.goto_scene("res://UI/MainMenu/MainMenu.tscn")
 		return
 	#OPTIONS.setSupportsVertical(true)
-	var _ok = GlobalRegistry.connect("loadingUpdate", onGlobalRegistryUpdate)
-	var _ok2 = GlobalRegistry.connect("loadingFinished", onGlobalRegistryFinishedUpdate)
-	GlobalRegistry.registerEverything()
+	var _ok = GR.connect("loadingUpdate", onGlobalRegistryUpdate)
+	var _ok2 = GR.connect("loadingFinished", onGlobalRegistryFinishedUpdate)
+	GR.registerEverything()
 
 func onGlobalRegistryUpdate(percent, whatnext):
 	$ProgressBar.value = percent * 100.0

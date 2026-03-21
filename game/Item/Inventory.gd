@@ -26,7 +26,7 @@ func addItem(item: ItemBase):
 	item.user=user
 
 func addItemID(itemID:String):
-	var newItem = GlobalRegistry.createItem(itemID)
+	var newItem = GR.createItem(itemID)
 	if(newItem == null):
 		return false
 	addItem(newItem)
@@ -65,7 +65,7 @@ func getItemByID(itemID)->ItemBase:
 
 func loadData(data):
 	for item in data["items"]:
-		var _item=GlobalRegistry.createItem(item["ID"])
+		var _item=GR.createItem(item["ID"])
 		_item.loadData(item)
 		addItem(_item)
 	pass

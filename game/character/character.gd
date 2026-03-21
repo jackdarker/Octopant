@@ -29,7 +29,7 @@ func _init():
 	effects=EffectsList.new()
 	skills= Inventory.new()
 	skills.user=(self)
-	skills.addItem(GlobalRegistry.createSkill("Skill_Punch"))
+	skills.addItem(GR.createSkill("Skill_Punch"))
 	
 func getName()->String:
 	return (uniqueID)

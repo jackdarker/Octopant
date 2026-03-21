@@ -27,22 +27,22 @@ func initGame(): # Called when game engine starts
 
 func register():
 	for scene in scenes:
-		GlobalRegistry.registerScene(scene, author)
+		GR.registerScene(scene, author)
 	
 	for item in items:
-		GlobalRegistry.registerItem(item)
+		GR.registerItem(item)
 	
 	for event in events:
-		GlobalRegistry.registerEvent(event)
+		GR.registerEvent(event)
 	
 	for effect in effects:
-		GlobalRegistry.registerEffect(effect)
+		GR.registerEffect(effect)
 	
 	for skill in skills:
-		GlobalRegistry.registerSkill(skill)
+		GR.registerSkill(skill)
 	
 	for character in characters:
-		GlobalRegistry.registerCharacter(character)
+		GR.registerCharacter(character)
 
 #override this !
 func registerEventTriggers():
@@ -53,10 +53,10 @@ func resetFlagsOnNewDay():
 	pass
 
 #func setFlag(flagID, value):
-#	GlobalRegistry.setFlag(flagID, value)
+#	GR.setFlag(flagID, value)
 
 #func getFlag(flagID, defaultValue = null):
-#	return GlobalRegistry.getFlag(flagID, defaultValue)
+#	return GR.getFlag(flagID, defaultValue)
 
 func getRandomSceneFor(_sceneType):
 	return []

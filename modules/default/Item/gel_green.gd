@@ -30,6 +30,6 @@ func canDo(action,_target)->Result:
 func doAction(action:String,target):
 	if(action=="eat"):
 		if target is Character:
-			var _eff=GlobalRegistry.createEffect("eff_nausea")
+			var _eff=GR.createEffect("eff_nausea")
 			_eff.applyTo(target)
 		self.destroyMe()

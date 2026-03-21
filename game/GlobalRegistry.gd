@@ -100,7 +100,7 @@ func clearFlag(flagID):
 func hasFlag(flagID:String) -> bool:
 	var splitData = Util.splitOnFirst(flagID, ".")
 	if(splitData.size() > 1):
-		var _modules = GlobalRegistry.getModules()
+		var _modules = GR.getModules()
 		var moduleID:String = splitData[0]
 		if(!_modules.has(moduleID)):
 			return false
@@ -158,7 +158,7 @@ func increaseFlag( flagID, addvalue = 1):
 	setFlag( flagID, getFlag( flagID, 0) + addvalue)
 
 func getModuleFlag(moduleID, flagID, defaultValue = null):
-	var _modules = GlobalRegistry.getModules()
+	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
 		#Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return defaultValue
@@ -176,7 +176,7 @@ func getModuleFlag(moduleID, flagID, defaultValue = null):
 	return moduleFlags[moduleID][flagID]
 
 func setModuleFlag(moduleID, flagID, value):
-	var _modules = GlobalRegistry.getModules()
+	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
 		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return
@@ -339,7 +339,7 @@ func registerScene(path: String, creator = null):
 	
 	var scene = load(path)
 	if(!scene):
-		#Log.printerr("ERROR: couldn't load scene from path "+path)
+		Log.printerr("ERROR: couldn't load scene from path "+path)
 		return
 	var sceneObject = scene.instantiate()
 	scenes[sceneObject.sceneID] = scene

@@ -1,17 +1,23 @@
 extends EventBase
 
+# player has to go through number of events before returning to beach
+
 func _init():
 	super()
-	ID="EventMeetSquishlBeach"
+	ID="EventDelveBeach"
 
 func react(_triggerID, _args)->bool:
-	Global.hud.say("As you walk the beach you spot a ")
-	Global.hud.addButton("Ignore it","",_ignore,null)
-	Global.hud.addButton("Inspect closer","",_inspect,null)
+	var state=GR.getModuleFlag("Squishl","Delve_State",0)
+	if(state==1):
+		return false				#TODO this is broken
+	else:
+		Global.hud.say("As you walk the beach you spot a ")
+		Global.hud.addButton("Ignore it","",_ignore,null)
 	return true
 	
 func canRun()->bool:
-	return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
+	return true
+	#return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
 
 func _ignore():
 	Global.hud.say("\n")

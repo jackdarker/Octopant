@@ -22,7 +22,7 @@ func addItem(item: Effect):
 		registerSignalItemChanged(cb,item.ID)
 
 func addItemID(itemID:String):
-	var newItem = GlobalRegistry.createEffect(itemID)
+	var newItem = GR.createEffect(itemID)
 	if(newItem == null):
 		return false
 	addItem(newItem)
@@ -88,7 +88,7 @@ func unregisterSignalItemsChanged(callable:Callable):
 
 func loadData(data):
 	for item in data["items"]:
-		var _item=GlobalRegistry.createEffect(item["ID"])
+		var _item=GR.createEffect(item["ID"])
 		_item.loadData(item)
 		addItem(_item)
 			
