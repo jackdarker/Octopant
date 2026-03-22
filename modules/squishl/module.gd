@@ -8,6 +8,9 @@ func _init()-> void :
 	scenes = [
 		"res://modules/squishl/world",
 		]
+	scene_ext = [
+		"res://modules/squishl/world/extend",
+		]
 	#items = [
 	#	"res://modules/squishl/Item",
 	#]

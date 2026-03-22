@@ -4,6 +4,7 @@ class_name Module
 var ID = "badmodule"
 var author = "no author"
 var scenes = []
+var scene_ext = []
 var items = []
 var events = []
 var effects = []
@@ -27,22 +28,25 @@ func initGame(): # Called when game engine starts
 
 func register():
 	for scene in scenes:
-		GR.registerScene(scene, author)
+		GR.registerScene(ID,scene, author)
+	
+	for scene in scene_ext:
+		GR.registerSceneExtension(ID,scene, author)
 	
 	for item in items:
-		GR.registerItem(item)
+		GR.registerItem(ID,item)
 	
 	for event in events:
-		GR.registerEvent(event)
+		GR.registerEvent(ID,event)
 	
 	for effect in effects:
-		GR.registerEffect(effect)
+		GR.registerEffect(ID,effect)
 	
 	for skill in skills:
-		GR.registerSkill(skill)
+		GR.registerSkill(ID,skill)
 	
 	for character in characters:
-		GR.registerCharacter(character)
+		GR.registerCharacter(ID,character)
 
 #override this !
 func registerEventTriggers():

@@ -6,22 +6,25 @@ func _init()-> void :
 	author = "TheAuthor"
 	
 	scenes = [
-		"res://modules/default/world",
+		"res://modules/__default/world",
+		]
+	scene_ext = [
+		"res://modules/__default/world/extend",
 		]
 	items = [
-		"res://modules/default/Item",
+		"res://modules/__default/Item",
 	]
 	events = [
-		"res://modules/default/event",		#dont forget to setup events in initGame !
+		"res://modules/__default/event",		#dont forget to setup events in initGame !
 	]
 	effects = [
-		"res://modules/default/effect",
+		"res://modules/__default/effect",
 	]
 	skills = [
-		"res://modules/default/skill",
+		"res://modules/__default/skill",
 	]
 	characters = [
-		"res://modules/default/character",
+		"res://modules/__default/character",
 	]
 
 func getFlags():

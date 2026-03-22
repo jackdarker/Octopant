@@ -18,6 +18,7 @@ var moduleFlags = {}
 #var moduleFlagsCache = null
 
 var scenes: Dictionary = {}
+var scene_ext: Dictionary = {}
 
 var events: Dictionary = {}		#see ES !
 
@@ -44,12 +45,8 @@ func registerEverything():
 	var start =  Time.get_ticks_usec()
 	#loadRegistryCacheFromFile()
 	preinitModulesFolder("res://modules/")
-	emit_signal("loadingUpdate", 18.0/totalStages, "Modules late initialization")
-	#yield(get_tree(), "idle_frame")	await ;is this still required?
-	#yield(get_tree(), "idle_frame")
-	
+	emit_signal("loadingUpdate", 18.0/totalStages, "Modules late initialization")	
 	registerModules()
-	
 	#saveRegistryCacheToFile()
 	
 	var end = Time.get_ticks_usec()
@@ -213,7 +210,6 @@ func resetFlagsOnNewDay():
 		
 #endregion
 
-
 #region modules
 func preinitModulesFolder(folder: String):
 	var progressBase = 1.0/totalStages
@@ -234,13 +230,13 @@ func preinitModulesFolder(folder: String):
 				if(dir.file_exists(modulePath)):
 					moduleFiles.append([file_name, modulePath])
 			file_name = dir.get_next()
+		moduleFiles.sort_custom(func(a,b): return(a[0]<b[0]) )	#sort alphabetical by name; default needs to be first!
+		#TODO mod sort order management
 		var moduleCount = moduleFiles.size()
 		var loadedModuleCount = 0
 		for moduleFile in moduleFiles:
 			var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
 			emit_signal("loadingUpdate", progressValue, "Loading " + moduleFile[0])
-			#yield(get_tree(), "idle_frame")
-			#yield(get_tree(), "idle_frame")
 			preInitModule(moduleFile[1])
 			loadedModuleCount += 1
 	else:
@@ -259,10 +255,7 @@ func registerModules():
 	for moduleID in modules:
 		var moduleObject = modules[moduleID]
 		var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
-		emit_signal("loadingUpdate", progressValue, moduleObject.ID)
-		#yield(get_tree(), "idle_frame")
-		#yield(get_tree(), "idle_frame")
-		
+		emit_signal("loadingUpdate", progressValue, moduleObject.ID)		
 		moduleObject.register()
 		print("Module "+moduleObject.ID+" by "+moduleObject.author+" was registered")
 		loadedModuleCount += 1
@@ -296,13 +289,13 @@ func getModule(ID):
 #endregion
 
 #region events
-func registerEvent(path: String):
+func registerEvent(moduleID:String,path: String):
 	#-------------------------------------------------------------------
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="gd":
-				registerEvent(path.path_join(file))
+				registerEvent(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	var item = load(path)
@@ -323,7 +316,7 @@ func getEvents():
 
 #region scenes
 #path is file or directory
-func registerScene(path: String, creator = null):
+func registerScene(moduleID:String,path: String, creator = null):
 	#if(hasCachedPath(CACHE_SCENE, path)):
 	#	scenes[getCachedID(CACHE_SCENE, path)] = null
 	#	return
@@ -332,7 +325,7 @@ func registerScene(path: String, creator = null):
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="tscn":
-				registerScene(path.path_join(file))
+				registerScene(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	path.get_file()
@@ -358,15 +351,52 @@ func createScene(ID: String):
 	
 #endregion
 
+#region scene_extensions
+#path is file or directory
+func registerSceneExtension(moduleID:String,path: String, creator = null):
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerSceneExtension(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	path.get_file()
+	
+	var script = load(path)
+	if(!script):
+		Log.printerr("ERROR: couldn't load script from path "+path)
+		return
+	var sceneObject = script.new()
+	if !scene_ext.has(sceneObject.sceneID):
+		scene_ext[sceneObject.sceneID]={}
+	
+	scene_ext[sceneObject.sceneID][moduleID] = script	#there can be multiple ext. for a scene1!
+	#sceneObject.free()
+	
+func getSceneExtensions(sceneID: String, parent:Node)->Array[SceneExtension]:
+	var ext:Array[SceneExtension]=[]
+	if(!scene_ext.has(sceneID) ):
+		Log.printerr("ERROR: extension with the ID "+sceneID+" wasn't found")
+		return ext
+	for scene in scene_ext[sceneID]:
+		var script= scene_ext[sceneID][scene].new()
+		script.parent_scene=parent
+		ext.push_back(script)
+	return ext
+	
+#endregion
+
+
 #region Items
 #path is file or directory
-func registerItem(path: String):
+func registerItem(moduleID:String,path: String):
 	#-------------------------------------------------------------------
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="gd":
-				registerItem(path.path_join(file))
+				registerItem(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	var item = load(path)
@@ -386,13 +416,13 @@ func createItem(ID: String)->ItemBase:
 #endregion
 
 #region effects
-func registerEffect(path: String):
+func registerEffect(moduleID:String,path: String):
 	#-------------------------------------------------------------------
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="gd":
-				registerEffect(path.path_join(file))
+				registerEffect(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	var item = load(path)
@@ -410,13 +440,13 @@ func createEffect(ID: String)->Effect:
 #endregion
 
 #region skills
-func registerSkill(path: String):
+func registerSkill(moduleID:String,path: String):
 	#-------------------------------------------------------------------
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="gd":
-				registerSkill(path.path_join(file))
+				registerSkill(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	var item = load(path)
@@ -434,13 +464,13 @@ func createSkill(ID: String)->Skill:
 #endregion
 
 #region characters
-func registerCharacter(path: String):
+func registerCharacter(moduleID:String,path: String):
 	#-------------------------------------------------------------------
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
 			if file.get_extension().to_lower()=="gd":
-				registerCharacter(path.path_join(file))
+				registerCharacter(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
 	var item = load(path)

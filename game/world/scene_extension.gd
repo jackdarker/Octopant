@@ -16,6 +16,9 @@ class Button_Config:
 
 var parent_scene
 
+func on_enterScene():
+	pass
+
 # called when a menu is built
 func get_buttons(menuid:String,buttons:Array)->Array:
 	return(buttons)

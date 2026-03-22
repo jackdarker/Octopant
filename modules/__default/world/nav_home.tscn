@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b0qurwpsffl61" path="res://ui/navigation_scene.tscn" id="1_knpt1"]
 [ext_resource type="Texture2D" uid="uid://dlktkx1cmow3a" path="res://assets/images/nav_home.png" id="2_fsgyh"]
-[ext_resource type="Script" uid="uid://dukkiv7fle58p" path="res://modules/default/world/nav_home.gd" id="2_knpt1"]
+[ext_resource type="Script" uid="uid://dukkiv7fle58p" path="res://modules/__default/world/nav_home.gd" id="2_knpt1"]
 
 [node name="Scene" instance=ExtResource("1_knpt1")]
 script = ExtResource("2_knpt1")
