@@ -24,14 +24,4 @@ offset_right = 428.0
 offset_bottom = 384.0
 text = "sleep"
 
-[node name="btExplore" type="Button" parent="." index="3"]
-layout_mode = 0
-offset_left = 576.0
-offset_top = 288.0
-offset_right = 691.0
-offset_bottom = 352.0
-text = "go to
-Beach"
-
 [connection signal="pressed" from="btHome" to="." method="_on_bt_sleep_pressed"]
-[connection signal="pressed" from="btExplore" to="." method="_on_bt_explore_pressed"]

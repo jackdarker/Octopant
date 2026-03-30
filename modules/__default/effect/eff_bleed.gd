@@ -10,7 +10,7 @@ func isCombatOnly()->bool:
 
 func processCombatTurn(_contex = {}):
 	@warning_ignore("integer_division")
-	character.status.getItemByID(StatEnum.Pain).modify(5)
+	user.status.getItemByID(StatEnum.Pain).modify(5)
 	timeLast=timeDelta+timeLast
 	duration-=1
 	changed.emit(ID)

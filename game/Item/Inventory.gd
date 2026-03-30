@@ -9,7 +9,7 @@ var user:Character:
 		wrefCharacter=weakref(value)
 	get:
 		return(wrefCharacter.get_ref())
-
+# set item.amount if you want add multiple items
 func addItem(item: ItemBase):
 	if(item.wrefInventory != null):
 		assert(false)
@@ -24,6 +24,7 @@ func addItem(item: ItemBase):
 	items.append(item)
 	item.wrefInventory = weakref(self)
 	item.user=user
+	#item.amount=
 
 func addItemID(itemID:String):
 	var newItem = GR.createItem(itemID)
@@ -32,27 +33,27 @@ func addItemID(itemID:String):
 	addItem(newItem)
 	return true
 
-func removeItem(item:ItemBase):
+func removeItem(item:ItemBase,_amount:int=1):
 	if(items.has(item)):
-		if item.amount>1:
-			item.amount-=1
-		else:
+		item.amount-=_amount
+		if item.amount<=0:
 			items.erase(item)
 			item.wrefInventory = null
 
-func removeItemID(itemID:String):
+func removeItemID(itemID:String,_amount:int=1):
 	var _item=getItemByID(itemID)
 	if(_item):
-		removeItem(_item)
+		removeItem(_item,_amount)
 
-func hasItem(item):
-	return items.has(item)
+#func hasItem(item):
+#	return items.has(item)
 
+## returns amount
 func hasItemID(itemID: String):
 	for item in items:
 		if(item.ID == itemID):
-			return true
-	return false
+			return item.amount
+	return 0
 
 func getItems():
 	return items

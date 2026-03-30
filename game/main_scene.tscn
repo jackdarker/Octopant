@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bn3bc54cdibds"]
+[gd_scene load_steps=8 format=3 uid="uid://bn3bc54cdibds"]
 
 [ext_resource type="Script" uid="uid://2y302sd0k6ap" path="res://game/main_scene.gd" id="1_qk4lp"]
 [ext_resource type="PackedScene" uid="uid://deyv2v8gvtbsu" path="res://ui/hud.tscn" id="2_bg2q0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bg7r17yt0ibm5" path="res://ui/tooltip_system.tscn" id="3_yrdys"]
 [ext_resource type="PackedScene" uid="uid://b73d7l6g8hcu1" path="res://ui/wnd_inventory.tscn" id="4_qinjo"]
 [ext_resource type="PackedScene" uid="uid://b3jgutn4jlo6x" path="res://ui/wnd_map.tscn" id="6_oq18f"]
+[ext_resource type="PackedScene" uid="uid://cr1v6so6n56qp" path="res://ui/wnd_craft.tscn" id="6_wqhqq"]
 
 [node name="MainScene" type="Node"]
 script = ExtResource("1_qk4lp")
@@ -26,6 +27,8 @@ visible = false
 
 [node name="WndInventory" parent="." instance=ExtResource("4_qinjo")]
 visible = false
+
+[node name="WndCraft" parent="." instance=ExtResource("6_wqhqq")]
 
 [node name="WndMap" parent="." instance=ExtResource("6_oq18f")]
 

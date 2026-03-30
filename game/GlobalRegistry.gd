@@ -25,6 +25,9 @@ var events: Dictionary = {}		#see ES !
 var items: Dictionary = {}
 var itemsByTag: Dictionary = {}
 
+var recipes: Dictionary = {}
+var recipesByTag: Dictionary = {}
+
 var effects: Dictionary = {}
 var skills: Dictionary = {}
 var characters: Dictionary = {}
@@ -413,6 +416,43 @@ func createItem(ID: String)->ItemBase:
 		return null
 	var newItem = items[ID].new()
 	return newItem
+#endregion
+
+#region Recipes
+#path is file or directory
+func registerRecipe(moduleID:String,path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd":
+				registerRecipe(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item.new()
+	recipes[itemObject.getID()] = item
+	for tag in itemObject.getTags():
+		if(!recipesByTag.has(tag)):
+			recipesByTag[tag] = []
+		recipesByTag[tag].append(itemObject.getID())
+
+func getRecipe(ID: String)->Recipe:
+	if(!recipes.has(ID)):
+		Log.printerr("ERROR: recipe with the ID "+ID+" wasn't found")
+		return null
+	var newItem = recipes[ID].new()
+	return newItem
+	
+func getRecipesByTag(tags:Array)->Array:
+	var items:Array=[]
+	var itemsInstances:Array=[]
+	for tag in tags:
+		if(recipesByTag.has(tag)):
+			items=recipesByTag[tag]		#TODO filter items that have all tags (AND)
+	for item in items:
+		itemsInstances.append(getRecipe(item))
+	return itemsInstances
 #endregion
 
 #region effects

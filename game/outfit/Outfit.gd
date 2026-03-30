@@ -5,7 +5,12 @@ class_name Outfit extends Node
 var list:Array=[]	#[{item:x, slots:['Legs']}]
 var slots:Array[int]=[]	#see BodySlotEnum
 var wrefCharacter:WeakRef=null
-
+var user:Character:
+	set(value):
+		wrefCharacter=weakref(value)
+	get:
+		return(wrefCharacter.get_ref())
+		
 func getAllIds()->Array:
 	return(list.map(func(x):return(x.item.ID)))
 
@@ -67,7 +72,7 @@ func addItem(item:EquipmentBase)->Result:		#TODO force:bool=false?
 	#check if equipment is equipable
 	#TODO	result = this.canEquipSlot(_idx);                // check if slot is available for equip this
 	if(result.OK):
-		result = item.canEquip(wrefCharacter.get_ref())
+		result = item.canEquip(user)
 	if(result.OK):
 		for _slot in _idx:#check if the current equip can be unequipped
 			var oldId = getItemIdForSlot(_slot)
@@ -95,7 +100,7 @@ func addItem(item:EquipmentBase)->Result:		#TODO force:bool=false?
 		_item=item.duplicate()	#you might have multiple helmets in inventory, we need a separate instance	
 	#Todo currently we have 2 copies of equipment - 1 for wardrobe 1 for outfit otherwise this will not work
 	list.push_back({"item":_item, "slots":_item.slotUse})
-	result=_item.equip(wrefCharacter.get_ref());
+	result=_item.equip(user);
 	#this.postItemChange(_item.name,"equipped",""/*result.msg*/);
 	return(result)
 
@@ -120,7 +125,7 @@ func removeItem(ID:String, _force:bool=false)->Result:
 		#this.parent.Inv.addItem(_item);
 	else:
 		#this.parent.Wardrobe.addItem(_item)
-		wrefCharacter.get_ref().inventory.addItem(_item)
+		user.inventory.addItem(_item)
 	#this.postItemChange(ID,"removed",""/*result.msg*/);
 	#Todo delete _item;    //un-parent
 	return(result)

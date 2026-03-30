@@ -1,6 +1,8 @@
 class_name ListItem extends Control
 
 signal selected(path:String)
+signal show_tooltip(path:String)
+signal hide_tooltip(path:String)
 
 static var SceneListItem
 static func create_item(data)-> ListItem:
@@ -20,14 +22,15 @@ static func create_item(data)-> ListItem:
 	else:
 		Height = ThumbnailSize;
 		Width = (Height * image.get_width()) / float(image.get_height());
-
+	_Item.mouse_entered.connect(func(): _Item.show_tooltip.emit())
+	_Item.mouse_exited.connect(func(): _Item.hide_tooltip.emit())
 	image.resize(Width,Height)
 	_Item.texture=ImageTexture.create_from_image(image)
 	_Item.data=data
 
 	return _Item
-
-var data:ItemBase:
+####################################################################################
+var data:	#ItemBase:
 	set(value):
 		data=value
 		_refresh()

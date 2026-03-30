@@ -10,7 +10,12 @@ enum HIDE {NONE=0, NAME=1, VALUE=2, DURATION=4, ALL=255}	#bitmask !
 
 var ID:String="UNKNOWN"
 var uniqueID:int = -1
-var character:Character=null
+var wrefCharacter:WeakRef=null
+var user:Character:
+	set(value):
+		wrefCharacter=weakref(value)
+	get:
+		return(wrefCharacter.get_ref())
 var hidden:int=0
 var timeStart:int		#when the effect was first applied
 var timeLast:int = 0	#the last time the effect was executed again
@@ -21,7 +26,7 @@ var duration:int = 60*60	#after this time remove the effect; in turn for combat 
 #override this !
 func _init():
 	pass
-
+			
 #override this !
 func getName()->String:
 	return (self.getID())
@@ -67,8 +72,8 @@ func combine(_newEffect:Effect)->Effect:
 	return self
 
 func applyTo(_char:Character):
-	character=_char
-	character.effects.addItem(self)
+	user=_char
+	_char.effects.addItem(self)
 	self.timeStart=Global.main.getTime()
 	self.timeLast=timeStart
 	onApply()
@@ -87,12 +92,14 @@ func destroyMe():
 	if __destroyInProcess<=0:
 		onRemove()
 		__destroyInProcess=1
-		character.effects.removeItem(self)
+		user.effects.removeItem(self)
 		changed.emit(ID)
 		queue_free()
 
 func loadData(data):
+	#Note reassigning char is done in effectlist
 	uniqueID=data["UID"]
+	ID=data["ID"]
 	timeStart=data["start"]
 	duration=data["duration"]
 	timeLast=data["timeLast"]
@@ -105,6 +112,7 @@ func saveData()->Variant:
 		#"scene" : get_scene_file_path(),
 		#"parent" : get_parent().get_path(),
 		"UID":uniqueID,
+		"ID":ID,
 		"start":timeStart,
 		"duration":duration,
 		"timeLast":timeLast,

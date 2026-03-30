@@ -12,8 +12,28 @@ var characterName:String="unknown":
 
 func _ready() -> void:
 	pain_bar.text="pain"
-	fatigue_bar.text="fatigue"
+	pain_bar.setTint(Color.LIGHT_CORAL,Color.CORAL)
+	fatigue_bar.text="fat"
+	fatigue_bar.setTint(Color.LIGHT_SKY_BLUE,Color.ROYAL_BLUE)
 	lust_bar.text="lust"
+	lust_bar.setTint(Color.LIGHT_PINK,Color.HOT_PINK)
+	_apply_heights()
+
+func _on_size_changed():
+	# reapply if container resized or style changes
+	_apply_heights()
+
+func _apply_heights():
+	var bars = $HBoxContainer.get_children()
+	var max2:=0.0
+	for b in bars:
+		if not b is BarStat:
+			continue
+		max2=max(max2,b.max_value)
+	for b in bars:
+		if not b is BarStat:
+			continue
+		b.adjustHeight(max2)
 
 func on_stat_update(who:Character):
 	on_bust_update(who)
@@ -23,6 +43,7 @@ func on_stat_update(who:Character):
 	fatigue_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("lust")
 	lust_bar.setValue(_n.value,_n.ul)
+	_apply_heights()
 
 func on_effect_update(who:Character,effectID:String):
 	var _item=who.effects.getItemByID(effectID)

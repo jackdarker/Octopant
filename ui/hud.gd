@@ -65,6 +65,7 @@ func clearInput():
 func addButton(text:String,tooltip:String,code:Callable,check=null):
 	for bt:BaseButton in buttons.get_children():	#TODO more...page if to many buttons
 		#TODO favour undisabled button against disabled
+		var tooltip2=tooltip
 		if(!bt.visible): #choose the next unused button
 			bt.text=text
 			#bt.tooltip_text=tooltip
@@ -73,10 +74,10 @@ func addButton(text:String,tooltip:String,code:Callable,check=null):
 				var _res:Result=(check as Callable).call()
 				if !_res.OK:
 					bt.disabled=true
-					bt.tooltip_text=_res.Msg
+				tooltip2+=_res.Msg
 			bt.visible=true
 			bt.pressed.connect(code)
-			bt.mouse_entered.connect(Global.toolTip.showTooltip.bind(bt,text,tooltip))
+			bt.mouse_entered.connect(Global.toolTip.showTooltip.bind(bt,text,tooltip2))
 			bt.mouse_exited.connect(Global.toolTip.hideTooltip.bind(bt))
 			break
 	pass

@@ -15,8 +15,8 @@ func _on_bt_explore_pressed():
 
 func _on_bt_crab_pressed():
 	Global.main.runScene("interaction_scene",
-		[load("res://modules/default/interaction/dlg_pc_crab.gd"),
-		$TextureRect.texture],self.uniqueSceneID)
+		[load("res://modules/__default/interaction/dlg_pc_crab.gd"),
+		%bg_image.texture],self.uniqueSceneID)
 
 func _on_bt_fight_pressed():
 	var _setup=CombatSetup.new()

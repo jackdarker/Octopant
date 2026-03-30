@@ -222,5 +222,10 @@ func _on_hud_menu_requested() -> void:
 func _on_hud_inventory_requested() -> void:
 	$WndInventory.visible=true
 
+func _on_hud_crafting_requested(character:Character,type:String) -> void:
+	$WndCraft.character=character
+	$WndCraft.craftStation=type
+	$WndCraft.visible=true
+
 func _on_hud_map_requested() -> void:
 	$WndMap.visible=true

@@ -23,6 +23,9 @@ func _on_bt_sleep_pressed() -> void:
 	Global.main.gotoSleep()
 
 func _on_bt_craft_pressed() -> void:
+	Global.main._on_hud_crafting_requested(Global.pc,"Backpack")
+	
+func OBSOLETE_on_bt_craft_pressed() -> void:
 	Global.hud.clearInput()
 	Global.main.doTimeProcess(120*60)
 	Global.hud.say("You rummage through your collection of sticks and stones but have no idea how to connect them together.")

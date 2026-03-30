@@ -14,6 +14,9 @@ func _init()-> void :
 	items = [
 		"res://modules/__default/Item",
 	]
+	recipes = [
+		"res://modules/__default/recipe",
+	]
 	events = [
 		"res://modules/__default/event",		#dont forget to setup events in initGame !
 	]

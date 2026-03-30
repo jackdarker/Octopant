@@ -14,6 +14,6 @@ func react(_triggerID, _args)->bool:
 	return true
 	
 func canRun()->bool:
-	if(GR.getModuleFlag("Default","Explored_Beach",0)>5):
+	if(GR.getModuleFlag("Default","Explored_Beach",0)>5 && GR.getModuleFlag("Default","Found_Cliff",0)==0):
 		return true
 	return false

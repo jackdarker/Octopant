@@ -10,7 +10,7 @@ var events = []
 var effects = []
 var skills = []
 var characters = []
-
+var recipes = []
 
 var flagsCache = null
 
@@ -35,7 +35,10 @@ func register():
 	
 	for item in items:
 		GR.registerItem(ID,item)
-	
+		
+	for recipe in recipes:
+		GR.registerRecipe(ID,recipe)
+		
 	for event in events:
 		GR.registerEvent(ID,event)
 	

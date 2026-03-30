@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://yygx72tbd1yv" path="res://ui/bar_stat.gd" id="2_svxqm"]
 
 [sub_resource type="Gradient" id="Gradient_svxqm"]
-colors = PackedColorArray(0.7176471, 0.7176471, 0.7176471, 0.4745098, 0.7176471, 0.7176471, 0.7176471, 0.4745098)
+interpolation_mode = 1
+colors = PackedColorArray(0.61960787, 0.61960787, 0.61960787, 0.43529412, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_nx3wa"]
 gradient = SubResource("Gradient_svxqm")
 width = 20
 height = 128
-fill_to = Vector2(1, 1)
+fill_from = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_rbyyf"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
@@ -21,30 +22,53 @@ width = 20
 height = 128
 fill_from = Vector2(0, 1)
 
-[node name="barPain" type="TextureProgressBar"]
+[node name="barPain" type="Control"]
 self_modulate = Color(0.27450982, 0.34509805, 1, 1)
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
 offset_right = 20.0
-offset_bottom = 116.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 128)
 size_flags_horizontal = 0
-size_flags_vertical = 0
 theme = ExtResource("1_hytq8")
-value = 80.0
+script = ExtResource("2_svxqm")
+
+[node name="bar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(20, 128)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -128.0
+offset_right = 10.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(0, 128)
+value = 30.0
 fill_mode = 3
 nine_patch_stretch = true
 texture_under = SubResource("GradientTexture2D_nx3wa")
 texture_progress = SubResource("GradientTexture2D_3h3vf")
-script = ExtResource("2_svxqm")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_top = -3.0
-offset_right = 32.0
-offset_bottom = 20.0
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 1.1640625
+anchor_right = 0.75
+anchor_bottom = 1.1640625
+offset_left = -17.0
+offset_top = -23.0
+offset_right = 17.0
+grow_horizontal = 2
 grow_vertical = 0
 rotation = -1.5707964
 theme = ExtResource("1_hytq8")
 text = "Pain"
+metadata/_edit_use_anchors_ = true

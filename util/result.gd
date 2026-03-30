@@ -12,3 +12,6 @@ static func create(ok,msg)->Result:
 func setRes(ok,msg):
 	OK=ok
 	Msg=msg
+
+func And(res2:Result)->Result:
+	return Result.create(self.OK && res2.OK, self.Msg+"\n"+res2.Msg)

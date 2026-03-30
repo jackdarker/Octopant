@@ -56,7 +56,6 @@ func hasTags(_tags:Array)->bool:
 	var _res=true
 	for tag in _tags:
 		_res=_res && tags.has(tag)
-	
 	return(_res);
 
 
@@ -93,11 +92,15 @@ func doAction(_action:String,_target:Character):
 
 func getPrice():
 	return 30
-	
+
+var __destroyInProcess:int=0
 func destroyMe():
 	if(wrefInventory == null):
 		return
-	wrefInventory.get_ref().removeItem(self)
+	if __destroyInProcess<=0:
+		__destroyInProcess=1
+		wrefInventory.get_ref().removeItem(self)
+		__destroyInProcess=0
 
 func useCharge(_amount = 1):
 	#charges -= amount

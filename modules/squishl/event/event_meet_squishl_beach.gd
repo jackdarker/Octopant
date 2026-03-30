@@ -5,7 +5,7 @@ func _init():
 	ID="EventMeetSquishlBeach"
 
 func react(_triggerID, _args)->bool:
-	Global.hud.say("As you walk the beach you spot a ")
+	Global.hud.say("As you walk the beach you spot a squid sitting in a small pool of water.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Inspect closer","",_inspect,null)
 	return true

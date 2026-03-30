@@ -7,7 +7,12 @@ class_name EffectsList extends Node
 
 var items:Dictionary={}	# using dictionary, might be faster then array
 var changedCB:Array[Callable]=[]
-
+var wrefCharacter:WeakRef
+var user:Character:
+	set(value):
+		wrefCharacter=weakref(value)
+	get:
+		return(wrefCharacter.get_ref())
 # use effect.applyTo(target) instead !
 func addItem(item: Effect):
 	var _item=getItemByID(item.ID)
@@ -17,7 +22,7 @@ func addItem(item: Effect):
 		items[item.ID]=_item.combine(item)
 	else:
 		items[item.ID]=item
-	
+	items[item.ID].user=user
 	for cb in changedCB:
 		registerSignalItemChanged(cb,item.ID)
 

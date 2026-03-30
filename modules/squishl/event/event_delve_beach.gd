@@ -16,7 +16,7 @@ func react(_triggerID, _args)->bool:
 	return true
 	
 func canRun()->bool:
-	return true
+	return false
 	#return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
 
 func _ignore():
