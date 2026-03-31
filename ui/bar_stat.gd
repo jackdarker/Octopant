@@ -20,5 +20,5 @@ func setValue(v:float,max:float):
 	#self.text=self.text
 
 func adjustHeight(max2:float):
-	var maxH=self.size.y
-	$bar.scale.y=maxH/$bar.size.y*$bar.max_value/max2
+	var maxH=self.size.x
+	$bar.scale.x=maxH/$bar.size.x*$bar.max_value/max2

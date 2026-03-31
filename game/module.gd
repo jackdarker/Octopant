@@ -11,6 +11,7 @@ var effects = []
 var skills = []
 var characters = []
 var recipes = []
+var quests = []
 
 var flagsCache = null
 
@@ -50,6 +51,9 @@ func register():
 	
 	for character in characters:
 		GR.registerCharacter(ID,character)
+	
+	for quest in quests:
+		GR.registerQuest(ID,quest)
 
 #override this !
 func registerEventTriggers():

@@ -29,6 +29,9 @@ func _init()-> void :
 	characters = [
 		"res://modules/__default/character",
 	]
+	quests = [
+		"res://modules/__default/quest",
+	]
 
 func getFlags():
 	return {

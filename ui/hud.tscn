@@ -389,6 +389,7 @@ libraries = {
 
 [connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btInventory" to="." method="_on_bt_inventory_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btQuest" to="." method="_on_bt_quest_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btMap" to="." method="_on_bt_map_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btMenu" to="." method="_on_bt_menu_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/bt_hud_off" to="." method="_on_bt_hud_off_pressed"]

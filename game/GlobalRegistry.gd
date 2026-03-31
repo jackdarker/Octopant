@@ -28,6 +28,9 @@ var itemsByTag: Dictionary = {}
 var recipes: Dictionary = {}
 var recipesByTag: Dictionary = {}
 
+var quests: Dictionary = {}
+
+
 var effects: Dictionary = {}
 var skills: Dictionary = {}
 var characters: Dictionary = {}
@@ -270,6 +273,7 @@ func postInitModules():
 		var moduleObject = modules[moduleID]
 		moduleObject.postInit()
 
+
 func preInitModule(path: String):
 	var module = load(path)
 	var moduleObject = module.new()
@@ -390,7 +394,6 @@ func getSceneExtensions(sceneID: String, parent:Node)->Array[SceneExtension]:
 	
 #endregion
 
-
 #region Items
 #path is file or directory
 func registerItem(moduleID:String,path: String):
@@ -454,6 +457,31 @@ func getRecipesByTag(tags:Array)->Array:
 		itemsInstances.append(getRecipe(item))
 	return itemsInstances
 #endregion
+
+#region Quests
+#path is file or directory
+func registerQuest(moduleID:String,path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="tres":
+				registerQuest(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item as Quest#.new()
+	quests[itemObject.ID] = item
+
+func getQuest(ID: String)->Quest:
+	if(!quests.has(ID)):
+		Log.printerr("ERROR: quest with the ID "+ID+" wasn't found")
+		return null
+	var newItem = quests[ID]#.new()
+	return newItem
+	
+#endregion
+
 
 #region effects
 func registerEffect(moduleID:String,path: String):

@@ -1,8 +1,8 @@
 extends VBoxContainer
 
-@onready var pain_bar=$HBoxContainer/barPain
-@onready var fatigue_bar=$HBoxContainer/barFatigue
-@onready var lust_bar=$HBoxContainer/barLust
+@onready var pain_bar=$HBoxContainer/VBoxContainer/barPain
+@onready var fatigue_bar=$HBoxContainer/VBoxContainer/barFatigue
+@onready var lust_bar=$HBoxContainer/VBoxContainer/barLust
 @onready var listEffects=$listEffects
 
 var characterName:String="unknown":
@@ -24,7 +24,7 @@ func _on_size_changed():
 	_apply_heights()
 
 func _apply_heights():
-	var bars = $HBoxContainer.get_children()
+	var bars = $HBoxContainer/VBoxContainer.get_children()
 	var max2:=0.0
 	for b in bars:
 		if not b is BarStat:

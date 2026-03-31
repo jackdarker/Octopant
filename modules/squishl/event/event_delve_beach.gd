@@ -8,46 +8,24 @@ func _init():
 
 func react(_triggerID, _args)->bool:
 	var state=GR.getModuleFlag("Squishl","Delve_State",0)
-	if(state==1):
-		return false				#TODO this is broken
-	else:
-		Global.hud.say("As you walk the beach you spot a ")
-		Global.hud.addButton("Ignore it","",_ignore,null)
+	#if(state==1):
+	#	return false				#TODO this is broken
+	#else:
+	Global.hud.say("There is something shiny over there. But you would have to walk through the water and something might lurk below.")
+	Global.hud.addButton("Ignore it","",_ignore,null)
+	Global.hud.addButton("Walk into the water","",_moveOn,null)
 	return true
 	
 func canRun()->bool:
-	return false
+	return true
 	#return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
 
 func _ignore():
 	Global.hud.say("\n")
-	Global.hud.say("You quickly pass by, leaving the hapeless creature to its fate.")
-	GR.setModuleFlag("Squishl","Squishl_Saved",-1)
 	Global.main.getCurrentScene().continueScene()
 
-func _inspect():
+func _moveOn():
 	Global.hud.clearInput()
-	Global.hud.say("\n")
-	Global.hud.say("Some octopus got trapped in this pool, possibly last night when the storm throwed the waves further up the shore then ever.")
-	Global.hud.say("The creature might not survive for much longer as the water heats up by the sun.")
-	Global.hud.addButton("Ignore it","",_ignore,null)
-	Global.hud.addButton("Help","",_help,null)
-
-func _help():
-	Global.hud.clearInput()
-	Global.hud.say("\n")
-	Global.hud.say("Unfortunalty you dont have anything with you to catch the sqid and cary it down to the sea.")
-	Global.hud.say("You would need to use your hands and you arent sure what it could do to you. Have those things teeth?")
-	Global.hud.addButton("Leave it","",_ignore,null)
-	Global.hud.addButton("Use your hands","",_help2,null)
-
-func _help2():
-	Global.hud.clearInput()
-	Global.hud.clearOutput()
-	Global.hud.say("So, you kneel down and try to snatch the squid.")
-	Global.hud.say("Of course it trys to get away but it already seems to weak and you can get a hold of its rubbery, squishy body.")
-	Global.hud.say("Having a hard time to keep its squirming mass craddled to your chest, you quickly make your way down to the waves.")
-	Global.hud.say("Walking some steps into the now flat waves, you release the critter into the water. Just a second later the octopus dashs forth, deeper into the saving ocean.")
-	Global.hud.say("You wonder if the creature would have recognized your help.")
-	GR.setModuleFlag("Squishl","Squishl_Saved",1)
-	Global.main.getCurrentScene().continueScene()
+	Global.main.runScene("interaction_scene",
+		[load("res://modules/squishl/interaction/delve_beach.gd"),
+		null],Global.main.getCurrentScene().uniqueSceneID)

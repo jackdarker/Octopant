@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=7 format=3 uid="uid://dy652c5qbwa2a"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_pvw0v"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_ima7e"]
+[ext_resource type="Script" uid="uid://c33rbc77yrsub" path="res://game/quest/step/gather_item.gd" id="3_eemib"]
+
+[sub_resource type="Resource" id="Resource_hgrp3"]
+script = ExtResource("3_eemib")
+itemID = "seashell"
+title = "Find some seashell t the beach."
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_tcj3j"]
+script = ExtResource("3_eemib")
+itemID = "gel_green"
+title = "A bit of goo could be used to form a handle for the knife."
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_cu5wk"]
+script = ExtResource("3_eemib")
+itemID = "knife_seashell"
+title = "Craft the knife at your resting place."
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[resource]
+script = ExtResource("1_pvw0v")
+ID = "craft_knife"
+quest_name = "Craft a knife"
+quest_description = "You need something to defend yourself. "
+steps = Array[ExtResource("2_ima7e")]([SubResource("Resource_hgrp3"), SubResource("Resource_tcj3j"), SubResource("Resource_cu5wk")])
+metadata/_custom_type_script = "uid://0jbnqgdlwjeo"

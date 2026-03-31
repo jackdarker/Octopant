@@ -108,3 +108,7 @@ func _on_bt_hud_off_pressed() -> void:
 
 func _on_bt_map_pressed() -> void:
 	map_requested.emit()
+
+
+func _on_bt_quest_pressed() -> void:
+	log_requested.emit()

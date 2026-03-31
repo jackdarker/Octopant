@@ -2,6 +2,9 @@ class_name Inventory extends Node
 
 # something to store items in
 
+signal item_added(ID:String)
+signal item_removed(ID:String)
+
 var items:Array[ItemBase]=[]
 var wrefCharacter:WeakRef=null
 var user:Character:
@@ -24,7 +27,7 @@ func addItem(item: ItemBase):
 	items.append(item)
 	item.wrefInventory = weakref(self)
 	item.user=user
-	#item.amount=
+	item_added.emit(item.ID)
 
 func addItemID(itemID:String):
 	var newItem = GR.createItem(itemID)
@@ -39,6 +42,7 @@ func removeItem(item:ItemBase,_amount:int=1):
 		if item.amount<=0:
 			items.erase(item)
 			item.wrefInventory = null
+	item_removed.emit(item.ID)
 
 func removeItemID(itemID:String,_amount:int=1):
 	var _item=getItemByID(itemID)

@@ -13,14 +13,20 @@ func _ready() -> void:
 	Global.toolTip=$TooltipSystem
 	Global.main = self
 	Global.ES = EventSystem.new()
+	Global.QS =  QuestSystem.new()
 	Global.pc = Player.new()
 	$WndInventory.character=Global.pc
 	
 	Global.ES.registerEventTriggers()
+	# connect events from UI & logic
 	time_passed.connect(Global.hud.on_time_passed)
+	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
+	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
+	Global.hud.inventory_requested.connect(func(): $WndInventory.visible=true)
+	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
 	postLoad()
-	#todo intro
-	runScene("nav_beach")
+
+	runScene("nav_beach") 	#todo intro
 
 func runScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	defferedRunScene.call_deferred(ID,_args, parentSceneUniqueID )
@@ -195,6 +201,7 @@ func canSave()->bool:
 func loadData(data):
 	timeOfDay=data["time"]
 	currentDay=data["day"]
+	Global.QS.loadData(data["quests"])
 			
 func saveData()->Variant:
 	#Note: data["info"] used by save-UI !
@@ -202,6 +209,7 @@ func saveData()->Variant:
 		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getTime()),
 		"day":currentDay,
 		"time": timeOfDay,
+		"quests":Global.QS.saveData()
 	}
 	return(data)
 	
@@ -216,16 +224,8 @@ func postLoad():
 	Global.hud.on_pc_stat_update("pain",0)	#todo Global.pc.effects.forceUpdate()
 	
 #endregion
-func _on_hud_menu_requested() -> void:
-	$WndPause.visible=true
-
-func _on_hud_inventory_requested() -> void:
-	$WndInventory.visible=true
 
 func _on_hud_crafting_requested(character:Character,type:String) -> void:
 	$WndCraft.character=character
 	$WndCraft.craftStation=type
 	$WndCraft.visible=true
-
-func _on_hud_map_requested() -> void:
-	$WndMap.visible=true
