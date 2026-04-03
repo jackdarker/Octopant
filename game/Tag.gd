@@ -1,7 +1,7 @@
 extends Node
 class_name Tag
 
-
+#TODO
 # Check.new(Obj.getTags()).Or(All("blue","flat").Any("tasty","boring"),Not("fishy"))
 
 var tagsToCheck:Array[String]=[]

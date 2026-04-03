@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://4f7lty3kt4gj"]
+
+[ext_resource type="PackedScene" uid="uid://b0qurwpsffl61" path="res://ui/navigation_scene.tscn" id="1_r73wo"]
+[ext_resource type="Script" uid="uid://df8778e4c151h" path="res://modules/__default/world/dng_beach.gd" id="2_r73wo"]
+
+[node name="Scene" instance=ExtResource("1_r73wo")]
+script = ExtResource("2_r73wo")

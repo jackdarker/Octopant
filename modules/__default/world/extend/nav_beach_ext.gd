@@ -5,11 +5,12 @@ const sceneID="nav_beach"
 func on_enterScene():
 	parent_scene.set_bg(load("res://assets/images/nav_beach_sun.png"))
 	if (GR.getModuleFlag("Default","Found_Beach",0)<=0):
-		Global.hud.say("I found myself at a beach.")
+		Global.hud.say("You found yourself at a beach.")
 		GR.setModuleFlag("Default","Found_Beach",1)
 		Global.QS.start_quest(GR.getQuest("craft_knife"))
+		Global.QS.start_quest(GR.getQuest("find_locations1"))
 	else:
-		Global.hud.say("I found myself back at the beach.")
+		Global.hud.say("Visiting the the beach again.")
 
 func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):
@@ -40,4 +41,4 @@ func sunbathing():
 	Global.hud.clearOutput()
 	Global.hud.say("You lay down on the dry sand and expose yourself to the sun.")
 	Global.main.doTimeProcess(30*60)
-	parent_scene.addButton("Get up","",parent_scene.menu)
+	Global.hud.addButton("Get up","",parent_scene.menu)

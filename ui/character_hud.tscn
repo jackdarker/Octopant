@@ -45,6 +45,10 @@ layout_mode = 2
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
+[node name="barInsanity" parent="HBoxContainer/VBoxContainer" instance=ExtResource("3_3h3vf")]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
 [node name="barLust" parent="HBoxContainer/VBoxContainer" instance=ExtResource("3_3h3vf")]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2

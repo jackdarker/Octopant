@@ -4,6 +4,7 @@ class_name Player
 func _init():
 	super()
 	self.ID="Player"
+	status.addItem(Status.create(StatEnum.Insanity,0,0,30))
 	self.skills.addItem(GR.createSkill("Skill_Slash"))
 
 func post_sleep():

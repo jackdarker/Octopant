@@ -12,9 +12,13 @@ class_name Quest extends Resource
 @export_multiline var quest_description: String
 ## A brief description that outlines what must be done to complete the quest
 @export_multiline var quest_objective: String
+## is the quest visible (in Quest-Log & notifications)
+@export var hidden:= HIDE.NONE
 
 @export var steps: Array[QuestStep]
 @export var rewards: Array
+
+enum HIDE {NONE=0, NAME=1, ALL=255}
 
 ## Emitted by default when [method start] gets called.
 signal started
@@ -105,17 +109,18 @@ func saveData()->Variant:
 		_i+=1
 	var data ={"ID":ID,
 			"complete":objective_completed,
+			"hidden": hidden,
 			"steps":stepData}
 	return(data)
 
 func loadData(data:Dictionary):
 	objective_completed=data["complete"]
+	hidden = data["hidden"]
 	var _i:int=0
 	for step in steps:
 		step.loadData(data["steps"][str(_i)])	#TODO things get messed up if steps are shuffled in new versions
 		_i+=1
 		step.updated.connect(_update_step.bind(step))
-
 
 
 func _to_string() -> String:

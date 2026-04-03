@@ -22,10 +22,11 @@ func updateQuests():
 	
 	var bt:Button
 	for item in Global.QS.get_active_quests():
-		bt=Button.new()
-		bt.text=item.quest_name
-		bt.pressed.connect(viewQuest.bind(item.ID))
-		%lst_active.add_child(bt)
+		if item.hidden == Quest.HIDE.NONE:
+			bt=Button.new()
+			bt.text=item.quest_name
+			bt.pressed.connect(viewQuest.bind(item.ID))
+			%lst_active.add_child(bt)
 	for item in Global.QS.get_completed_quests():
 		bt=Button.new()
 		bt.text=item.quest_name
@@ -40,5 +41,5 @@ func viewQuest(ID:String):
 	for step in quest.steps:
 		text+="\n" #String.chr(13)+String.chr(10)
 		text+= "X " if step.completed else "O "
-		text+=step.title	
+		text+=step.title if (step.hidden==Quest.HIDE.NONE || step.completed) else "???" 	
 	%lbl_questdesc.text=text

@@ -53,13 +53,13 @@ func menu_back():
 	menu(menustack.pop_back())
 
 # override this ! 
-func on_button(_i:int):
-	pass
+#func on_button(_i:int):
+#	pass
 
 func navigate_home():
 	Global.main.runScene("nav_home")
 
 
-func show_msg():
-	msg.on_button.connect(on_button)
-	get_node("../../MessageHolder").add_child(msg)
+#func show_msg():
+#	msg.on_button.connect(on_button)
+#	get_node("../../MessageHolder").add_child(msg)

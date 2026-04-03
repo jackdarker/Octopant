@@ -2,6 +2,7 @@ extends VBoxContainer
 
 @onready var pain_bar=$HBoxContainer/VBoxContainer/barPain
 @onready var fatigue_bar=$HBoxContainer/VBoxContainer/barFatigue
+@onready var insanity_bar=$HBoxContainer/VBoxContainer/barInsanity
 @onready var lust_bar=$HBoxContainer/VBoxContainer/barLust
 @onready var listEffects=$listEffects
 
@@ -13,8 +14,10 @@ var characterName:String="unknown":
 func _ready() -> void:
 	pain_bar.text="pain"
 	pain_bar.setTint(Color.LIGHT_CORAL,Color.CORAL)
-	fatigue_bar.text="fat"
+	fatigue_bar.text="fatigue"
 	fatigue_bar.setTint(Color.LIGHT_SKY_BLUE,Color.ROYAL_BLUE)
+	insanity_bar.text="insanity"
+	insanity_bar.setTint(Color.BURLYWOOD,Color.GOLDENROD)
 	lust_bar.text="lust"
 	lust_bar.setTint(Color.LIGHT_PINK,Color.HOT_PINK)
 	_apply_heights()
@@ -41,6 +44,11 @@ func on_stat_update(who:Character):
 	pain_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("fatigue")
 	fatigue_bar.setValue(_n.value,_n.ul)
+	_n=who.getStat("insanity")
+	if(!_n):
+		insanity_bar.visible=false
+	else:
+		insanity_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("lust")
 	lust_bar.setValue(_n.value,_n.ul)
 	_apply_heights()

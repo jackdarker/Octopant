@@ -7,18 +7,14 @@ func _init():
 	ID="EventDelveBeach"
 
 func react(_triggerID, _args)->bool:
-	var state=GR.getModuleFlag("Squishl","Delve_State",0)
-	#if(state==1):
-	#	return false				#TODO this is broken
-	#else:
 	Global.hud.say("There is something shiny over there. But you would have to walk through the water and something might lurk below.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Walk into the water","",_moveOn,null)
 	return true
 	
 func canRun()->bool:
-	return true
-	#return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
+	var _x=GR.getModuleFlag("Squishl","Daily_Treasure",0)
+	return _x<1
 
 func _ignore():
 	Global.hud.say("\n")
@@ -26,6 +22,5 @@ func _ignore():
 
 func _moveOn():
 	Global.hud.clearInput()
-	Global.main.runScene("interaction_scene",
-		[load("res://modules/squishl/interaction/delve_beach.gd"),
-		null],Global.main.getCurrentScene().uniqueSceneID)
+	GR.setModuleFlag("Squishl","Delve_State",0)
+	Global.main.runScene("dng_beach",[],Global.main.getCurrentScene().uniqueSceneID)

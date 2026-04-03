@@ -1,5 +1,4 @@
-extends Node
-class_name MainScene
+class_name MainScene extends Node
 
 signal time_passed(_secondsPassed)
 
@@ -193,11 +192,21 @@ func gotoSleep():
 	startNewDay()
 	Global.pc.post_sleep()
 
+func defaultDefeat(scene):
+	Global.hud.clearOutput()
+	Global.hud.clearInput()
+	Global.hud.say("You lost")
+	Global.hud.addButton("Next","",
+		func():
+			Global.main.removeScene(scene)
+			Global.main.endCurrentScene()
+			)
+
+#region save/load
 #called by save-dialog
 func canSave()->bool:
 	return true
-
-#region save/load
+	
 func loadData(data):
 	timeOfDay=data["time"]
 	currentDay=data["day"]
@@ -218,6 +227,7 @@ func postLoad():
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"pain")		
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"fatigue")
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Lust)
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Insanity)
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)

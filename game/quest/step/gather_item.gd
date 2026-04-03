@@ -1,4 +1,4 @@
-class_name GatherItemsQuestStep extends QuestStep
+class_name QuestStepGatherItems extends QuestStep
 
 ## questStep to gather item in inventory
 

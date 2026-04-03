@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://bykkpmw4s63kr"]
+
+[ext_resource type="Script" uid="uid://27gxkaeehmlu" path="res://game/quest/step/has_flag.gd" id="1_crjtx"]
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_tl15q"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_s0n7i"]
+
+[sub_resource type="Resource" id="Resource_0y6lf"]
+script = ExtResource("1_crjtx")
+moduleID = "Default"
+flagID = "Found_Cliff"
+valueMin = 1
+title = "Find the cliff"
+hidden = 1
+metadata/_custom_type_script = "uid://27gxkaeehmlu"
+
+[sub_resource type="Resource" id="Resource_xx3fv"]
+script = ExtResource("1_crjtx")
+moduleID = "Default"
+flagID = "Found_DeepWoods"
+valueMin = 1
+title = "Find the forest"
+hidden = 1
+metadata/_custom_type_script = "uid://27gxkaeehmlu"
+
+[resource]
+script = ExtResource("1_tl15q")
+ID = "find_locations1"
+quest_name = "exploration #1"
+quest_description = "discover the areas around the beach"
+quest_objective = "explore the beach to find connected areas"
+steps = Array[ExtResource("2_s0n7i")]([SubResource("Resource_0y6lf"), SubResource("Resource_xx3fv")])
+metadata/_custom_type_script = "uid://27gxkaeehmlu"

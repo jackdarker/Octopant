@@ -2,6 +2,7 @@ class_name QuestStep extends Resource
 
 @export_multiline var title: String
 @export var completed: bool = false
+@export var hidden:=Quest.HIDE.NONE
 
 signal updated
 
@@ -15,7 +16,7 @@ func ready() -> void:
 
 
 func saveData() -> Dictionary:
-	return {"completed": completed}
+	return {"completed": completed, "hidden":hidden}
 
 
 func loadData(data: Dictionary) -> void:
