@@ -13,6 +13,10 @@ func _ready() -> void:
 	enterScene()
 	pass
 
+#override this
+func setupScene(_args:Array):
+	pass
+
 func enterScene():
 	Global.pc.location=self.sceneID
 	scene_ext=GR.getSceneExtensions(self.sceneID,self)
@@ -32,6 +36,10 @@ func continueScene():
 func set_bg(bg:Texture2D):
 	%bg_image.texture=bg
 
+func get_bg()->Texture2D:
+	return %bg_image.texture
+
+# menuid depends on the scene; usually "walk","explore","rest","craft"
 func menu(menuid:String):
 	var buttons:Array[SceneExtension.Button_Config]=[]
 	Global.hud.clearInput()
@@ -47,19 +55,11 @@ func menu(menuid:String):
 	
 	for bt in buttons:		#TODO if to many buttons make subpages
 		Global.hud.addButton(bt.text,bt.tooltip,bt.cb,bt.enabled)	
+	
 
 func menu_back():
 	menustack.pop_back()
 	menu(menustack.pop_back())
 
-# override this ! 
-#func on_button(_i:int):
-#	pass
-
 func navigate_home():
 	Global.main.runScene("nav_home")
-
-
-#func show_msg():
-#	msg.on_button.connect(on_button)
-#	get_node("../../MessageHolder").add_child(msg)

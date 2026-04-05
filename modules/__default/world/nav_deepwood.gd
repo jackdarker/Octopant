@@ -5,6 +5,7 @@ func _init() -> void:
 
 func enterScene():
 	super()
+	set_bg(load("res://assets/images/bg/nav_forest_sun.png"))
 	if (GR.getModuleFlag("Default","Found_DeepWoods",0)<=0):
 		Global.hud.say("I found myself in a dense forest.")
 		GR.setModuleFlag("Default","Found_DeepWoods",1)

@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctfaehavklyyf"]
+
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="1_xf1vp"]
+[ext_resource type="Script" uid="uid://buqalfmek4g1l" path="res://ui/bar_stat_bi.gd" id="2_xf1vp"]
+
+[sub_resource type="Gradient" id="Gradient_svxqm"]
+interpolation_mode = 1
+colors = PackedColorArray(0.61960787, 0.61960787, 0.61960787, 0.43529412, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nx3wa"]
+gradient = SubResource("Gradient_svxqm")
+width = 20
+height = 128
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_rbyyf"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3h3vf"]
+gradient = SubResource("Gradient_rbyyf")
+width = 20
+height = 128
+fill_from = Vector2(0, 1)
+
+[node name="barBi" type="Control"]
+self_modulate = Color(0.27450982, 0.34509805, 1, 1)
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_xf1vp")
+script = ExtResource("2_xf1vp")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 256.0
+offset_bottom = 20.0
+theme_override_constants/separation = 0
+
+[node name="barNeg" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 20)
+layout_mode = 2
+max_value = 30.0
+value = 10.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_nx3wa")
+texture_progress = SubResource("GradientTexture2D_3h3vf")
+metadata/_edit_use_anchors_ = true
+
+[node name="barPos" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 20)
+layout_mode = 2
+value = 70.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_nx3wa")
+texture_progress = SubResource("GradientTexture2D_3h3vf")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 34.0
+offset_bottom = 23.0
+theme = ExtResource("1_xf1vp")
+theme_override_colors/font_color = Color(4.9935653e-07, 0.19472194, 0.1956889, 1)
+text = "Pain"

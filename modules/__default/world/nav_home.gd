@@ -5,6 +5,7 @@ func _init() -> void:
 
 func enterScene():
 	super()
+	set_bg(load("res://assets/images/bg/nav_home_sun.png"))
 	Global.hud.addButton("go somewhere else...","",_on_bt_walk_pressed)
 	Global.hud.addButton("craft...","",_on_bt_craft_pressed)
 	Global.hud.addButton("sleep until morning","",_on_bt_sleep_pressed)

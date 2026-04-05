@@ -1,9 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=21 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
+[ext_resource type="Texture2D" uid="uid://8vs1f4ky84fr" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_546lt"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spcu4"]
+bg_color = Color(0.6, 0.6, 0.6, 0.59607846)
 
 [sub_resource type="Theme" id="Theme_276te"]
 
@@ -125,7 +127,7 @@ theme_override_constants/separation = 0
 [node name="LeftPanel" type="Panel" parent="HBoxContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_546lt")
+theme_override_styles/panel = SubResource("StyleBoxFlat_spcu4")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftPanel"]
 layout_mode = 1
@@ -221,6 +223,7 @@ theme_override_constants/margin_right = 20
 layout_mode = 2
 
 [node name="list_enemys" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -250,11 +253,22 @@ size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_7ihmi")
-text = "Her test vgbnf
+bbcode_enabled = true
+text = "Her test vgbnfYou found a [b]pretty seaschell[/b]
+[color=green]test[/color]
 Her test vgbnf
+Her test vgbnf
+[color=green]test[/color]
 Her test vgbnf"
 fit_content = true
 scroll_following = true
+
+[node name="img_pic" type="TextureRect" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_546lt")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Panel" type="Panel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 clip_contents = true

@@ -30,7 +30,10 @@ visible = false
 visible = false
 
 [node name="WndCraft" parent="." instance=ExtResource("6_wqhqq")]
+visible = false
 
 [node name="WndMap" parent="." instance=ExtResource("6_oq18f")]
+visible = false
 
 [node name="WndQuest" parent="." instance=ExtResource("8_8x7y4")]
+visible = false

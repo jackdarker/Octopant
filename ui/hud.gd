@@ -11,9 +11,12 @@ enum HUDMODE { Explore=0, Combat=1}
 	set(value):
 		if(value==HUDMODE.Combat):
 			enemyList.get_parent_control().visible=true
+			picture.visible=false
 		else:
 			Util.delete_children(enemyList)	#cleanup list after combat
 			enemyList.get_parent_control().visible=false
+			picture.texture=null
+			picture.visible=true
 		hudMode=value
 
 @onready var fullhud=$HBoxContainer
@@ -21,6 +24,7 @@ enum HUDMODE { Explore=0, Combat=1}
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
+@onready var picture=$HBoxContainer/Panel/MarginContainer/VBoxContainer/img_pic
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
 @onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
 
@@ -38,11 +42,16 @@ func on_pc_effect_update(_key):
 	playerHud.on_effect_update(Global.pc,_key)
 	
 func say(text):
-	msg.text=msg.text+"\n"+text
+	msg.append_text("\n"+text)
 	#msg.typewrite("\n"+text)	doeant work with keeping old text
+
+func show_picture(_texture:Texture):
+	picture.texture=_texture
+	picture.visible=true
 
 func clearOutput():
 	$img_fade.visible=false
+	picture.visible=false
 	msg.text=""
 
 # hide buttons

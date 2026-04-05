@@ -3,7 +3,7 @@ extends SceneExtension
 const sceneID="nav_beach"
 
 func on_enterScene():
-	parent_scene.set_bg(load("res://assets/images/nav_beach_sun.png"))
+	parent_scene.set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
 	if (GR.getModuleFlag("Default","Found_Beach",0)<=0):
 		Global.hud.say("You found yourself at a beach.")
 		GR.setModuleFlag("Default","Found_Beach",1)

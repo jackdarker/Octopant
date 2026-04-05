@@ -7,7 +7,7 @@ func _init() -> void:
 func _on_bt_explore_pressed():
 	Global.hud.clearInput()
 	Global.main.doTimeProcess(30*60)
-	Global.pc.getStat(StatEnum.Fatigue).modify(20)
+	Global.pc.getStat(StatEnum.Fatigue).modify(10)
 	GR.increaseModuleFlag("Default","Explored_Beach",1)
 	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_beach_explore",[]):
 		Global.hud.say("Nothing was found")
@@ -29,7 +29,7 @@ func _on_bt_fight_pressed():
 func _requiresFatigue():
 	var _res:Result=Result.create(true,"")
 	var _fat=Global.pc.getStat(StatEnum.Fatigue)
-	if((_fat.ul-_fat.value)<20):
+	if((_fat.ul-_fat.value)<10):
 		_res.OK=false
 		_res.Msg="You are to tired for this."
 	return _res

@@ -32,11 +32,10 @@ func _apply_heights():
 	for b in bars:
 		if not b is BarStat:
 			continue
-		max2=max(max2,b.max_value)
+		max2=max(max2,b.get_max_value())
 	for b in bars:
-		if not b is BarStat:
-			continue
-		b.adjustHeight(max2)
+		if b.has_method("adjustHeight"):
+			b.adjustHeight(max2)
 
 func on_stat_update(who:Character):
 	on_bust_update(who)

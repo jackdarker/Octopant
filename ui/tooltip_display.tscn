@@ -68,6 +68,7 @@ layout_mode = 2
 
 [node name="lb_body" type="RichTextLabel" parent="Panel/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_r80qv")
 text = "sdfsfsökljsädajlkgja ölgöldagj sdfsfsökljsädajlkgja ölgöldagj sdfsfsökljsädajlkgja ölgöldagj sdfsfsökljsädajlkgja ölgöldagj "
 fit_content = true
 

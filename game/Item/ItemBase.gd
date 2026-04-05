@@ -60,7 +60,7 @@ func hasTags(_tags:Array)->bool:
 
 
 #override this !
-func getInventoryImage():
+func getInventoryImage()->String:
 	return "res://assets/images/icons/ic_unknown.svg"
 
 #override this !

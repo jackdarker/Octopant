@@ -1,5 +1,7 @@
 class_name MainScene extends Node
 
+# the MAIN-scene of the game that holds references to the actual story-scene and windows
+
 signal time_passed(_secondsPassed)
 
 var sceneStack:Array=[]
@@ -27,11 +29,12 @@ func _ready() -> void:
 
 	runScene("nav_beach") 	#todo intro
 
+#region scene
 func runScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	defferedRunScene.call_deferred(ID,_args, parentSceneUniqueID )
 
 func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
-	var actual_scene = getCurrentScene()
+	var actual_scene:DefaultScene = getCurrentScene()
 	if(actual_scene && parentSceneUniqueID!=actual_scene.uniqueSceneID):
 		sceneStack.erase(actual_scene)
 		actual_scene.free()
@@ -48,6 +51,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 		actual_scene.setupScene(_args[0])
 	else:
 		actual_scene = GR.createScene(ID)
+		actual_scene.setupScene(_args)
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
@@ -103,7 +107,9 @@ func clearSceneStack():
 	for scene in sceneStack:
 		scene.queue_free()
 	sceneStack = []
+#endregion
 
+#region Time
 func getTime()->int:
 	return timeOfDay
 
@@ -148,9 +154,9 @@ func doTimeProcess(_seconds:int):
 		currentDay += 1
 		copySeconds-= 24*60*60
 		
-		
 	timeOfDay = copySeconds
 	emit_signal("time_passed", _seconds)
+	Global.main.checkForGameOver()	#TODO here?
 
 func processTimeUntil(newseconds):
 	if(timeOfDay >= newseconds):			#todo wrap around?
@@ -192,15 +198,30 @@ func gotoSleep():
 	startNewDay()
 	Global.pc.post_sleep()
 
+#endregion
+
 func defaultDefeat(scene):
-	Global.hud.clearOutput()
-	Global.hud.clearInput()
-	Global.hud.say("You lost")
-	Global.hud.addButton("Next","",
-		func():
-			Global.main.removeScene(scene)
-			Global.main.endCurrentScene()
-			)
+	Global.main.clearSceneStack()
+	Global.main.runScene("nav_home")
+			
+func defaultGameOver(scene):
+	Global.main.clearSceneStack()
+	Global.main.runScene("nav_gameover")
+
+			
+# call this in scenes to check and handle game over state
+func checkForGameOver():
+	var _n =Global.pc.getStat(StatEnum.Pain)
+	if _n.atUL:		#Pain -> game over
+		defaultGameOver(Global.main.getCurrentScene())
+		
+	_n =Global.pc.getStat(StatEnum.Insanity)
+	if _n.atUL || _n.atLL:	#Sanity -> Game over
+		defaultGameOver(Global.main.getCurrentScene())
+		
+	_n =Global.pc.getStat(StatEnum.Fatigue)
+	if _n.atUL:		#Pass out -> Teleport
+		defaultDefeat(Global.main.getCurrentScene())
 
 #region save/load
 #called by save-dialog

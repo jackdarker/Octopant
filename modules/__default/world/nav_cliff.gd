@@ -5,6 +5,7 @@ func _init() -> void:
 
 func enterScene():
 	super()
+	set_bg(load("res://assets/images/bg/nav_cliff_sun.png"))
 	if (GR.getModuleFlag("Default","Found_Cliff",0)<=0):
 		Global.hud.say("Your walk at the beach finally brings you to a high cliff.")
 		GR.increaseModuleFlag("Default","Found_Cliff",1)

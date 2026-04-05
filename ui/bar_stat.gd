@@ -6,9 +6,8 @@ class_name BarStat extends Control
 		$Label.text=text # +"   "+ str(value)+"/"+str(max_value)
 		#TODO display numbers on big bars?
 
-var max_value:float:
-	get():
-		return $bar.max_value
+func get_max_value()->float:
+	return $bar.max_value
 
 func setTint(under:Color,progress:Color):
 	$bar.tint_under=under
@@ -17,7 +16,6 @@ func setTint(under:Color,progress:Color):
 func setValue(v:float,max:float):
 	$bar.max_value=max
 	$bar.value=v
-	#self.text=self.text
 
 func adjustHeight(max2:float):
 	var maxH=self.size.x

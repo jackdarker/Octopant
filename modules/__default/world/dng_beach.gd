@@ -17,7 +17,7 @@ func enterScene():
 	#	if ext.has_method("on_enterScene"):			#TODO use extension?
 	#		ext.on_enterScene()
 	#menu("")
-	set_bg(load("res://assets/images/nav_beach_sun.png"))
+	set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
 	var room=GR.getModuleFlag("Squishl","Delve_State",0)
 	if (room<=1):
 		Global.hud.say("You walk into the water. There is something around your feet...")

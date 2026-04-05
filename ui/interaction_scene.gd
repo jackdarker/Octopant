@@ -12,8 +12,6 @@ var enabled_buttons : Array[Button] = []
 
 func _ready() -> void:
 	if(back_image):
-		#var _image= StyleBoxTexture.new()
-		#_image.texture=load("res://assets/images/nav_beach_sun.png")
 		$".".add_theme_stylebox_override("normal",back_image)
 	dialogue_engine = dialogue_gdscript.new()
 	#dialogue_engine.dialogue_started.connect(__on_dialogue_started)
