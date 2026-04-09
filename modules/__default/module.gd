@@ -41,7 +41,8 @@ func getFlags():
 		"Explored_Beach": flag(FlagType.Number),
 		"Explored_Cliff": flag(FlagType.Number),
 		"Explored_DeepWoods": flag(FlagType.Number),
-		"FaintMessage": flag(FlagType.Text)
+		"FaintMessage": flag(FlagType.Text),
+		"FatigueHigh":	flag(FlagType.Number),
 		}
 
 func initGame():

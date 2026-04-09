@@ -15,6 +15,24 @@ static func create(_ID:StringName,_value:float,_ll:float,_ul:float)->Status:
 
 var ID:String="UNKNOWN"
 var value:float=0
+var value_percent:float:
+	set(v):
+		if(v>=0):
+			value = min(ul,max(ll,v*ul/100.0))
+		else:
+			value = min(ul,max(ll,v*ll/-100.0))	
+	get():
+		# ll	v	ul	perc
+		# 0		20	60	33
+		# -30	6	60	10
+		# -30	-15	30	-50
+		# 20	30	40	50	or 75 ??	#TODO
+		# -50	-20	-10	-25	or -45??
+		if(value>=0):
+			return (100.0*value/ul)
+		else:
+			return (-100.0*value/ll)
+			
 var ll:float= -100	#lower limit
 var ul:float= 100	#upper limit
 var atUL:bool:

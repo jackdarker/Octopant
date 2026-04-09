@@ -1,4 +1,4 @@
-extends "res://ui/default_scene.gd"
+class_name NavigationScene extends "res://ui/default_scene.gd"
 
 # shows a view with buttons to explore or move on
 
@@ -23,6 +23,9 @@ func enterScene():
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
+	if(!self.sceneID.begins_with("vis_")):
+		if(Global.main.playerSpecialScene()):
+			return
 	for ext in scene_ext:
 		if ext.has_method("on_enterScene"):
 			ext.on_enterScene()
@@ -52,6 +55,9 @@ func menu(menuid:String):
 	for ext in scene_ext:
 		if ext.has_method("get_buttons"):
 			buttons=ext.get_buttons(menuid,buttons)
+	
+	if(menuid=="" && buttons.size()==0):	#fallback if no extension
+		Global.hud.addButton("Next","",Global.main.removeScene.bind(self))
 	
 	for bt in buttons:		#TODO if to many buttons make subpages
 		Global.hud.addButton(bt.text,bt.tooltip,bt.cb,bt.enabled)	

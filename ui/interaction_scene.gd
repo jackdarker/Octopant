@@ -12,7 +12,7 @@ var enabled_buttons : Array[Button] = []
 
 func _ready() -> void:
 	if(back_image):
-		$".".add_theme_stylebox_override("normal",back_image)
+		set_bg(back_image)
 	dialogue_engine = dialogue_gdscript.new()
 	#dialogue_engine.dialogue_started.connect(__on_dialogue_started)
 	dialogue_engine.dialogue_continued.connect(__on_dialogue_continued)
@@ -23,6 +23,9 @@ func _ready() -> void:
 func _input(p_input_event : InputEvent) -> void:
 	if p_input_event.is_action_pressed(&"ui_accept"):
 		dialogue_engine.advance()
+
+func set_bg(bg:Texture2D):
+	%bg_image.texture=bg
 
 func __displayImage(where,path):
 	var _texture=Texture.new()

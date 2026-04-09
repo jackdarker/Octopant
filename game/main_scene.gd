@@ -55,8 +55,9 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
-	get_node("Scene").add_child(actual_scene)
 	sceneStack.append(actual_scene)
+	get_node("Scene").add_child(actual_scene)
+	
 
 func removeScene(scene, args = []):
 	defferedRemoveScene.call_deferred(scene,args)
@@ -107,6 +108,21 @@ func clearSceneStack():
 	for scene in sceneStack:
 		scene.queue_free()
 	sceneStack = []
+
+func playerSpecialScene()->bool:
+	#TODO here we can place checks to visualize state change of player
+	#this is called when starting a usual nav_scene and injects a proper visual scene
+	#afterwards it returns to the nav_scene again. This could trigger another visual scene and cause a loop!
+	#Todo ho make this moddable? use EventSystem instead?
+	var _ret:bool=false
+	var _bev=Global.pc.getStat(StatEnum.Lust).value_percent
+	if(_bev>=50 && GR.getModuleFlag("Default","FatigueHigh",0)<50):
+		_ret=true
+		runScene("vis_stat",[],getCurrentScene().uniqueSceneID)
+	GR.setModuleFlag("Default","FatigueHigh",_bev)
+		
+	return _ret
+
 #endregion
 
 #region Time

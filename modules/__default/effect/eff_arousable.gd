@@ -7,7 +7,7 @@ func processTime(_delta:int):
 	timeDelta=timeDelta+_delta
 	if(timeDelta>=3600):	#tick every 1h
 		@warning_ignore("integer_division")
-		user.status.getItemByID(StatEnum.Lust).modify(5*timeDelta/3600)
+		user.status.getItemByID(StatEnum.Lust).modify(15*timeDelta/3600)
 		timeLast=timeDelta+timeLast
 		duration-=timeDelta
 		timeDelta=0

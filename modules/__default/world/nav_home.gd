@@ -3,8 +3,8 @@ extends "res://ui/navigation_scene.gd"
 func _init() -> void:
 	sceneID="nav_home"
 
-func enterScene():
-	super()
+func enterScene2():
+	#super()
 	set_bg(load("res://assets/images/bg/nav_home_sun.png"))
 	Global.hud.addButton("go somewhere else...","",_on_bt_walk_pressed)
 	Global.hud.addButton("craft...","",_on_bt_craft_pressed)

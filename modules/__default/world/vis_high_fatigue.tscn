@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://vgwpdat7k7ke"]
+
+[ext_resource type="Script" uid="uid://xyoy0jy2thl5" path="res://ui/navigation_scene.gd" id="1_fsmkl"]
+
+[node name="VisHighFatigue" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_fsmkl")
+metadata/_custom_type_script = "uid://xyoy0jy2thl5"
