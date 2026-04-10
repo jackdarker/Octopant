@@ -1,18 +1,19 @@
-extends "res://ui/default_scene.gd"
+class_name InteractionScene extends NavigationScene
 
 
 # this scene runs a dialog between PC & NPC 
 # using dialog engine
 
 @export var back_image:Texture=null		#background-image, default color if null
-@export var dialogue_gdscript : GDScript = null	#dialog-script
+@export var dialogue_gdscript  = null	#dialog-script
 
 var dialogue_engine : DialogueEngine = null
 var enabled_buttons : Array[Button] = []
 
-func _ready() -> void:
+func _ready_old() -> void:
 	if(back_image):
 		set_bg(back_image)
+	Global.hud.hudMode=Hud.HUDMODE.Interaction
 	dialogue_engine = dialogue_gdscript.new()
 	#dialogue_engine.dialogue_started.connect(__on_dialogue_started)
 	dialogue_engine.dialogue_continued.connect(__on_dialogue_continued)
@@ -20,12 +21,22 @@ func _ready() -> void:
 	dialogue_engine.dialogue_canceled.connect(__on_dialogue_canceled)
 	dialogue_engine.advance()
 
-func _input(p_input_event : InputEvent) -> void:
-	if p_input_event.is_action_pressed(&"ui_accept"):
-		dialogue_engine.advance()
+func enterScene():
+	Global.hud.hudMode=Hud.HUDMODE.Interaction
+	Global.hud.visible=true
+	Global.hud.clearOutput()
+	Global.hud.clearInput()
+	scene_ext=GR.getSceneExtensions(dialogue_gdscript,self)
+	for ext in scene_ext:
+		if ext.has_method("on_enterScene"):
+			ext.on_enterScene()
+	menu("")
+#func _input(p_input_event : InputEvent) -> void:
+#	if p_input_event.is_action_pressed(&"ui_accept"):
+#		dialogue_engine.advance()
 
-func set_bg(bg:Texture2D):
-	%bg_image.texture=bg
+#func set_bg(bg:Texture2D):
+#	%bg_image.texture=bg
 
 func __displayImage(where,path):
 	var _texture=Texture.new()

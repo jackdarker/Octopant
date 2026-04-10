@@ -42,7 +42,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	print("Starting scene "+ID)
 	#var s = ResourceLoader.load(path)
 	if(ID=="interaction_scene"):
-		Global.hud.visible=false
+		#Global.hud.visible=false
 		actual_scene=load("res://ui/interaction_scene.tscn").instantiate()
 		actual_scene.dialogue_gdscript=_args[0]
 		actual_scene.back_image=_args[1]
@@ -50,6 +50,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 		actual_scene=load("res://ui/combat_scene.tscn").instantiate()
 		actual_scene.setupScene(_args[0])
 	else:
+		Global.hud.hudMode=Hud.HUDMODE.Explore
 		actual_scene = GR.createScene(ID)
 		actual_scene.setupScene(_args)
 	if(parentSceneUniqueID >= 0):

@@ -1,11 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=15 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_7ihmi"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
 [ext_resource type="Texture2D" uid="uid://8vs1f4ky84fr" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spcu4"]
-bg_color = Color(0.6, 0.6, 0.6, 0.59607846)
 
 [sub_resource type="Theme" id="Theme_276te"]
 
@@ -15,25 +13,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0.59607846)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ihmi"]
 bg_color = Color(0.38431373, 0.38431373, 0.38431373, 0.8627451)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_546lt"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q43x7"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_en2x2"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_srpbi"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1v5rv"]
-bg_color = Color(0.73384637, 0.44077763, 0.9599053, 1)
-
-[sub_resource type="Theme" id="Theme_7ihmi"]
-Panel/styles/panel = SubResource("StyleBoxFlat_546lt")
-RichTextLabel/colors/default_color = Color(0.17641911, 0.17641908, 0.17641908, 1)
-RichTextLabel/styles/background = SubResource("StyleBoxFlat_q43x7")
-RichTextLabel/styles/fill = SubResource("StyleBoxFlat_en2x2")
-RichTextLabel/styles/focus = SubResource("StyleBoxFlat_srpbi")
-RichTextLabel/styles/normal = SubResource("StyleBoxFlat_1v5rv")
 
 [sub_resource type="Gradient" id="Gradient_276te"]
 offsets = PackedFloat32Array(0, 0.8933333)
@@ -122,12 +101,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="LeftPanel" type="Panel" parent="HBoxContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_spcu4")
+theme = ExtResource("2_7ihmi")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftPanel"]
 layout_mode = 1
@@ -206,6 +186,7 @@ text = "Hide Hud"
 [node name="Panel" type="Panel" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_276te")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel"]
@@ -215,17 +196,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="list_enemys" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="HFlowContainer" type="HFlowContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys"]
 layout_mode = 2
@@ -246,10 +230,12 @@ layout_mode = 2
 [node name="txt_main" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_7ihmi")
@@ -266,6 +252,7 @@ scroll_following = true
 [node name="img_pic" type="TextureRect" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 texture = ExtResource("3_546lt")
 expand_mode = 1
 stretch_mode = 4
@@ -274,7 +261,7 @@ stretch_mode = 4
 clip_contents = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
-theme = SubResource("Theme_7ihmi")
+theme = ExtResource("2_7ihmi")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel"]
 layout_mode = 1

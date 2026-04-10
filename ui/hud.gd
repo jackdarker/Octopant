@@ -5,14 +5,21 @@ signal log_requested
 signal map_requested
 signal inventory_requested
 
-enum HUDMODE { Explore=0, Combat=1}
+enum HUDMODE { Explore=0, Combat=1, Interaction=2}
 
 @export var hudMode:HUDMODE=HUDMODE.Explore:
 	set(value):
-		if(value==HUDMODE.Combat):
+		if(value==HUDMODE.Interaction):
+			$HBoxContainer/LeftPanel.visible=false
+			Util.delete_children(enemyList)	#cleanup list after combat
+			enemyList.get_parent_control().visible=false
+			picture.texture=null
+			picture.visible=true
+		elif(value==HUDMODE.Combat):
 			enemyList.get_parent_control().visible=true
 			picture.visible=false
 		else:
+			$HBoxContainer/LeftPanel.visible=true
 			Util.delete_children(enemyList)	#cleanup list after combat
 			enemyList.get_parent_control().visible=false
 			picture.texture=null

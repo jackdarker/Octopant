@@ -14,7 +14,7 @@ class Button_Config:
 		cb=_cb
 		enabled=_enabled
 
-var parent_scene
+var parent_scene:DefaultScene
 
 func on_enterScene():
 	pass
@@ -22,4 +22,6 @@ func on_enterScene():
 # called when a menu is built
 func get_buttons(menuid:String,buttons:Array)->Array:
 	return(buttons)
-	
+
+func cb_menu(menuID:String,no_back:bool=false)->Callable:
+	return parent_scene.menu.bind(menuID,no_back)

@@ -18,11 +18,12 @@ func setupScene(_args:Array):
 	pass
 
 func enterScene():
+	Global.hud.hudMode=Hud.HUDMODE.Explore
 	Global.pc.location=self.sceneID
-	scene_ext=GR.getSceneExtensions(self.sceneID,self)
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
+	scene_ext=GR.getSceneExtensions(self.sceneID,self)
 	if(!self.sceneID.begins_with("vis_")):
 		if(Global.main.playerSpecialScene()):
 			return
@@ -43,10 +44,10 @@ func get_bg()->Texture2D:
 	return %bg_image.texture
 
 # menuid depends on the scene; usually "walk","explore","rest","craft"
-func menu(menuid:String):
+func menu(menuid:String,no_back:=false):
 	var buttons:Array[SceneExtension.Button_Config]=[]
 	Global.hud.clearInput()
-	if menuid!="":
+	if menuid!="" && !no_back:
 		menustack.push_back(menuid)
 		Global.hud.addButton("back","",menu_back)
 	else:
@@ -57,6 +58,7 @@ func menu(menuid:String):
 			buttons=ext.get_buttons(menuid,buttons)
 	
 	if(menuid=="" && buttons.size()==0):	#fallback if no extension
+		Log.print("Warning: no buttons in scene="+sceneID+" menuid="+menuid)
 		Global.hud.addButton("Next","",Global.main.removeScene.bind(self))
 	
 	for bt in buttons:		#TODO if to many buttons make subpages

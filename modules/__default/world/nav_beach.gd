@@ -17,8 +17,8 @@ func _on_bt_crab_pressed():
 	var x:Image=%bg_image.texture.get_image()
 	x.resize_to_po2()
 	var y:ImageTexture = ImageTexture.create_from_image(x)
-	Global.main.runScene("interaction_scene",
-		[load("res://modules/__default/interaction/dlg_pc_crab.gd"),
+	Global.main.runScene("interaction_scene",["dlg_pc_crab",
+		#[load("res://modules/__default/interaction/dlg_pc_crab.gd"),
 		y],self.uniqueSceneID)
 
 func _on_bt_fight_pressed():
