@@ -9,21 +9,19 @@ enum HUDMODE { Explore=0, Combat=1, Interaction=2}
 
 @export var hudMode:HUDMODE=HUDMODE.Explore:
 	set(value):
+		show_picture_center(null)
+		show_picture_left(null)
+		show_picture_right(null)
 		if(value==HUDMODE.Interaction):
 			$HBoxContainer/LeftPanel.visible=false
 			Util.delete_children(enemyList)	#cleanup list after combat
 			enemyList.get_parent_control().visible=false
-			picture.texture=null
-			picture.visible=true
 		elif(value==HUDMODE.Combat):
 			enemyList.get_parent_control().visible=true
-			picture.visible=false
 		else:
 			$HBoxContainer/LeftPanel.visible=true
 			Util.delete_children(enemyList)	#cleanup list after combat
 			enemyList.get_parent_control().visible=false
-			picture.texture=null
-			picture.visible=true
 		hudMode=value
 
 @onready var fullhud=$HBoxContainer
@@ -31,7 +29,9 @@ enum HUDMODE { Explore=0, Combat=1, Interaction=2}
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
 @onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
-@onready var picture=$HBoxContainer/Panel/MarginContainer/VBoxContainer/img_pic
+@onready var pictureC=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_C
+@onready var pictureL=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_L
+@onready var pictureR=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_R
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
 @onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
 
@@ -52,13 +52,20 @@ func say(text):
 	msg.append_text("\n"+text)
 	#msg.typewrite("\n"+text)	doeant work with keeping old text
 
-func show_picture(_texture:Texture):
-	picture.texture=_texture
-	picture.visible=true
+func show_picture_center(_texture:Texture):
+	pictureC.texture=_texture
+	pictureC.visible=true if _texture!=null else false
+
+func show_picture_left(_texture:Texture):
+	pictureL.texture=_texture
+	pictureL.visible=true if _texture!=null else false
+
+func show_picture_right(_texture:Texture):
+	pictureR.texture=_texture
+	pictureR.visible=true if _texture!=null else false
 
 func clearOutput():
 	$img_fade.visible=false
-	picture.visible=false
 	msg.text=""
 
 # hide buttons

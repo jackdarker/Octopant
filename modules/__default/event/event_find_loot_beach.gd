@@ -1,5 +1,4 @@
 extends EventBase
-class_name EventFindLootBeach
 
 # an event that gives the player some loot
 
@@ -26,12 +25,12 @@ func _dig():
 	if(i>50):
 		var _item=GR.createItem("vial_empty")
 		Global.hud.say("You found some [b]empty glass-vial[/b].")
-		Global.hud.show_picture(load(_item.getInventoryImage()))
+		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
 	elif(i>10):
 		var _item=GR.createItem("seashell")
 		Global.hud.say("You found a [b]pretty seaschell[/b].")
-		Global.hud.show_picture(load(_item.getInventoryImage()))
+		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
 	else:
 		Global.hud.say("There is nothing.")

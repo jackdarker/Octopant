@@ -39,13 +39,14 @@ func enterScene():
 #	%bg_image.texture=bg
 
 func __displayImage(where,path):
-	var _texture=Texture.new()
+	var _texture:Texture=null
 	if path!="":
 		_texture= load(path)
 	if(where==1):
-		%img_char_1.texture=_texture
+		#%img_char_1.texture=_texture
+		Global.hud.show_picture_left(_texture)
 	else:
-		%img_char_2.texture=_texture
+		Global.hud.show_picture_right(_texture)
 
 func __on_dialogue_continued(p_dialogue_entry : DialogueEntry) -> void:
 	var label : RichTextLabel = RichTextLabel.new()

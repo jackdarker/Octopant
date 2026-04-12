@@ -53,4 +53,4 @@ func initGame():
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventHurtBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathDeepWoods"),"nav_beach_explore",[])
-	pass
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootForest"),"nav_forest_explore",[])

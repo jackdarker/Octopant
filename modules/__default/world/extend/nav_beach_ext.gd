@@ -41,4 +41,4 @@ func sunbathing():
 	Global.hud.clearOutput()
 	Global.hud.say("You lay down on the dry sand and expose yourself to the sun.")
 	Global.main.doTimeProcess(30*60)
-	Global.hud.addButton("Get up","",parent_scene.menu)
+	Global.hud.addButton("Get up","",parent_scene.menu.bind(""))

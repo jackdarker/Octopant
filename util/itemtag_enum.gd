@@ -1,11 +1,14 @@
 class_name ItemTagEnum extends Object
 
-const Consumable=1
-const Ingredient = 2
-const Weapon_Melee=3
-const Weapon_Ranged=4
-const Weapon_Throw=5
-const Shield=6
-const Tool_Cut=7
-const Quest=100
-const Body=101   
+const Quest= 3
+const Weapon_Melee=103
+const Weapon_Ranged=104
+const Weapon_Throw=105
+const Shield=106
+const Tool=200
+const Tool_Cut=201
+const Consumable = 300
+const Ingredient = 400
+const Ingredient_Craft = 401
+const Ingredient_Cook = 402
+const Body=501 
