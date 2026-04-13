@@ -42,6 +42,8 @@ func getFlags():
 		"Explored_Beach": flag(FlagType.Number),
 		"Explored_Cliff": flag(FlagType.Number),
 		"Explored_DeepWoods": flag(FlagType.Number),
+		"Cliff_Height": flag(FlagType.Number),	# actual climb-height of player 
+		"Cliff_Ropes": flag(FlagType.Number),	# how many ropes are installed from bottom to up
 		"FaintMessage": flag(FlagType.Text),
 		"FatigueHigh":	flag(FlagType.Number),
 		}

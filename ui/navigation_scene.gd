@@ -15,7 +15,9 @@ func _ready() -> void:
 
 #override this
 func setupScene(_args:Array):
-	pass
+	scene_ext=GR.getSceneExtensions(self.sceneID,self)
+	for ext in scene_ext:
+		ext.on_setupScene()
 
 func enterScene():
 	Global.hud.hudMode=Hud.HUDMODE.Explore
@@ -23,13 +25,12 @@ func enterScene():
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
-	scene_ext=GR.getSceneExtensions(self.sceneID,self)
+	
 	if(!self.sceneID.begins_with("vis_")):
 		if(Global.main.playerSpecialScene()):
 			return
 	for ext in scene_ext:
-		if ext.has_method("on_enterScene"):
-			ext.on_enterScene()
+		ext.on_enterScene()
 	menu("")
 
 # call this after event finishs to continue previous scene	
@@ -54,8 +55,7 @@ func menu(menuid:String,no_back:=false):
 		menustack=[""]
 		
 	for ext in scene_ext:
-		if ext.has_method("get_buttons"):
-			buttons=ext.get_buttons(menuid,buttons)
+		buttons=ext.get_buttons(menuid,buttons)
 	
 	if(menuid=="" && buttons.size()==0):	#fallback if no extension
 		Log.print("Warning: no buttons in scene="+sceneID+" menuid="+menuid)

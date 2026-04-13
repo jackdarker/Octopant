@@ -1,18 +1,16 @@
 [gd_scene load_steps=15 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
-[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_7ihmi"]
+[ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="2_7ihmi"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
 [ext_resource type="Texture2D" uid="uid://8vs1f4ky84fr" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="4_en2x2"]
 
 [sub_resource type="Theme" id="Theme_276te"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_276te"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_276te"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ihmi"]
-bg_color = Color(0.38431373, 0.38431373, 0.38431373, 0.8627451)
 
 [sub_resource type="Gradient" id="Gradient_276te"]
 offsets = PackedFloat32Array(0, 0.8933333)
@@ -107,7 +105,7 @@ theme_override_constants/separation = 0
 [node name="LeftPanel" type="Panel" parent="HBoxContainer"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-theme = ExtResource("2_7ihmi")
+theme = ExtResource("4_en2x2")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/LeftPanel"]
 layout_mode = 1
@@ -231,24 +229,22 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 0
 mouse_default_cursor_shape = 2
+theme = ExtResource("4_en2x2")
+follow_focus = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main"]
+[node name="RichTextLabel" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main"]
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 1
 mouse_default_cursor_shape = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_7ihmi")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel"]
+layout_mode = 2
+theme = ExtResource("2_7ihmi")
 bbcode_enabled = true
-text = "Her test vgbnfYou found a [b]pretty seaschell[/b]
-[color=green]test[/color]
-Her test vgbnf
-Her test vgbnf
-[color=green]test[/color]
-Her test vgbnf"
+text = "sdfdfsdafa
+gfhfshr
+"
 fit_content = true
-scroll_following = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -285,7 +281,7 @@ stretch_mode = 4
 clip_contents = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
-theme = ExtResource("2_7ihmi")
+theme = ExtResource("4_en2x2")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel"]
 layout_mode = 1

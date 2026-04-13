@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cow4nvrioynif"]
+
+[ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="1_r8sig"]
+
+[node name="TextBullet" type="RichTextLabel"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme = ExtResource("1_r8sig")
+bbcode_enabled = true
+text = "sgdfgdg
+hfdxhj"
+fit_content = true

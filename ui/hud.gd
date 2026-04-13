@@ -7,6 +7,9 @@ signal inventory_requested
 
 enum HUDMODE { Explore=0, Combat=1, Interaction=2}
 
+var text_bullet = preload("res://ui/fragments/text_bullet.tscn")
+
+
 @export var hudMode:HUDMODE=HUDMODE.Explore:
 	set(value):
 		show_picture_center(null)
@@ -49,7 +52,12 @@ func on_pc_effect_update(_key):
 	playerHud.on_effect_update(Global.pc,_key)
 	
 func say(text):
-	msg.append_text("\n"+text)
+	#msg.append_text("\n"+text)
+	var label = text_bullet.instantiate()
+	label.set_use_bbcode(true)
+	label.set_fit_content(true)
+	label.set_text(text)
+	msg.add_child(label)
 	#msg.typewrite("\n"+text)	doeant work with keeping old text
 
 func show_picture_center(_texture:Texture):
@@ -66,7 +74,10 @@ func show_picture_right(_texture:Texture):
 
 func clearOutput():
 	$img_fade.visible=false
-	msg.text=""
+	#msg.text=""
+	for child in msg.get_children():
+		msg.remove_child(child)
+		child.queue_free()
 
 # hide buttons
 func clearInput():

@@ -16,6 +16,9 @@ class Button_Config:
 
 var parent_scene:DefaultScene
 
+func on_setupScene():
+	pass
+
 func on_enterScene():
 	pass
 
