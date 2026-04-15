@@ -50,6 +50,7 @@ func getFlags():
 
 func initGame():
 	#setup triggers for events
+	Global.ES.registerEvent(EventSystem.TRIGGER.InRoom,GR.getEvent("EventVisStat"),"",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventNothing"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])

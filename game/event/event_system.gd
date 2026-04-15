@@ -4,9 +4,10 @@ class_name EventSystem
 # most events only need to be checked at certain locations (by location-id) or at locations with tags
 # others might occur anywhere
 
-const TRIGGER = {EnterRoom=1,		#when exploring
-	InSleep=2,						#while sleeping (dream)
-	PostSleep=3,					#when waking
+const TRIGGER = {EnterRoom=1,		# when exploring
+	InSleep=2,						# while sleeping (dream)
+	PostSleep=3,					# when waking
+	InRoom=4,						# inject vis_scene in between navigation
 	}
 
 var eventLocation:Dictionary = {}
@@ -30,7 +31,7 @@ func registerEvent(trigger,event:EventBase, location, args):
 #func unregisterEvent(trigger, eventID):
 #	pass
 
-func triggerEvent(trigger,location,args):
+func triggerEvent(trigger,location,args)->bool:
 	var _events=getAvailableEvents(trigger,location,args)
 	if(_events.size()<=0):
 		return false

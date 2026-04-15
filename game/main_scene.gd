@@ -116,11 +116,12 @@ func playerSpecialScene()->bool:
 	#afterwards it returns to the nav_scene again. This could trigger another visual scene and cause a loop!
 	#Todo ho make this moddable? use EventSystem instead?
 	var _ret:bool=false
-	var _bev=Global.pc.getStat(StatEnum.Lust).value_percent
-	if(_bev>=50 && GR.getModuleFlag("Default","FatigueHigh",0)<50):
-		_ret=true
-		runScene("vis_stat",[],getCurrentScene().uniqueSceneID)
-	GR.setModuleFlag("Default","FatigueHigh",_bev)
+	_ret=Global.ES.triggerEvent(EventSystem.TRIGGER.InRoom,"",[])
+	#var _bev=Global.pc.getStat(StatEnum.Lust).value_percent
+	#if(_bev>=50 && GR.getModuleFlag("Default","FatigueHigh",0)<50):
+	#	_ret=true
+	#	runScene("vis_stat",[],getCurrentScene().uniqueSceneID)
+	#GR.setModuleFlag("Default","FatigueHigh",_bev)
 		
 	return _ret
 
@@ -269,7 +270,7 @@ func postLoad():
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
-	Global.hud.on_pc_stat_update("pain",0)	#todo Global.pc.effects.forceUpdate()
+	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()
 	
 #endregion
 

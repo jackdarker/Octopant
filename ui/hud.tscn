@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="2_7ihmi"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
-[ext_resource type="Texture2D" uid="uid://8vs1f4ky84fr" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
+[ext_resource type="Texture2D" uid="uid://bqdh41p5jnj78" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="4_en2x2"]
 
 [sub_resource type="Theme" id="Theme_276te"]
@@ -151,10 +151,10 @@ text = "Daylight"
 
 [node name="PlayerStatus" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2" instance=ExtResource("2_276te")]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 10
 
 [node name="btInventory" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2

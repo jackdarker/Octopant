@@ -205,13 +205,14 @@ func _createEnemyWidgets():
 		
 	for _index in _actualI:
 		var _char=enemyParty[_index]
-		var widget =scene_charWidget.instantiate()
+		var widget:CharacterHud =scene_charWidget.instantiate()
 		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),"pain")		
 		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),"fatigue")
 		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),StatEnum.Lust)
 		_char.effects.registerSignalItemsChanged(func(ID):widget.on_effect_update(_char,ID))
 		widget.on_stat_update.call_deferred(_char)
 		Global.hud.enemyList.add_child(widget)
+		widget.on_stat_update.call_deferred(_char)
 
 
 func isPartyDefeated(party:Array[Character]):

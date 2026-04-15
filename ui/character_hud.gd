@@ -1,10 +1,10 @@
-extends VBoxContainer
+class_name CharacterHud extends Control
 
-@onready var pain_bar=$HBoxContainer/VBoxContainer/barPain
-@onready var fatigue_bar=$HBoxContainer/VBoxContainer/barFatigue
-@onready var insanity_bar=$HBoxContainer/VBoxContainer/barInsanity
-@onready var lust_bar=$HBoxContainer/VBoxContainer/barLust
-@onready var listEffects=$listEffects
+@onready var pain_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barPain
+@onready var fatigue_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barFatigue
+@onready var insanity_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barInsanity
+@onready var lust_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barLust
+@onready var listEffects=$VBoxContainer/listEffects
 
 var characterName:String="unknown":
 	set(value):
@@ -27,7 +27,7 @@ func _on_size_changed():
 	_apply_heights()
 
 func _apply_heights():
-	var bars = $HBoxContainer/VBoxContainer.get_children()
+	var bars = pain_bar.get_parent_control().get_children()
 	var max2:=0.0
 	for b in bars:
 		if not b is BarStat:
