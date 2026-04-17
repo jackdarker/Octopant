@@ -90,7 +90,7 @@ func battleEnd():
 	elif(isPartyDefeated(enemyParty)):
 		combatSetup.onVictory.call(self);
 	elif(isPartyDefeated(playerParty)):
-		combatSetup.onDefeat.call()
+		combatSetup.onDefeat.call(self)
 
 func preTurn():
 	turnCount+=1
@@ -108,6 +108,7 @@ func preTurn():
 
 
 func checkDefeat():
+	Global.hud.clearInput()
 	#handle player fleeing
 	#is any party down?
 	if(isPartyDefeated(enemyParty) || isPartyDefeated(playerParty)):

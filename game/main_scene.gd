@@ -26,7 +26,7 @@ func _ready() -> void:
 	Global.hud.inventory_requested.connect(func(): $WndInventory.visible=true)
 	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
 	postLoad()
-
+	
 	runScene("nav_beach") 	#todo intro
 
 #region scene
@@ -140,6 +140,7 @@ func getDayTimeStart()->int:
 func isVeryLate()->bool:
 	return timeOfDay >= getDayTimeEnd()
 
+## returns days in game
 func getDays()->int:
 	return currentDay
 

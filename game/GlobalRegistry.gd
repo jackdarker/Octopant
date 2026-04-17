@@ -50,7 +50,7 @@ func registerEverything():
 	#createLoadLockFile()
 	var start =  Time.get_ticks_usec()
 	#loadRegistryCacheFromFile()
-	preinitModulesFolder("res://modules/")
+	preinitModulesFolder(module_basepath("res://modules/"))
 	emit_signal("loadingUpdate", 18.0/totalStages, "Modules late initialization")	
 	registerModules()
 	#saveRegistryCacheToFile()
@@ -217,6 +217,16 @@ func resetFlagsOnNewDay():
 #endregion
 
 #region modules
+static func module_basepath(_folder:String)->String:
+	if( OS.has_feature("editor_runtime")):
+		return _folder
+	else:
+		var _base="D:/Projects/Godot/Octopant"#OS.get_executable_path().get_base_dir()
+		if _folder.begins_with(_base):
+			return _folder
+		else:
+			return _base.path_join(ProjectSettings.globalize_path(_folder))
+
 func preinitModulesFolder(folder: String):
 	var progressBase = 1.0/totalStages
 	var progressStep = 2.0/totalStages
@@ -232,7 +242,7 @@ func preinitModulesFolder(folder: String):
 				var full_path = folder.path_join(file_name)
 				#print("FOUND DIR: "+full_path)
 				
-				var modulePath:String = full_path.path_join("Module.gd")
+				var modulePath:String = full_path.path_join("module.gd")
 				if(dir.file_exists(modulePath)):
 					moduleFiles.append([file_name, modulePath])
 			file_name = dir.get_next()

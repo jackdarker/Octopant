@@ -22,8 +22,6 @@ GR="*res://game/GlobalRegistry.gd"
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=600
 window/size/initial_position_type=3
 window/stretch/mode="viewport"
 

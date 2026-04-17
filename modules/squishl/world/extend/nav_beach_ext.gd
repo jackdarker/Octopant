@@ -3,8 +3,8 @@ extends SceneExtension
 const sceneID="nav_beach"
 
 func on_enterScene():
-	Global.hud.say("Lutes is also here.")
-
+	if(GR.getModuleFlag("Squishl","Lutes_Met",0)>=5):
+		Global.hud.say("Lutes is also here.")
 
 func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):
@@ -12,7 +12,6 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("pitty you","",pittyYourself))
 		buttons.push_back(Button_Config.new("go crazy","",crazyYourself))
 		buttons.push_back(Button_Config.new("strain you","",fatigueYourself))
-	elif(menuid=="walk"):
 		buttons.push_back(Button_Config.new("visit lutes","",dlg_lutes))
 	return(buttons)
 

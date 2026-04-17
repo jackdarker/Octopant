@@ -3,6 +3,7 @@ extends "res://modules/__default/world/nav_beach.gd"
 # the player has to pass multiple tests before he gets a prize
 # this is triggered by event_delve_beach
 
+var _defeated:bool=false
 
 func _init() -> void:
 	sceneID="dng_beach"
@@ -19,7 +20,9 @@ func enterScene():
 	#menu("")
 	set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
 	var room=GR.getModuleFlag("Squishl","Delve_State",0)
-	if (room<=1):
+	if(_defeated):
+		Global.hud.addButton("Next","",	func():Global.main.removeScene(self)		)
+	elif (room<=1):
 		Global.hud.say("You walk into the water. There is something around your feet...")
 		Global.hud.addButton("Next","",_on_bt_fight_pressed)
 	else :
@@ -31,6 +34,9 @@ func _on_bt_fight_pressed():
 	var _setup=CombatSetup.new()
 	var _x=Global.pc.effects.getItems()
 	_setup.onVictory= _postVictory
+	_setup.onDefeat= _postDefeat
+	_setup.onFlee= _postDefeat
+	_setup.onSubmit= _postDefeat
 	_setup.playerParty.push_back(Global.pc)
 	_setup.enemyParty.push_back(GR.createCharacter("Crab"))
 	Global.main.runScene("combat_scene",
@@ -40,6 +46,11 @@ func _postVictory(combatScene):
 	GR.increaseModuleFlag("Squishl","Delve_State",1)
 	Global.hud.say("You have won this fight")	#todo fetchloot
 	Global.hud.addButton("Next","",func():Global.main.removeScene(combatScene))
+
+func _postDefeat(combatScene):
+	self._defeated=true
+	Global.hud.say("After loosing that fight you find yourself washed up at the shoreline.")	#todo fetchloot
+	Global.hud.addButton("Next","",	func():Global.main.removeScene(combatScene)		)
 
 func _on_prize_claim():	
 	Global.main.removeScene(self)

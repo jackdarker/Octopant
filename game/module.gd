@@ -29,31 +29,31 @@ func initGame(): # Called when game engine starts
 
 func register():
 	for scene in scenes:
-		GR.registerScene(ID,scene, author)
+		GR.registerScene(ID,GR.module_basepath(scene), author)
 	
 	for scene in scene_ext:
-		GR.registerSceneExtension(ID,scene, author)
+		GR.registerSceneExtension(ID,GR.module_basepath(scene), author)
 	
 	for item in items:
-		GR.registerItem(ID,item)
+		GR.registerItem(ID,GR.module_basepath(item))
 		
 	for recipe in recipes:
-		GR.registerRecipe(ID,recipe)
+		GR.registerRecipe(ID,GR.module_basepath(recipe))
 		
 	for event in events:
-		GR.registerEvent(ID,event)
+		GR.registerEvent(ID,GR.module_basepath(event))
 	
 	for effect in effects:
-		GR.registerEffect(ID,effect)
+		GR.registerEffect(ID,GR.module_basepath(effect))
 	
 	for skill in skills:
-		GR.registerSkill(ID,skill)
+		GR.registerSkill(ID,GR.module_basepath(skill))
 	
 	for character in characters:
-		GR.registerCharacter(ID,character)
+		GR.registerCharacter(ID,GR.module_basepath(character))
 	
 	for quest in quests:
-		GR.registerQuest(ID,quest)
+		GR.registerQuest(ID,GR.module_basepath(quest))
 
 #override this !
 func registerEventTriggers():
