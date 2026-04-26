@@ -3,7 +3,7 @@ extends ItemBase
 func _init():
 	super()
 	ID="gel_green"
-	tags.push_back(ItemTagEnum.Ingredient)
+	tags.push_back(ItemTagEnum.Ingredient_Craft)
 
 func getName()->String:
 	return "green gel"

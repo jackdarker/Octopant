@@ -50,5 +50,5 @@ func onTurnStart():
 #this is used to filter possible targets for a skill
 #the function returns a array of arrays containing the targets  
 #f.e. [[dragon],[mole1,mole2]] to indicate that the skill can be used on dragon or both moles at same time
-func targetFilter(targets):
-	return targets
+func targetFilter(enemys:Array[Character],own:Array[Character]):
+	return enemys

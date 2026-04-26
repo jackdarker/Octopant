@@ -3,6 +3,7 @@ extends Skill
 func _init():
 	super()
 	ID="Skill_Slash"
+	tags.push_back(SkillTagEnum.Attack)
 
 func getName()->String:
 	return "Slash"

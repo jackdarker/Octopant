@@ -34,12 +34,12 @@ script = ExtResource("2_xf1vp")
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 offset_right = 256.0
-offset_bottom = 20.0
+offset_bottom = 16.0
 theme_override_constants/separation = 0
 
 [node name="barNeg" type="TextureProgressBar" parent="HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 20)
+custom_minimum_size = Vector2(128, 16)
 layout_mode = 2
 max_value = 30.0
 value = 10.0
@@ -51,7 +51,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="barPos" type="TextureProgressBar" parent="HBoxContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(128, 20)
+custom_minimum_size = Vector2(128, 16)
 layout_mode = 2
 value = 70.0
 nine_patch_stretch = true
@@ -61,7 +61,8 @@ texture_progress = SubResource("GradientTexture2D_3h3vf")
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
 offset_right = 34.0
-offset_bottom = 23.0
+offset_bottom = 17.0
 theme = ExtResource("1_xf1vp")
 theme_override_colors/font_color = Color(4.9935653e-07, 0.19472194, 0.1956889, 1)
+theme_override_font_sizes/font_size = 12
 text = "Pain"

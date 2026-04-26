@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=16 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="2_7ihmi"]
@@ -11,6 +11,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_276te"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_276te"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_en2x2"]
 
 [sub_resource type="Gradient" id="Gradient_276te"]
 offsets = PackedFloat32Array(0, 0.8933333)
@@ -85,10 +87,12 @@ _data = {
 script = ExtResource("1_276te")
 
 [node name="bt_hud_on" type="Button" parent="."]
-visible = false
-offset_top = 569.0
-offset_right = 88.0
-offset_bottom = 600.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 90.0
+grow_vertical = 0
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "Show HUD"
@@ -122,6 +126,7 @@ theme_override_constants/margin_bottom = 20
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+theme = ExtResource("4_en2x2")
 theme_override_constants/separation = 6
 
 [node name="time_left" type="ProgressBar" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2"]
@@ -297,6 +302,8 @@ theme_override_constants/margin_bottom = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer"]
 layout_mode = 2
+theme = ExtResource("4_en2x2")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_en2x2")
 
 [node name="ButtonGrid" type="HFlowContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer"]
 layout_mode = 2

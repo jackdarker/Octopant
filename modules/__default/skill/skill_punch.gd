@@ -3,7 +3,7 @@ extends Skill
 func _init():
 	super()
 	ID="Skill_Punch"
-	#TODO tags.push_back(ItemTagEnum.Ingredient)
+	tags.push_back(SkillTagEnum.Attack)
 
 func getName()->String:
 	return "Punch"

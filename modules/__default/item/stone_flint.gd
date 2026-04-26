@@ -2,11 +2,12 @@ extends ItemBase
 
 func _init():
 	super()
-	ID="liane"
+	ID="flint"
 	tags=[ItemTagEnum.Ingredient_Craft]
 
+
 func getName()->String:
-	return "a length of liane"
+	return "flint stone"
 
 func getDescription()->String:
-	return "Some meters of a sturdy liane."
+	return "A small, hard stone. Creates sparks if slapped against metal."

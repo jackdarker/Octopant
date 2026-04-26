@@ -2,11 +2,11 @@ extends ItemBase
 
 func _init():
 	super()
-	ID="liane"
+	ID="net_broken"
 	tags=[ItemTagEnum.Ingredient_Craft]
 
 func getName()->String:
-	return "a length of liane"
+	return "damaged net"
 
 func getDescription()->String:
-	return "Some meters of a sturdy liane."
+	return "A piece of fishing net. Break down for threads."

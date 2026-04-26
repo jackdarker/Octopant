@@ -14,7 +14,7 @@ var effects:EffectsList
 var inventory:Inventory
 var outfit:Outfit
 var skills:Inventory
-var combatAI = null		#controlled by player if this is null
+var combatAI:CombatAIBase = null		#controlled by player if this is null
 var despawn:bool=false	#this was spawned in combat and should despawn
 
 func _init():
@@ -56,6 +56,7 @@ func isKnockedOut()->bool:
 func processTime(_delta:int):
 	for item in effects.getItems():
 		item.processTime(_delta)
+   
 
 func loadData(data):
 	location=data["location"]

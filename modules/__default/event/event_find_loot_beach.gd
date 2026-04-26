@@ -22,9 +22,14 @@ func _ignore():
 
 func _dig():
 	var i=randi_range(0, 100)
-	if(i>50):
+	if(i>70):
 		var _item=GR.createItem("vial_empty")
-		Global.hud.say("You found some [b]empty glass-vial[/b].")
+		Global.hud.say("You found some [b]empty plastic bottle[/b].")
+		Global.hud.show_picture_center(load(_item.getInventoryImage()))
+		Global.pc.inventory.addItem(_item)
+	elif(i>50):
+		var _item=GR.createItem("net_broken")
+		Global.hud.say("Embedded into the sand is a [b]piece of a net[/b], possibly ripped of from some fishing net.")
 		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
 	elif(i>10):

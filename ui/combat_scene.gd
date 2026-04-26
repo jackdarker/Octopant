@@ -126,13 +126,13 @@ func selectActor():
 
 func selectSkill():
 	Global.hud.clearInput()
-	Global.hud.say("select skill for "+actor.getName())
 	#TODO onMoveSelect()
 	if(actor.isKnockedOut()):
 		next_state=STATE.selectActor	#
 	
 	var isplayerActor=playerParty.find(actor)>=0
-	if(!actor.combatAI):
+	if(!actor.combatAI || combatSetup.noAI):
+		Global.hud.say("select skill for "+actor.getName())
 		_printSkillList()
 	else:
 		var _res
@@ -148,13 +148,16 @@ func selectTarget():
 	Global.hud.clearInput()
 	Global.hud.say("select target for "+skill.getName())
 	Global.hud.addButton("Back","",selectSkill)
-	var _allChars=playerParty+enemyParty
-	var _targets=skill.targetFilter(_allChars)
+	var _targets=skill.targetFilter(enemyParty,playerParty)
 	for _target in _targets:
 		Global.hud.addButton(_target.getName(),"",_postTargetSelect.bind(_target))
 
 func execSkill():
-	skill.doAction("",target)
+	if !skill || !target:
+		Global.hud.say(actor.getName() +"doesnt know what to do.")
+	else:
+		Global.hud.say(actor.getName() +" is going to "+skill.getName()+" "+target.uniqueID)
+		skill.doAction("",target)
 	_postExecute()
 	
 func _printSkillList():

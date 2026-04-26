@@ -8,7 +8,7 @@ func _init():
 	ID="EventFindPathDeepWoods"
 
 func react(_triggerID, _args)->bool:
-	Global.hud.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\\n")
+	Global.hud.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\n")
 	Global.hud.addButton("next","",Global.main.runScene.bind("nav_deepwood"))
 	return true
 	

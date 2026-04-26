@@ -1,6 +1,7 @@
 class_name CombatSetup extends Object
 
 var canFlee:bool=true
+var noAI:bool=false	# disable AI for debug
 var location:String="Unknown"
 var background:Texture=null
 
