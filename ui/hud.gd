@@ -50,14 +50,20 @@ func on_pc_stat_update(_key,_data):
 
 func on_pc_effect_update(_key):
 	playerHud.on_effect_update(Global.pc,_key)
-	
-func say(text):
+## who is dictionary of formating {"bgcolor":#49c9}	
+func say(text,who:Dictionary={}):
 	#msg.append_text("\n"+text)
 	var label = text_bullet.instantiate()
 	label.set_use_bbcode(true)
 	label.set_fit_content(true)
+	if(who.has("bgcolor")):
+		text="[bgcolor="+who.bgcolor+"]"+text+"[/bgcolor]"
 	label.set_text(text)
 	msg.add_child(label)
+	await get_tree().process_frame
+	if(label):  #there might be occasions where clearOutput() is a called before the frame and label is already destroyed
+		msg.get_parent().ensure_control_visible(label)
+
 	#msg.typewrite("\n"+text)	doeant work with keeping old text
 
 func show_picture_center(_texture:Texture):

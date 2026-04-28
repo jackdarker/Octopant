@@ -10,7 +10,6 @@ func _init()-> void :
 		]
 	scene_ext = [
 		"res://modules/squishl/world/extend",
-		"res://modules/__default/interaction",
 		]
 	#items = [
 	#	"res://modules/squishl/Item",

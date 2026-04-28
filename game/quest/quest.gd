@@ -120,7 +120,8 @@ func loadData(data:Dictionary):
 	for step in steps:
 		step.loadData(data["steps"][str(_i)])	#TODO things get messed up if steps are shuffled in new versions
 		_i+=1
-		step.updated.connect(_update_step.bind(step))
+		if !step.updated.is_connected(_update_step):	#quests are not instantiated on loading, they are alive in GR; therefore they might already be connected
+			step.updated.connect(_update_step.bind(step))
 
 
 func _to_string() -> String:

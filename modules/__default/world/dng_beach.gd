@@ -18,7 +18,7 @@ func enterScene():
 	#	if ext.has_method("on_enterScene"):			#TODO use extension?
 	#		ext.on_enterScene()
 	#menu("")
-	set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
+	set_bg(load("res://assets/images/bg/event_delve_beach.png"))
 	var room=GR.getModuleFlag("Squishl","Delve_State",0)
 	if(_defeated):
 		Global.hud.addButton("Next","",	func():Global.main.removeScene(self)		)
@@ -38,7 +38,8 @@ func _on_bt_fight_pressed():
 	_setup.onFlee= _postDefeat
 	_setup.onSubmit= _postDefeat
 	_setup.playerParty.push_back(Global.pc)
-	_setup.enemyParty.push_back(GR.createCharacter("Crab"))
+	var _mob=Util.pickRandomFromArray(["Crab","JellyFish"])
+	_setup.enemyParty.push_back(GR.createCharacter(_mob))
 	Global.main.runScene("combat_scene",
 		[_setup],self.uniqueSceneID)
 

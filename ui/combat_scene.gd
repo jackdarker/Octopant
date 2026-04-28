@@ -149,8 +149,11 @@ func selectTarget():
 	Global.hud.say("select target for "+skill.getName())
 	Global.hud.addButton("Back","",selectSkill)
 	var _targets=skill.targetFilter(enemyParty,playerParty)
-	for _target in _targets:
-		Global.hud.addButton(_target.getName(),"",_postTargetSelect.bind(_target))
+	if _targets.size()==1:	#skip select for lone enemys
+		_postTargetSelect(_targets[0])
+	else:
+		for _target in _targets:
+			Global.hud.addButton(_target.getName(),"",_postTargetSelect.bind(_target))
 
 func execSkill():
 	if !skill || !target:

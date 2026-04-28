@@ -44,4 +44,24 @@ static func getStackFunction(depth = 2):
 	var text = "File: "+stack[depth]["source"]+" Line: "+str(stack[depth]["line"])
 	return text
 
-static var STAT={Pain="pain"}
+## picks an item from an array; you might define different weight (float or int) per item 
+static func pickRandomFromArray(items:Array,weights:Array=[])-> Variant:
+	if weights.size()==0:
+		weights=items.map(func(_elmt):return 1)
+	if(weights.size()!=items.size()):
+		push_error("sizes dont match")
+	var _max=weights.reduce(func(accum,elmnt):return(accum+elmnt))
+	var _rnd=randf_range(0.001,_max)
+	var _item=null
+	var _lo
+	var _up=_max
+	var i=items.size()
+	while(i>0):
+		i-=1
+		_lo=_up-weights[i]
+		if(_lo<_rnd && _rnd<=_up):
+			_item=items[i]
+			break
+		_up=_lo
+		
+	return _item

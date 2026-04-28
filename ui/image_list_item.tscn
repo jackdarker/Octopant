@@ -37,6 +37,7 @@ texture = ExtResource("1_67525")
 [node name="Label" type="Label" parent="Control"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+size_flags_horizontal = 4
 text = "My ImageMy ImageMy "
 horizontal_alignment = 1
 autowrap_mode = 3

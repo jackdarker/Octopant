@@ -133,6 +133,8 @@ func saveData()->Variant:
 ## Restores the state of each quest
 func loadData(data):
 	var _quests: Array[Quest]
+	active.reset()
+	completed.reset()
 	for item in data["quest_active"]:
 		var _item=GR.getQuest(item["ID"])
 		if !_item:
