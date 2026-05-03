@@ -3,6 +3,7 @@ class_name MainScene extends Node
 # the MAIN-scene of the game that holds references to the actual story-scene and windows
 
 signal time_passed(_secondsPassed)
+signal item_trade(giverId:String,receiverId:String,itemid:String,amount:int)	#used by queststep_deliver_item
 
 var sceneStack:Array=[]
 
@@ -25,6 +26,7 @@ func _ready() -> void:
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
 	Global.hud.inventory_requested.connect(func(): $WndInventory.visible=true)
 	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
+	
 	postLoad()
 	
 	runScene("nav_beach") 	#todo intro
@@ -198,7 +200,7 @@ func startNewDay():
 	var newtime = getDayTimeStart()
 	var timediff = 24 * 60 * 60 - timeOfDay + newtime
 	
-	#Flag.resetFlagsOnNewDay()
+	GR.resetFlagsOnNewDay()
 	#roomMemoriesProcessDay()
 	#npcSlaveryOnNewDay()
 	
@@ -250,7 +252,6 @@ func canSave()->bool:
 func loadData(data):
 	timeOfDay=data["time"]
 	currentDay=data["day"]
-	Global.QS.loadData(data["quests"])
 			
 func saveData()->Variant:
 	#Note: data["info"] used by save-UI !
@@ -258,7 +259,6 @@ func saveData()->Variant:
 		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getTime()),
 		"day":currentDay,
 		"time": timeOfDay,
-		"quests":Global.QS.saveData()
 	}
 	return(data)
 	
@@ -269,6 +269,11 @@ func postLoad():
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Lust)
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Insanity)
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
+	Global.pc.inventory.item_added.connect(func(itemID): Global.toolTip.showNotification("Item added",itemID))
+	Global.pc.inventory.item_removed.connect(func(itemID): Global.toolTip.showNotification("Item removed",itemID))
+	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
+	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name))
+	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
 	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()

@@ -1,6 +1,4 @@
 extends Control
-
-
 		
 @export var showBelow = false
 @onready var _title:Label=$Panel/VBoxContainer/lb_header
@@ -11,7 +9,7 @@ var is_active:bool = false:
 	set(value):
 		is_active=value
 		if value:
-		#	_tween..remove_all()
+		#	_tween.remove_all()
 		#	_tween.interpolate_property(self, "modulate", Color(0.0, 0.0, 0.0, -6.0), Color.WHITE, 0.6)
 		#	_tween.start()
 			modulate = Color.WHITE
@@ -48,7 +46,7 @@ func _process(_delta: float) -> void:
 	global_position=_pos
 
 func set_text(title: String, body: String):
-	_title.text = title.capitalize()
+	_title.text = title	#.capitalize()
 	_body.text=(body)
 	size.y = 0	#the label would not shrink back otherwise
 	size.x = 0

@@ -14,6 +14,7 @@ class_name Quest extends Resource
 @export_multiline var quest_objective: String
 ## is the quest visible (in Quest-Log & notifications)
 @export var hidden:= HIDE.NONE
+@export var repeatable:=false
 
 @export var steps: Array[QuestStep]
 @export var rewards: Array
@@ -42,23 +43,24 @@ var objective_completed: bool = false:
 		return objective_completed
 
 
-## Gets called after QuestSystem' [method update_quest] method.[br][br]
-##
-## By default, it emits the [signal updated] signal.
-func update(_args: Dictionary = {}) -> void:
-	updated.emit()
-
-
 ## Gets called after QuestSystem' [method start_quest] method.[br]
 ## Additional data may be passed from the optional [param _args] parameter.[br][br]
 ##
 ## By default, it emits the [signal started] signal.
 func start(_args: Dictionary = {}) -> void:
+	var i:int=0
+	objective_completed=false
 	for step: QuestStep in steps:
+		step.index=i
 		step.ready()
 		step.updated.connect(_update_step.bind(step))
+		i+=1
 	started.emit()
 
+## call to cleanup f.e. event-registration
+func stop()->void:
+	for step: QuestStep in steps:
+		step.stop()
 
 ## Gets called after QuestSystem' [method complete_quest] method.[br]
 ## Make sure to set [member objective_completed] to true or disable its requirement in ProjectSettings,[br]
@@ -76,6 +78,8 @@ func complete(_args: Dictionary = {}) -> void:
 		#	for item: Item in rewards:
 		#		Globals.inventory.add_item(item, Globals.inventory.get_first_empty_index())
 		completed.emit()
+	else:
+		updated.emit()
 
 func get_quest_step(index: int) -> QuestStep:
 	if index > steps.size():
@@ -120,8 +124,8 @@ func loadData(data:Dictionary):
 	for step in steps:
 		step.loadData(data["steps"][str(_i)])	#TODO things get messed up if steps are shuffled in new versions
 		_i+=1
-		if !step.updated.is_connected(_update_step):	#quests are not instantiated on loading, they are alive in GR; therefore they might already be connected
-			step.updated.connect(_update_step.bind(step))
+		#if !step.updated.is_connected(_update_step):	#quests are not instantiated on loading, they are alive in GR; therefore they might already be connected
+		#	step.updated.connect(_update_step.bind(step))
 
 
 func _to_string() -> String:

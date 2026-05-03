@@ -9,7 +9,7 @@ var game_version_suffix = ""	#"fix1"
 
 signal loadingUpdate(percent, whatsnext)
 signal loadingFinished
-
+signal moduleFlagChanged(module:String, flag:String, newvalue:Variant)
 var modules: Dictionary [String,Module]= {}
 
 var flags = {}
@@ -34,6 +34,7 @@ var quests: Dictionary = {}
 var effects: Dictionary = {}
 var skills: Dictionary = {}
 var characters: Dictionary = {}
+var characterInstances: Dictionary = {} 
 
 var currentUniqueID:int=1
 var isInitialized = false
@@ -63,7 +64,6 @@ func registerEverything():
 	emit_signal("loadingFinished")
 
 #region save/load
-# only need to save flags
 func loadData(data):
 	currentUniqueID=data["uid"]
 	#cleanout all present flags
@@ -75,9 +75,17 @@ func loadData(data):
 		_moduleFlags[moduleid]=modules[moduleid].postLoadCleanupFlags(_moduleDic)
 	moduleFlags=_moduleFlags
 	
+	# player-charater is handled in main_scene!
+	characterInstances={}	#make sure to flush outdated chars
+	for _charID in data["uniqueChars"]:
+		var _char=GR.createCharacter(_charID)	#instead of just constructing Character+loadData recreate from specific script
+		if (_char):	#TODO version-fixing of renamed/altered chars
+			_char.loadData(data["uniqueChars"][_charID])
+	
 func saveData()->Variant:
 	var data:Dictionary ={
 		"uid":currentUniqueID,
+		"uniqueChars":{},
 	}
 	for flagid in flags.keys():	#Todo there could be colliding moduleid with flagid
 		data[flagid]=flags[flagid]
@@ -87,6 +95,10 @@ func saveData()->Variant:
 		for flagid in moduleFlags[moduleid].keys():
 			_moduleDic[flagid]=moduleFlags[moduleid][flagid]
 		data[moduleid]=_moduleDic
+	
+	for _char:Character in characterInstances.keys():
+		data["uniqueChars"][_char]=characterInstances[_char].saveData()
+	
 	return(data)
 #endregion
 
@@ -200,6 +212,7 @@ func setModuleFlag(moduleID, flagID, value):
 	if(!moduleFlags.has(moduleID)):
 		moduleFlags[moduleID] = {}
 	moduleFlags[moduleID][flagID] = value
+	moduleFlagChanged.emit(moduleID,flagID,value)
 
 func increaseModuleFlag(moduleID, flagID, addvalue = 1):
 	setModuleFlag(moduleID, flagID, getModuleFlag(moduleID, flagID, 0) + addvalue)
@@ -492,7 +505,6 @@ func getQuest(ID: String)->Quest:
 	
 #endregion
 
-
 #region effects
 func registerEffect(moduleID:String,path: String):
 	#-------------------------------------------------------------------
@@ -560,7 +572,17 @@ func createCharacter(ID: String)->Character:
 	if(!characters.has(ID)):
 		Log.printerr("ERROR: character with the ID "+ID+" wasn't found")
 		return null
-	var newItem = characters[ID].new()
-	return newItem
+	if characterInstances.has(ID):
+		return characterInstances[ID]
+	var newItem:Character = characters[ID].new()
 	
+	return newItem
+
+## call this once after createCharacter to make them persistent; createCharacter will then reuse them and not create anew
+## data is stored in savegame
+func addCharacterAsUnique(character:Character):
+	if characterInstances.has(character.uniqueID):
+		Log.printerr("ERROR: character with the ID "+character.uniqueID+" already unique")
+		return
+	characterInstances[character.uniqueID]=character
 #endregion

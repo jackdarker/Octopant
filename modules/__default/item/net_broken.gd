@@ -10,3 +10,6 @@ func getName()->String:
 
 func getDescription()->String:
 	return "A piece of fishing net. Break down for threads."
+
+func canStack()->bool:
+	return true

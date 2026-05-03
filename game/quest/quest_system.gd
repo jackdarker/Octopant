@@ -2,7 +2,7 @@ class_name QuestSystem extends Node
 
 signal quest_accepted(quest: Quest) # Emitted when a quest gets moved to the ActivePool
 signal quest_completed(quest: Quest) # Emitted when a quest gets moved to the CompletedPool
-#signal new_available_quest(quest: Quest) # Emitted when a quest gets added to the AvailablePool
+signal quest_updated(quest: Quest) # 
 
 #var available: QuestPool = QuestPool.new()			TODO do we need this?
 var active: QuestPool = QuestPool.new()
@@ -14,8 +14,11 @@ func start_quest(quest: Quest, args: Dictionary = {}) -> Quest:
 
 	if active.is_quest_inside(quest):
 		return quest
-	if completed.is_quest_inside(quest): #or QuestSystemSettings.get_config_setting("allow_repeating_completed_quests", false):
-		return quest
+	if completed.is_quest_inside(quest): 
+		if quest.repeatable: #or QuestSystemSettings.get_config_setting("allow_repeating_completed_quests", false):
+			completed.remove_quest(quest)
+		else:
+			return quest
 
 	#Add the quest to the actives quests
 	#available.remove_quest(quest)
@@ -23,14 +26,13 @@ func start_quest(quest: Quest, args: Dictionary = {}) -> Quest:
 	quest_accepted.emit(quest)
 	quest.start(args)
 	quest.completed.connect(quest_finished.bind(quest))
+	quest.updated.connect(quest_updated.emit.bind(quest))
 	return quest
 
 ## Complete a given quest, and add it to the completed pool.[br]
 ## Additionally, if the [objective_completed] property of the quest
 ##is not set to true when the complete() method gets called,
-## it will not mark the quest as completed and instead return back the quest object.[br]
-##
-## You can ovverride this behavior by setting the "require_objective_completed" in the ProjectSettings to false
+## it will not mark the quest as completed and instead return back the quest object.
 func complete_quest(quest: Quest, args: Dictionary = {}) -> Quest:
 	if not active.is_quest_inside(quest):
 		return quest

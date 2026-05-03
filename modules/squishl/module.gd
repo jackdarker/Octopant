@@ -10,6 +10,7 @@ func _init()-> void :
 		]
 	scene_ext = [
 		"res://modules/squishl/world/extend",
+		"res://modules/squishl/interaction",
 		]
 	#items = [
 	#	"res://modules/squishl/Item",
@@ -26,6 +27,9 @@ func _init()-> void :
 	characters = [
 		"res://modules/squishl/character",
 	]
+	quests = [
+		"res://modules/squishl/quest",
+	]
 
 func getFlags():
 	return {
@@ -33,6 +37,7 @@ func getFlags():
 		"Delve_State": flag(FlagType.Number),
 		"Daily_Treasure": flag(FlagType.Number),
 		"Lutes_Met":flag(FlagType.Number),
+		"Lutes_Love":flag(FlagType.Number),
 	}
 
 func resetFlagsOnNewDay():

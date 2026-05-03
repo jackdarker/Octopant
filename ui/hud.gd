@@ -57,7 +57,7 @@ func say(text,who:Dictionary={}):
 	label.set_use_bbcode(true)
 	label.set_fit_content(true)
 	if(who.has("bgcolor")):
-		text="[bgcolor="+who.bgcolor+"]"+text+"[/bgcolor]"
+		text="[bgcolor=#"+who.bgcolor.to_html()+"]"+text+"[/bgcolor]"
 	label.set_text(text)
 	msg.add_child(label)
 	await get_tree().process_frame

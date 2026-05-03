@@ -17,7 +17,7 @@ func get_buttons(menuid:String,buttons:Array):
 
 func dlg_lutes():
 	Global.main.runScene("interaction_scene",
-		[load("res://modules/squishl/interaction/dlg_pc_lutes.gd"),
+		["dlg_pc_lutes",
 		Global.main.getCurrentScene().get_bg()],
 		Global.main.getCurrentScene().uniqueSceneID)
 

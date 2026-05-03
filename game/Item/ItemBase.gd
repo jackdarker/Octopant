@@ -64,11 +64,11 @@ func getInventoryImage()->String:
 	return "res://assets/images/icons/ic_unknown.svg"
 
 #override this !
-func canCombine():
+func canStack()->bool:
 	return false
 
 #override this !	
-func tryCombine(_otherItem):
+func tryCombine(_otherItem)->bool:
 	amount += _otherItem.amount
 	return true
 

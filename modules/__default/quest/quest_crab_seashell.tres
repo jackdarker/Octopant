@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=7 format=3 uid="uid://bwendhg6wnlo0"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_numpk"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_vmgmc"]
+[ext_resource type="Script" uid="uid://c33rbc77yrsub" path="res://game/quest/step/gather_item.gd" id="4_l36kw"]
+[ext_resource type="Script" uid="uid://qb1wkgaipufw" path="res://game/quest/step/deliver_item.gd" id="5_xihlh"]
+
+[sub_resource type="Resource" id="Resource_e881p"]
+script = ExtResource("4_l36kw")
+itemID = "seashell"
+title = "Find a seashell"
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_5ci4c"]
+script = ExtResource("5_xihlh")
+characterID = "Crab"
+itemID = "seashell"
+title = "Visit the crab to handover the shell"
+metadata/_custom_type_script = "uid://qb1wkgaipufw"
+
+[resource]
+script = ExtResource("1_numpk")
+ID = "crab_seashell"
+quest_name = "Find a seashell for the hermit crab"
+quest_objective = "The little guy asked for some seashell. There might be some at the beach."
+repeatable = true
+steps = Array[ExtResource("2_vmgmc")]([SubResource("Resource_e881p"), SubResource("Resource_5ci4c")])
+metadata/_custom_type_script = "uid://0jbnqgdlwjeo"

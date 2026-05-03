@@ -7,3 +7,10 @@
 script = ExtResource("1_7ohwl")
 
 [node name="TooltipDisplay" parent="." instance=ExtResource("2_mmfcs")]
+
+[node name="Notifications" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2

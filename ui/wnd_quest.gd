@@ -39,7 +39,9 @@ func viewQuest(ID:String):
 		quest=Global.QS.completed.get_quest_from_id(ID)
 	var text=quest.quest_description + ("\n COMPLETE" if quest.objective_completed else "")
 	for step in quest.steps:
+		var _progress=step.progressText()
 		text+="\n" #String.chr(13)+String.chr(10)
 		text+= "X " if step.completed else "O "
-		text+=step.title if (step.hidden==Quest.HIDE.NONE || step.completed) else "???" 	
+		text+=step.title if (step.hidden==Quest.HIDE.NONE || step.completed) else "???"
+		text+=("\n\t"+_progress) if (_progress!="" && (step.hidden==Quest.HIDE.NONE || step.completed)) else "" 	
 	%lbl_questdesc.text=text

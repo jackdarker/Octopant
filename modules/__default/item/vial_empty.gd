@@ -13,3 +13,6 @@ func getDescription()->String:
 
 func getInventoryImage():
 	return "res://assets/images/items/Drink_S_Empty.svg"
+
+func canStack()->bool:
+	return true

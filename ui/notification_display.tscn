@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://n73gb5bl805p"]
+
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="1_61j8v"]
+[ext_resource type="Script" uid="uid://6463ox6m7d7n" path="res://ui/notification_display.gd" id="2_61j8v"]
+[ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="2_yv2wr"]
+
+[sub_resource type="Animation" id="Animation_4c2pk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ojsk0"]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pbtgj"]
+_data = {
+&"RESET": SubResource("Animation_4c2pk"),
+&"fade": SubResource("Animation_ojsk0")
+}
+
+[node name="NotificationDisplay" type="PanelContainer"]
+custom_minimum_size = Vector2(250, 0)
+offset_right = 250.0
+offset_bottom = 165.0
+pivot_offset = Vector2(0, 20)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme = ExtResource("1_61j8v")
+theme_override_styles/panel = ExtResource("2_yv2wr")
+script = ExtResource("2_61j8v")
+
+[node name="Panel" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_61j8v")
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="lb_header" type="RichTextLabel" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+text = "header"
+scroll_active = false
+
+[node name="HSeparator" type="HSeparator" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="lb_body" type="RichTextLabel" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("1_61j8v")
+text = "sdfsfsökljsädajlkgja ö sdfsfsökljsädajlkgja ösdfsfsökljsädajlkgja ösdfsfsökljsädajlkgja ösdfsfsökljsädajlkgja ö"
+fit_content = true
+scroll_active = false
+
+[node name="tween" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_pbtgj")
+}
+
+[node name="hideTimer" type="Timer" parent="."]

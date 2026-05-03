@@ -17,7 +17,7 @@ func addItem(item: ItemBase):
 	if(item.wrefInventory != null):
 		assert(false)
 	
-	if(item.canCombine()):
+	if(item.canStack()):
 		for myitem in items:
 			if(myitem.ID == item.ID):
 				if(myitem.tryCombine(item)):
@@ -32,9 +32,8 @@ func addItem(item: ItemBase):
 func addItemID(itemID:String):
 	var newItem = GR.createItem(itemID)
 	if(newItem == null):
-		return false
+		return 
 	addItem(newItem)
-	return true
 
 func removeItem(item:ItemBase,_amount:int=1):
 	if(items.has(item)):
@@ -53,13 +52,13 @@ func removeItemID(itemID:String,_amount:int=1):
 #	return items.has(item)
 
 ## returns amount
-func hasItemID(itemID: String):
+func hasItemID(itemID: String)->int:
 	for item in items:
 		if(item.ID == itemID):
 			return item.amount
 	return 0
 
-func getItems():
+func getItems()->Array[ItemBase]:
 	return items
 
 func getItemByID(itemID)->ItemBase:

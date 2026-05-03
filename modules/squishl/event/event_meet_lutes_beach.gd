@@ -6,7 +6,7 @@ func _init():
 
 func react(_triggerID, _args)->bool:
 	Global.main.runScene("interaction_scene",
-		[load("res://modules/squishl/interaction/dlg_pc_lutes.gd"),
+		["dlg_pc_lutes",
 		Global.main.getCurrentScene().get_bg()],
 		Global.main.getCurrentScene().uniqueSceneID)
 	return false

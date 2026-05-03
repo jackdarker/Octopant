@@ -112,6 +112,7 @@ func loadData(data):
 	GR.loadData(data.globalregistry)
 	Global.main.loadData(data.main)
 	Global.pc.loadData(data.pc)
+	Global.QS.loadData(data["quests"]) #done after characters because checking inventory!
 	Global.main.postLoad()
 			
 func saveData()->Variant:
@@ -119,6 +120,7 @@ func saveData()->Variant:
 		"globalregistry":GR.saveData(),
 		"main":Global.main.saveData(),
 		"pc": Global.pc.saveData(),
+		"quests":Global.QS.saveData()
 	}
 		
 	return(data)

@@ -7,8 +7,8 @@ func on_enterScene():
 	if (GR.getModuleFlag("Default","Found_Beach",0)<=0):
 		Global.hud.say("You found yourself at a beach.")
 		GR.setModuleFlag("Default","Found_Beach",1)
-		Global.QS.start_quest(GR.getQuest("craft_knife"))
-		Global.QS.start_quest(GR.getQuest("find_locations1"))
+		Global.QS.start_quest(GR.getQuest("craft_knife")) #TODO
+		Global.QS.start_quest(GR.getQuest("find_locations1")) #TODO
 	else:
 		Global.hud.say("Visiting the the beach again.")
 

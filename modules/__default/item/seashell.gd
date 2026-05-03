@@ -17,3 +17,6 @@ func getPossibleActions():
 			"scene": "UseItemLikeInCombatScene",
 			"description": "Dont cut yourself!",
 		}]
+
+func canStack()->bool:
+	return true

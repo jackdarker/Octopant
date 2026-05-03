@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=9 format=3 uid="uid://cvraqamhx060d"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_xcq60"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_0272m"]
+[ext_resource type="Script" uid="uid://c33rbc77yrsub" path="res://game/quest/step/gather_item.gd" id="3_dqukm"]
+[ext_resource type="Script" uid="uid://27gxkaeehmlu" path="res://game/quest/step/has_flag.gd" id="3_hsi1p"]
+[ext_resource type="Script" uid="uid://qb1wkgaipufw" path="res://game/quest/step/deliver_item.gd" id="4_hsi1p"]
+
+[sub_resource type="Resource" id="Resource_plwdu"]
+script = ExtResource("3_hsi1p")
+moduleID = "Squishl"
+flagID = "Daily_Treasure"
+valueMin = 1
+title = "Spot the location and make your way to it."
+metadata/_custom_type_script = "uid://27gxkaeehmlu"
+
+[sub_resource type="Resource" id="Resource_e881p"]
+script = ExtResource("3_dqukm")
+itemID = "vial_empty"
+title = "Fetch the trinket"
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_5ci4c"]
+script = ExtResource("4_hsi1p")
+characterID = "Lutes"
+itemID = "vial_empty"
+title = "Bring the item to Lutes"
+metadata/_custom_type_script = "uid://qb1wkgaipufw"
+
+[resource]
+script = ExtResource("1_xcq60")
+ID = "lutes_trinket"
+quest_name = "Get the trinket for Lutes"
+quest_objective = "Somewhere at the beach coast are some rocks further out in the sea. There is something there that is of interest for Lutes."
+steps = Array[ExtResource("2_0272m")]([SubResource("Resource_plwdu"), SubResource("Resource_e881p"), SubResource("Resource_5ci4c")])
+metadata/_custom_type_script = "uid://0jbnqgdlwjeo"

@@ -10,14 +10,10 @@ func _init() -> void:
 
 func enterScene():
 	Global.pc.location=self.sceneID
-	#scene_ext=GR.getSceneExtensions(self.sceneID,self)
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
-	#for ext in scene_ext:
-	#	if ext.has_method("on_enterScene"):			#TODO use extension?
-	#		ext.on_enterScene()
-	#menu("")
+
 	set_bg(load("res://assets/images/bg/event_delve_beach.png"))
 	var room=GR.getModuleFlag("Squishl","Delve_State",0)
 	if(_defeated):
@@ -27,7 +23,10 @@ func enterScene():
 		Global.hud.addButton("Next","",_on_bt_fight_pressed)
 	else :
 		GR.increaseModuleFlag("Squishl","Daily_Treasure",1)
-		Global.hud.say("Finally you get to your prize-")
+		var _item=GR.createItem("vial_empty")
+		Global.pc.inventory.addItem(_item)
+		Global.hud.say("You found some [b]empty plastic bottle[/b].")
+		Global.hud.say("Finally you get to your prize- some small,empty vial.")
 		Global.hud.addButton("Next","",_on_prize_claim)
 
 func _on_bt_fight_pressed():
