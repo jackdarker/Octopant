@@ -1,12 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b73d7l6g8hcu1"]
+[gd_scene load_steps=5 format=3 uid="uid://b73d7l6g8hcu1"]
 
 [ext_resource type="Script" uid="uid://crvgbwupgvyr0" path="res://ui/wnd_inventory.gd" id="1_cgda4"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_p5x5a"]
 [ext_resource type="PackedScene" uid="uid://c8qw0h1nshdir" path="res://ui/image_list_item.tscn" id="2_pk74w"]
 [ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="3_p5x5a"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4oy"]
-bg_color = Color(0.017051354, 0.19979927, 0.37354562, 1)
 
 [node name="WndInventory" type="CanvasLayer"]
 script = ExtResource("1_cgda4")
@@ -28,7 +25,7 @@ theme = ExtResource("2_p5x5a")
 layout_mode = 2
 size_flags_vertical = 0
 theme = ExtResource("2_p5x5a")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ga4oy")
+theme_type_variation = &"LabelHeader"
 text = "Inventory"
 horizontal_alignment = 1
 

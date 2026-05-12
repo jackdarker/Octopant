@@ -1,12 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://cr1v6so6n56qp"]
 
 [ext_resource type="Script" uid="uid://ih6slra10msu" path="res://ui/wnd_craft.gd" id="1_wkr8o"]
+[ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="2_5w2ku"]
 [ext_resource type="PackedScene" uid="uid://c8qw0h1nshdir" path="res://ui/image_list_item.tscn" id="2_o7v6b"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpobv"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ga4oy"]
-bg_color = Color(0.28731307, 0.6124641, 0.9600938, 1)
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="3_trfg0"]
 
 [node name="WndCraft" type="CanvasLayer"]
 script = ExtResource("1_wkr8o")
@@ -17,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_mpobv")
+theme_override_styles/panel = ExtResource("2_5w2ku")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -25,7 +22,8 @@ layout_mode = 2
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_ga4oy")
+theme = ExtResource("3_trfg0")
+theme_type_variation = &"LabelHeader"
 text = "Crafting"
 horizontal_alignment = 1
 
