@@ -8,6 +8,8 @@ bg_color = Color(0.29411766, 0.29411766, 0.30588236, 0.72156864)
 
 [resource]
 Label/colors/font_color = Color(1, 1, 1, 1)
+LabelHeader/base_type = &"Label"
+LabelHeader/font_sizes/font_size = 24
 Panel/styles/panel = SubResource("StyleBoxFlat_otacr")
 RichTextLabel/colors/default_color = Color(0.92535293, 0.9253528, 0.9253529, 1)
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_e1x85")

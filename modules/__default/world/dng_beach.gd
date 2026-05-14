@@ -13,9 +13,12 @@ func enterScene():
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
-
+	var baseSize=get_tree().root.size
 	set_bg(load("res://assets/images/bg/event_delve_beach.png"))
+	var imgSize:Vector2=%bg_image.texture.get_size()
 	var room=GR.getModuleFlag("Squishl","Delve_State",0)
+	#%bg_image.scale=Vector2(0.5+(0.15*room),0.5+(0.15*room))
+	#%bg_image.size=imgSize*(0.5+(0.15*room))  no effect
 	if(_defeated):
 		Global.hud.addButton("Next","",	func():Global.main.removeScene(self)		)
 	elif (room<=1):

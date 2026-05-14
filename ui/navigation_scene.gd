@@ -26,7 +26,7 @@ func enterScene():
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
 	
-	if(!self.sceneID.begins_with("vis_")):
+	if(!self.sceneID.begins_with("vis_")): # if this is standard-nav-scene inject special scene if available
 		if(Global.main.playerSpecialScene()):
 			return
 	for ext in scene_ext:

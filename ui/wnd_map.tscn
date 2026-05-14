@@ -1,27 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3jgutn4jlo6x"]
+[gd_scene load_steps=4 format=3 uid="uid://b3jgutn4jlo6x"]
 
 [ext_resource type="Script" uid="uid://cv6yag7rrdiir" path="res://ui/wnd_map.gd" id="1_0sq2l"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_he8bp"]
+[ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="2_amtvy"]
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="3_lcleh"]
 
 [node name="Map" type="CanvasLayer"]
 script = ExtResource("1_0sq2l")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="PanelContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_he8bp")
+theme_override_styles/panel = ExtResource("2_amtvy")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("3_lcleh")
+theme_type_variation = &"LabelHeader"
+text = "Map"
+horizontal_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
