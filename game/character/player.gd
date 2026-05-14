@@ -1,5 +1,4 @@
-extends Character
-class_name Player
+class_name Player extends Character
 
 func _init():
 	super()
@@ -12,3 +11,5 @@ func post_sleep():
 	getStat(StatEnum.Fatigue).modify(-99999)
 	GR.createEffect("eff_arousable").applyTo(self)
 	
+func getBustImage()->String:
+	return "res://assets/images/chars/bust_pc_start.png"

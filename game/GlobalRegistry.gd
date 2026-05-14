@@ -230,7 +230,7 @@ func resetFlagsOnNewDay():
 #endregion
 
 #region modules
-static func module_basepath(_folder:String)->String:
+func module_basepath(_folder:String)->String:
 	if( OS.has_feature("editor_runtime")):
 		return _folder
 	else:
