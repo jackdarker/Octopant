@@ -48,7 +48,7 @@ func complete_quest(quest: Quest, args: Dictionary = {}) -> Quest:
 	return quest
 
 ## CB for quest signal
-func quest_finished(quest: Quest, args: Dictionary = {}):
+func quest_finished(quest: Quest, _args: Dictionary = {}):
 	if not active.is_quest_inside(quest):
 		return quest
 
@@ -124,13 +124,13 @@ func is_quest_completed(quest: Quest) -> bool:
 
 
 func saveData()->Variant:
-	var quest_active:Array = []
-	var quest_completed:Array = []
+	var quests_active:Array = []
+	var quests_completed:Array = []
 	for item in active.get_all_quests():
-		quest_active.push_back(item.saveData())
+		quests_active.push_back(item.saveData())
 	for item in completed.get_all_quests():
-		quest_completed.push_back(item.saveData())	
-	return({"quest_active":quest_active,"quest_completed":quest_completed })
+		quests_completed.push_back(item.saveData())	
+	return({"quest_active":quests_active,"quest_completed":quests_completed })
 
 ## Restores the state of each quest
 func loadData(data):

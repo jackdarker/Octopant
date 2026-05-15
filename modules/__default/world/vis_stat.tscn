@@ -3,5 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://b0qurwpsffl61" path="res://ui/navigation_scene.tscn" id="1_cktvw"]
 [ext_resource type="Script" uid="uid://bwvapj583hixf" path="res://modules/__default/world/vis_stat.gd" id="2_b0idv"]
 
-[node name="Scene" instance=ExtResource("1_cktvw")]
+[node name="Scene2" instance=ExtResource("1_cktvw")]
 script = ExtResource("2_b0idv")
+
+[node name="bg_image" parent="." index="1"]
+texture = null

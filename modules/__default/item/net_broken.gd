@@ -5,6 +5,9 @@ func _init():
 	ID="net_broken"
 	tags=[ItemTagEnum.Ingredient_Craft]
 
+func getInventoryImage():
+	return "res://assets/images/items/Net_Broke.svg"
+
 func getName()->String:
 	return "damaged net"
 

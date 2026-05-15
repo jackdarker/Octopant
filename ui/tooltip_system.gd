@@ -57,7 +57,7 @@ func getTooltipParent():
 
 #region notification
 
-func showNotification(title: String, message: String, icon: Texture2D = null, time: float = 4.0):
+func showNotification(title: String, message: String, _icon: Texture2D = null):
 	var panel:NotificationDisplay = NotificationScene.instantiate()
 	panel.set_size(Vector2(10,10))
 	panel.title=title 
@@ -103,8 +103,8 @@ func _on_notification_request_close(panel):
 			break
 	_reposition_notifications()
 	
-func _on_notification_shown(panel):
-	pass#_reposition_notifications()
+func _on_notification_shown(_panel):
+	_reposition_notifications()
 
 func _reposition_notifications():
 	# place panels stacked downward from top with spacing

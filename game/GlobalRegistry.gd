@@ -175,7 +175,7 @@ func increaseFlag( flagID, addvalue = 1):
 func getModuleFlag(moduleID, flagID, defaultValue = null):
 	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
-		#Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
+		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return defaultValue
 	
 	var module:Module = _modules[moduleID]
@@ -274,7 +274,7 @@ func preinitModulesFolder(folder: String):
 
 	var end = Time.get_ticks_usec()
 	var worker_time = (end-start)/1000000.0
-	#Log.print("MODULES pre-initialized in: %s seconds" % [worker_time])
+	Log.print("MODULES pre-initialized in: %s seconds" % [worker_time])
 
 func registerModules():
 	var progressBase = 15.0/totalStages
@@ -346,7 +346,7 @@ func getEvents():
 
 #region scenes
 #path is file or directory
-func registerScene(moduleID:String,path: String, creator = null):
+func registerScene(moduleID:String,path: String, _creator = null):
 	#if(hasCachedPath(CACHE_SCENE, path)):
 	#	scenes[getCachedID(CACHE_SCENE, path)] = null
 	#	return
@@ -383,7 +383,7 @@ func createScene(ID: String):
 
 #region scene_extensions
 #path is file or directory
-func registerSceneExtension(moduleID:String,path: String, creator = null):
+func registerSceneExtension(moduleID:String,path: String, _creator = null):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
@@ -469,14 +469,15 @@ func getRecipe(ID: String)->Recipe:
 		return null
 	var newItem = recipes[ID].new()
 	return newItem
-	
+
+## this is meant to filter recipe by craftingstation ("Brewery") or class ("Sword") 	
 func getRecipesByTag(tags:Array)->Array:
-	var items:Array=[]
+	var _items:Array=[]
 	var itemsInstances:Array=[]
 	for tag in tags:
 		if(recipesByTag.has(tag)):
-			items=recipesByTag[tag]		#TODO filter items that have all tags (AND)
-	for item in items:
+			_items=recipesByTag[tag]		#TODO filter items that have all tags (AND)
+	for item in _items:
 		itemsInstances.append(getRecipe(item))
 	return itemsInstances
 #endregion

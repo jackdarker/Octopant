@@ -6,11 +6,14 @@ func _init():
 	super()
 	ID="EventHurtBeach"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	Global.hud.say("Accidently you hurt yourself by stepping on some pointed seashell hidden in the wet sand.")
 	Global.pc.getStat("pain").modify(10)
 	Global.main.getCurrentScene().continueScene()
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return true
+
+func getWeight()->float:
+	return 0.5

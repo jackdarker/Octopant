@@ -11,13 +11,15 @@ var menustack:Array[String]=[]	#sub-menu path
 
 func _ready() -> void:
 	enterScene()
-	pass
 
 #override this
 func setupScene(_args:Array):
 	scene_ext=GR.getSceneExtensions(self.sceneID,self)
 	for ext in scene_ext:
 		ext.on_setupScene()
+
+func canSave()->bool:
+	return true
 
 func enterScene():
 	Global.hud.hudMode=Hud.HUDMODE.Explore
@@ -69,5 +71,6 @@ func menu_back():
 	menustack.pop_back()
 	menu(menustack.pop_back())
 
+# emergency exit
 func navigate_home():
 	Global.main.runScene("nav_home")

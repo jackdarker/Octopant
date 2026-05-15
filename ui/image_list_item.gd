@@ -5,12 +5,11 @@ signal show_tooltip(path:String)
 signal hide_tooltip(path:String)
 
 static var SceneListItem
-static func create_item(data)-> ListItem:
+static func create_item(theItem)-> ListItem:
 	if(!SceneListItem):
 		SceneListItem = load("res://ui/image_list_item.tscn")
 	var _Item=SceneListItem.instantiate()
-	#var image = Image.load_from_file(data.getInventoryImage())
-	var _tex:Texture2D = load(data.getInventoryImage())
+	var _tex:Texture2D = load(theItem.getInventoryImage())
 	var image = _tex.get_image()
 	var ThumbnailSize = 128	#TODO
 	var Width =0
@@ -26,7 +25,7 @@ static func create_item(data)-> ListItem:
 	_Item.mouse_exited.connect(func(): _Item.hide_tooltip.emit())
 	image.resize(Width,Height)
 	_Item.texture=ImageTexture.create_from_image(image)
-	_Item.data=data
+	_Item.data=theItem
 
 	return _Item
 ####################################################################################

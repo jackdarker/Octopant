@@ -6,7 +6,7 @@ func _init():
 	super()
 	ID="EventFindLootCliff"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	var i=randi_range(0, 100)
 	if(i>50):
 		Global.hud.say("There's a rock that looks a little unusual. It's much harder and appears to be made up of several shell-like layers.")
@@ -19,7 +19,7 @@ func react(_triggerID, _args)->bool:
 		
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return true
 
 func _ignore():

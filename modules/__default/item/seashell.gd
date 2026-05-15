@@ -12,11 +12,11 @@ func getInventoryImage():
 	return "res://assets/images/items/Seashell.png"
 
 func getPossibleActions():
-	return [ 
-		{	"name": "break it!",
-			"scene": "UseItemLikeInCombatScene",
-			"description": "Dont cut yourself!",
-		}]
+	return [ ]
+	#	{	"name": "break it!",
+	#		"scene": "UseItemLikeInCombatScene",
+	#		"description": "Dont cut yourself!",
+	#	}]
 
 func canStack()->bool:
 	return true

@@ -24,8 +24,8 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("go home","",parent_scene.navigate_home))
 		if(GR.getModuleFlag("Default","Found_Cliff",0)>0):
 			buttons.push_back(Button_Config.new("Cliff","",Global.main.runScene.bind("nav_cliff")))
-		if(GR.getModuleFlag("Default","Found_DeepWoods",0)>0):
-			buttons.push_back(Button_Config.new("DeepWood","",Global.main.runScene.bind("nav_deepwood")))
+		if(GR.getModuleFlag("Default","Found_Forest",0)>0):
+			buttons.push_back(Button_Config.new("Forest","",Global.main.runScene.bind("nav_forest")))
 	
 	return(buttons)
 

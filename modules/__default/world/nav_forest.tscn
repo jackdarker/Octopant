@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bpt5jucxuec1a"]
 
 [ext_resource type="PackedScene" uid="uid://b0qurwpsffl61" path="res://ui/navigation_scene.tscn" id="1_5hom5"]
-[ext_resource type="Script" uid="uid://dovnht6a8go7y" path="res://modules/__default/world/nav_deepwood.gd" id="2_5hom5"]
+[ext_resource type="Script" uid="uid://dovnht6a8go7y" path="res://modules/__default/world/nav_forest.gd" id="2_5hom5"]
 
-[node name="Scene" instance=ExtResource("1_5hom5")]
+[node name="Scene2" instance=ExtResource("1_5hom5")]
 script = ExtResource("2_5hom5")

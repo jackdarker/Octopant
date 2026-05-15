@@ -4,13 +4,13 @@ func _init():
 	super()
 	ID="EventMeetSquishlBeach"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	Global.hud.say("As you walk the beach you spot a squid sitting in a small pool of water.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Inspect closer","",_inspect,null)
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
 
 func _ignore():

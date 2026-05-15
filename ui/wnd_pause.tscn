@@ -101,12 +101,23 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="bt_back" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="bt_back" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 text = "Back"
 
+[node name="lb_no_save" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_colors/default_color = Color(0.59607846, 0, 0, 1)
+text = "You cant save at this location !"
+
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="filechange" from="PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/save_new" to="." method="_on_filechange"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer2/bt_back" to="." method="_on_bt_back_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer2/HBoxContainer/bt_back" to="." method="_on_bt_back_pressed"]

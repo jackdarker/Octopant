@@ -15,12 +15,14 @@ static func create(_ID:StringName,_value:float,_ll:float,_ul:float)->Status:
 
 var ID:String="UNKNOWN"
 var value:float=0
-var value_percent:float:
+## sets/gets value related to limits
+var value_percent:float:	# 50% -> 50
 	set(v):
 		if(v>=0):
 			value = min(ul,max(ll,v*ul/100.0))
 		else:
-			value = min(ul,max(ll,v*ll/-100.0))	
+			value = min(ul,max(ll,v*ll/-100.0))
+		changed.emit(ID,value)
 	get():
 		# ll	v	ul	perc
 		# 0		20	60	33

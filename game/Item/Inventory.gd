@@ -67,9 +67,9 @@ func getItemByID(itemID)->ItemBase:
 			return item
 	return null
 
-static func filter_by_tag(items:Array[ItemBase],tags:Array)->Array:
+static func filter_by_tag(allItems:Array[ItemBase],tags:Array)->Array:
 	var _ret=[] 
-	for item in items:
+	for item in allItems:
 		if item.hasTags(tags):
 			_ret.push_back(item)
 	return _ret

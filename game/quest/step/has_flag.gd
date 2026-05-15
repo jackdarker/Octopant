@@ -32,7 +32,7 @@ func meets_condition() -> bool:
 			updated.emit()
 	return completed
 
-func _on_flag_change(module:String, flag:String, newvalue:Variant):
+func _on_flag_change(module:String, flag:String, _newvalue:Variant):
 	if(module==moduleID && flag==flagID && !completed):
 		meets_condition()
 

@@ -1,14 +1,14 @@
 extends "res://ui/navigation_scene.gd"
 
 func _init() -> void:
-	sceneID="nav_deepwood"
+	sceneID="nav_forest"
 
 func _on_bt_explore_pressed():
 	Global.hud.clearInput()
 	Global.main.doTimeProcess(30*60)
 	_requiresFatigue(true)
-	GR.increaseModuleFlag("Default","Explored_DeepWoods",1)
-	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_deepwoods_explore",[]):
+	GR.increaseModuleFlag("Default","Explored_Forest",1)
+	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_forests_explore",[]):
 		Global.hud.say("Nothing was found")
 		continueScene()
 

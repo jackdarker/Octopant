@@ -1,14 +1,11 @@
 extends EventBase
-class_name EventNothing
-
-# an event that gives the player some loot
 
 func _init():
 	super()
 	ID="EventNothing"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	return false
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return true

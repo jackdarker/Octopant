@@ -17,7 +17,7 @@ var char:Character:
 		return(wrefCharacter.get_ref())
 
 ## override this; default will just choose a random target and try to find a random Attack-Skill to use
-func selectCombatSkill(enemyParty:Array[Character],ownParty:Array[Character])->CombatSkillResult:
+func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->CombatSkillResult:
 	var _res:CombatSkillResult=CombatSkillResult.create(true,"")
 	var skills=Inventory.filter_by_tag(char.skills.getItems(),[SkillTagEnum.Attack])
 	skills.shuffle()

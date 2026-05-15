@@ -46,6 +46,8 @@ func _deferred_goto_scene(path,data):
 	get_tree().current_scene = current_scene
 	if(data!=null):
 		loadData(data)
+	elif(path=="res://game/main_scene.tscn"):
+		current_scene.runScene("nav_beach")	#TODO intro   
 
 #region save/load
 var SAVE_DIR="user://Save/"	
@@ -109,6 +111,7 @@ func loadFromFile(slot):
 func loadData(data):
 	#TODO Global.settings.loadData(data.settings)		store settings in separate file?
 	#Note: data["info"] used by save-UI !
+	Global.main.beforeLoad()
 	GR.loadData(data.globalregistry)
 	Global.main.loadData(data.main)
 	Global.pc.loadData(data.pc)

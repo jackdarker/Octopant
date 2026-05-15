@@ -12,7 +12,8 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("pitty you","",pittyYourself))
 		buttons.push_back(Button_Config.new("go crazy","",crazyYourself))
 		buttons.push_back(Button_Config.new("strain you","",fatigueYourself))
-		buttons.push_back(Button_Config.new("visit lutes","",dlg_lutes))
+		if(GR.getModuleFlag("Squishl","Lutes_Met",0)>5):
+			buttons.push_back(Button_Config.new("visit lutes","",dlg_lutes,_can_meet_lutes))
 	return(buttons)
 
 func dlg_lutes():
@@ -20,6 +21,9 @@ func dlg_lutes():
 		["dlg_pc_lutes",
 		Global.main.getCurrentScene().get_bg()],
 		Global.main.getCurrentScene().uniqueSceneID)
+
+func _can_meet_lutes(_apply:bool=false):
+	var _res:Result=Result.create(true,"Lutes is around")
 
 func hurtYourself():
 	Global.pc.getStat(StatEnum.Pain).modify(30)

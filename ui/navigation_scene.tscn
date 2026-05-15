@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0qurwpsffl61"]
+[gd_scene load_steps=2 format=3 uid="uid://b0qurwpsffl61"]
 
 [ext_resource type="Script" uid="uid://xyoy0jy2thl5" path="res://ui/navigation_scene.gd" id="1_11lim"]
-[ext_resource type="Texture2D" uid="uid://bi46kjdtv2gos" path="res://assets/images/bg/nav_forest_sun.png" id="2_eoi45"]
 
 [node name="Scene" type="Control"]
 layout_mode = 3
@@ -29,4 +28,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_eoi45")

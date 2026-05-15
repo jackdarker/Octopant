@@ -6,7 +6,10 @@ signal time_passed(_secondsPassed)
 signal item_trade(giverId:String,receiverId:String,itemid:String,amount:int)	#used by queststep_deliver_item
 
 var sceneStack:Array=[]
-
+var currentSceneUID:int:
+	get():
+		return -1 if !getCurrentScene() else getCurrentScene(). uniqueSceneID
+			
 var currentDay = 0
 var timeOfDay:int = 6*60*60 # seconds since 00:00
 
@@ -28,8 +31,6 @@ func _ready() -> void:
 	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
 	
 	postLoad()
-	
-	runScene("nav_beach") 	#todo intro
 
 #region scene
 func runScene(ID:String, _args = [], parentSceneUniqueID = -1):
@@ -116,15 +117,8 @@ func playerSpecialScene()->bool:
 	#TODO here we can place checks to visualize state change of player
 	#this is called when starting a usual nav_scene and injects a proper visual scene
 	#afterwards it returns to the nav_scene again. This could trigger another visual scene and cause a loop!
-	#Todo ho make this moddable? use EventSystem instead?
 	var _ret:bool=false
-	_ret=Global.ES.triggerEvent(EventSystem.TRIGGER.InRoom,"",[])
-	#var _bev=Global.pc.getStat(StatEnum.Lust).value_percent
-	#if(_bev>=50 && GR.getModuleFlag("Default","FatigueHigh",0)<50):
-	#	_ret=true
-	#	runScene("vis_stat",[],getCurrentScene().uniqueSceneID)
-	#GR.setModuleFlag("Default","FatigueHigh",_bev)
-		
+	_ret=Global.ES.triggerEvent(EventSystem.TRIGGER.InRoom,"",[])		
 	return _ret
 
 #endregion
@@ -214,18 +208,18 @@ func startNewDay():
 	#SAVE.triggerAutosave()
 
 func gotoSleep():
-	Global.hud.fade()
+	await Global.hud.fade()	#wait for fade out  #TODO fadeout  do stuff fadein
 	#TODO sleep event
 	startNewDay()
 	Global.pc.post_sleep()
 
 #endregion
 
-func defaultDefeat(scene):
+func defaultDefeat(_scene):
 	Global.main.clearSceneStack()
 	Global.main.runScene("nav_home")
 			
-func defaultGameOver(scene):
+func defaultGameOver(_scene):
 	Global.main.clearSceneStack()
 	Global.main.runScene("nav_gameover")
 
@@ -247,21 +241,47 @@ func checkForGameOver():
 #region save/load
 #called by save-dialog
 func canSave()->bool:
+	var _scene=getCurrentScene()
+	if(_scene && _scene.has_method("canSave")):
+		return _scene.canSave()
 	return true
 	
 func loadData(data):
 	timeOfDay=data["time"]
 	currentDay=data["day"]
+	var _scenes:Dictionary=data["scenes"]
+	for _scene in sceneStack:
+		_scene.queue_free()
+	for _id in _scenes.keys():
+		var _scene=GR.createScene(_id)
+		_scene.loadData(_scenes[_id])
+		sceneStack.push_back(_scene)
+		get_node("Scene").add_child(_scene)
+	getCurrentScene().setupScene([])
+	getCurrentScene().enterScene()
 			
 func saveData()->Variant:
 	#Note: data["info"] used by save-UI !
+	var _scenes:={}
+	for _scene in sceneStack:
+		if !_scene.canSave():
+			Log.error("tried to save scene that has no save-support: "+str(_scene.uniqueSceneID))
+		_scenes[_scene.sceneID]=_scene.saveData()
+		
 	var data ={
 		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getTime()),
 		"day":currentDay,
 		"time": timeOfDay,
+		"scenes": _scenes,
 	}
+
 	return(data)
-	
+
+func beforeLoad():
+	# to not spam signal when inventory items are re-added
+	for evt in Global.pc.inventory.item_added.get_connections():
+		evt.signal.disconnect(evt.callable)
+
 func postLoad():
 	# because stats are recreated on load, events also need to be reconnected
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"pain")		

@@ -37,7 +37,7 @@ func meets_condition() -> bool:
 		updated.emit()
 	return completed
 
-func _on_item_trade(giverId:String,receiverId:String,itemid:String,amount:int) -> void:
+func _on_item_trade(_giverId:String,receiverId:String,itemid:String,amount:int) -> void:
 	if receiverId==characterID and not completed:
 		if itemid==itemID:
 			gathered += amount

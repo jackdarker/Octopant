@@ -11,9 +11,9 @@ func setTint(under:Color,progress:Color):
 	%barPos.tint_under=under
 	%barPos.tint_progress=progress
 
-func setValue(v:float,max:float):
-	%barNeg.max_value=max
-	%barPos.max_value=max
+func setValue(v:float,maxv:float):
+	%barNeg.max_value=maxv
+	%barPos.max_value=maxv
 	if(v>=0):
 		%barPos.value=v
 		%barNeg.value=0.0

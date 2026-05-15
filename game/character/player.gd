@@ -9,7 +9,8 @@ func _init():
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)
 	getStat(StatEnum.Fatigue).modify(-99999)
-	GR.createEffect("eff_arousable").applyTo(self)
+	getStat(StatEnum.Lust).modify(getStat(StatEnum.Lust).value*-0.5)
+	GR.createEffect("eff_slept").applyTo(self)
 	
 func getBustImage()->String:
 	return "res://assets/images/chars/bust_pc_start.png"

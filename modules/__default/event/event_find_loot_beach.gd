@@ -6,13 +6,13 @@ func _init():
 	super()
 	ID="EventFindLootBeach"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	Global.hud.say("There is something sparkling between seasshells")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Dig it out","",_dig,null)
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return true
 
 func _ignore():

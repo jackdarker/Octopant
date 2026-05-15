@@ -1,11 +1,12 @@
 extends SceneExtension
 
 const sceneID="dlg_pc_crab"
-const avatar_player = "res://assets/images/icons/ic_unknown.svg"
+var avatar_player
 const avatar_crab = "res://assets/images/chars/Crab.png"
 const NPC_Format = {"bgcolor":Color.DARK_ORANGE}
 
 func on_enterScene():
+	avatar_player = Global.pc.getBustImage()
 	parent_scene.__displayImage(1,avatar_player)
 	parent_scene.__displayImage(2,avatar_crab)
 	pass

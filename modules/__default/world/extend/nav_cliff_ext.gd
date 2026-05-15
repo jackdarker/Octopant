@@ -58,7 +58,7 @@ func _on_climb_down():
 
 func _on_climb():
 	_can_climb(true)
-	var i=randi_range(0, 100)
+	#var i=randi_range(0, 100)
 	GR.increaseModuleFlag("Default","Cliff_Height",10)
 	Global.hud.clearInput()
 	Global.hud.clearOutput()

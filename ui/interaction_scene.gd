@@ -19,6 +19,8 @@ func enterScene():
 			ext.on_enterScene()
 	menu("")
 
+func canSave()->bool:
+	return false	#TODO fix saving Interactions 
 
 func __displayImage(where,path):
 	var _texture:Texture=null

@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
 [ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="2_7ihmi"]
 [ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
-[ext_resource type="Texture2D" uid="uid://bqdh41p5jnj78" path="res://assets/images/chars/spider1.svg" id="3_546lt"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="4_en2x2"]
+[ext_resource type="Texture2D" uid="uid://bjmunitvs80eh" path="res://assets/images/chars/Crab.png" id="5_1v5rv"]
+[ext_resource type="Texture2D" uid="uid://bpfguvnmwowwd" path="res://assets/images/items/Seashell.png" id="6_q43x7"]
 
 [sub_resource type="Theme" id="Theme_276te"]
 
@@ -80,8 +81,6 @@ _data = {
 &"RESET": SubResource("Animation_en2x2"),
 &"fade": SubResource("Animation_7ihmi")
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_276te"]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_276te")
@@ -261,7 +260,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-texture = ExtResource("3_546lt")
+texture = ExtResource("5_1v5rv")
 expand_mode = 1
 stretch_mode = 4
 
@@ -270,7 +269,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-texture = ExtResource("3_546lt")
+texture = ExtResource("5_1v5rv")
 expand_mode = 1
 stretch_mode = 4
 
@@ -279,7 +278,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
-texture = ExtResource("3_546lt")
+texture = ExtResource("6_q43x7")
 expand_mode = 1
 stretch_mode = 4
 
@@ -412,8 +411,7 @@ texture = SubResource("GradientTexture1D_546lt")
 
 [node name="anim_fade" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_1v5rv"),
-&"ui_anim": SubResource("AnimationLibrary_276te")
+&"": SubResource("AnimationLibrary_1v5rv")
 }
 
 [connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]

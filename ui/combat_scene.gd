@@ -34,7 +34,10 @@ var next_state:STATE=STATE.undef:
 func _init():
 	sceneID = "FightScene"
 	fight_next.connect(next)
-
+	
+func canSave()->bool:
+	return false	#no save in combat
+	
 func next():
 	if(next_state==STATE.battleInit):
 		battleInit()

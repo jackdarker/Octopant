@@ -1,11 +1,12 @@
 extends SceneExtension
 
 const sceneID="dlg_pc_lutes"
-const avatar_player = "res://assets/images/icons/ic_unknown.svg"
+var avatar_player
 const avatar_lutes = "res://assets/images/chars/lutes.png"
 const NPC_Format = {"bgcolor":Color.DARK_ORANGE}
 
 func on_enterScene():
+	avatar_player = Global.pc.getBustImage()
 	parent_scene.__displayImage(1,avatar_player)
 	
 	pass
@@ -29,13 +30,17 @@ func get_buttons(menuid:String,buttons:Array):
 		Global.hud.say("As you get closer to the person,...")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("introTalk2",true)))
 	if(menuid=="introTalk2"):
-		Global.hud.say("...talking about harponing...")
+		Global.hud.say("TODO...talking about harponing...")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))
 	if(menuid=="requestTalk"):
 		GR.increaseModuleFlag("Squishl","Lutes_Met",1)
-		if(_met>1 && GR.getModuleFlag("Squishl","Lutes_Love",0)<=0):
-				Global.hud.say("Did you see that trinket on those rocks out in the sea? If you can get it for me, I would be grateful...",NPC_Format)
-				buttons.push_back(Button_Config.new("Trinket?","",cb_menu("questTrinket",true)))
+		if(_met>5):
+			Global.hud.say("You talk about this and that.")
+			Global.hud.say("[Lutes is now available via menu]",Constants.GM_Format)
+			buttons.push_back(Button_Config.new("Thats cool","",cb_menu("leave",true)))
+		elif(_met>1 && GR.getModuleFlag("Squishl","Lutes_Love",0)<=0):
+			Global.hud.say("Did you see that trinket on those rocks out in the sea? If you can get it for me, I would be grateful...",NPC_Format)
+			buttons.push_back(Button_Config.new("Trinket?","",cb_menu("questTrinket",true)))
 		else:	
 			Global.hud.say("You talk about this and that.")
 			buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))
@@ -63,14 +68,14 @@ func get_buttons(menuid:String,buttons:Array):
 		Global.hud.say("Keep it, I dont need it.",NPC_Format)
 		GR.increaseModuleFlag("Squishl","Lutes_Love",1)
 		buttons.push_back(Button_Config.new("Sure","",cb_menu("leave",true)))
-		buttons.push_back(Button_Config.new("That sucks","",cb_menu("leave",true)))
+		buttons.push_back(Button_Config.new("That sucks","All the effort for nothing?",cb_menu("leave",true)))
 		if Global.QS.active.get_quest_from_id("lutes_trinket"):
 			Log.error("quest should be complete")
 	if(menuid=="requestFuck"):
-		Global.hud.say("Sorry, not in the mood",NPC_Format)
+		Global.hud.say("Sorry, I'm not in the mood.",NPC_Format)
 		buttons.push_back(Button_Config.new("Next","",cb_menu("requestFuck_Nope",true)))
 	if(menuid=="requestFuck_Nope"):
-		Global.hud.say("OK, no problem....")
+		Global.hud.say("No pressure....")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))
 	if(menuid=="leave"):
 		Global.hud.say("I need to leave.")

@@ -59,7 +59,7 @@ class Cond_Stat extends Cond_Base:
 			_res.Msg="requires "+str(minValue)+" <"+statID+" <"+str(maxValue)
 		return _res
 	
-	func apply(target:Character):
+	func apply(_target:Character):
 		pass
 
 ## check for Stat and alter it (positive change means increase of stat)
@@ -92,9 +92,9 @@ class Cond_StatChange extends Cond_Base:
 #endregion
 ################################################################################
 ## factory method
-static func create(conds:Array[Cond_Base])->CondCheck:
+static func create(theConds:Array[Cond_Base])->CondCheck:
 	var me=CondCheck.new()
-	me.addCond(conds)
+	me.addCond(theConds)
 	return me
 ################################################################################
 var conds:Array=[]

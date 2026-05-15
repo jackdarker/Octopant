@@ -1,4 +1,4 @@
-extends Module
+class_name Module_Default extends Module
 
 func _init()-> void :
 	super()
@@ -36,15 +36,18 @@ func _init()-> void :
 
 func getFlags():
 	return {
-		"Found_Beach": flag(FlagType.Number),
+		"Found_Beach": flag(FlagType.Number),	#has found region
 		"Found_Cliff": flag(FlagType.Number),
-		"Found_DeepWoods": flag(FlagType.Number),
-		"Explored_Beach": flag(FlagType.Number),
+		"Found_Forest": flag(FlagType.Number),
+		"Found_Tunnel": flag(FlagType.Number),
+		"Explored_Beach": flag(FlagType.Number),	#times explored region
 		"Explored_Cliff": flag(FlagType.Number),
-		"Explored_DeepWoods": flag(FlagType.Number),
+		"Explored_Forest": flag(FlagType.Number),
+		"FatigueFactor_Beach": flag(FlagType.Number),	#fatigue-reduction bonus
+		"FatigueFactor_Forest": flag(FlagType.Number),
 		"Cliff_Height": flag(FlagType.Number),	# actual climb-height of player 
 		"Cliff_Ropes": flag(FlagType.Number),	# how many ropes are installed from bottom to up
-		"FaintMessage": flag(FlagType.Text),
+		"FaintMessage": flag(FlagType.Text),	#text why player fainted
 		"FatigueHigh":	flag(FlagType.Number),
 		}
 
@@ -55,6 +58,9 @@ func initGame():
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventHurtBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathDeepWoods"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindTroubleBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathForest"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventExploreUpgrade"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootForest"),"nav_forest_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventExploreUpgrade"),"nav_forest_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootCliff"),"nav_cliff_explore",[])

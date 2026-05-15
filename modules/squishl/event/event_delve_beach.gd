@@ -6,13 +6,13 @@ func _init():
 	super()
 	ID="EventDelveBeach"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	Global.hud.say("There is something shiny over there. But you would have to walk through the water and something might lurk below.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Walk into the water","",_moveOn,null)
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	var _x=GR.getModuleFlag("Squishl","Daily_Treasure",0)
 	return _x<1
 

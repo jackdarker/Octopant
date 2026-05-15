@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://cy2awct1v5hyr"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_8o5ch"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_gn0yt"]
+[ext_resource type="Script" uid="uid://c33rbc77yrsub" path="res://game/quest/step/gather_item.gd" id="3_8o5ch"]
+
+[sub_resource type="Resource" id="Resource_gn0yt"]
+script = ExtResource("3_8o5ch")
+itemID = "thread_rough"
+quantity = 4
+title = "get some threads"
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_m0b2d"]
+script = ExtResource("3_8o5ch")
+itemID = "foot_sandals"
+title = "craft sandales"
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[resource]
+script = ExtResource("1_8o5ch")
+ID = "craft_sandales"
+quest_name = "craft sandales"
+quest_description = "without shoes, there is a risk to hurt your feet"
+quest_objective = "craft some makeshift sandales"
+steps = Array[ExtResource("2_gn0yt")]([SubResource("Resource_gn0yt"), SubResource("Resource_m0b2d")])
+metadata/_custom_type_script = "uid://27gxkaeehmlu"

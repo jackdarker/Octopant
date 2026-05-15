@@ -6,7 +6,7 @@ func _init():
 	super()
 	ID="EventFindLootForest"
 
-func react(_triggerID, _args)->bool:
+func react(_triggerID,_location,_args)->bool:
 	var i=randi_range(0, 100)
 	if(i>50):
 		Global.hud.say("Some lianes are dangling down from the branches of some trees.\n
@@ -19,7 +19,7 @@ func react(_triggerID, _args)->bool:
 		
 	return true
 	
-func canRun()->bool:
+func canRun(_trigger,_location,_args)->bool:
 	return true
 
 func _ignore():
@@ -29,7 +29,7 @@ func _ignore():
 
 func _can_cut()->Result:
 	var _res:Result=Result.create(true,"")
-	var _items=Global.pc.inventory.filter_by_tag(Global.pc.inventory.getItems(),[ItemTagEnum.Tool_Cut])
+	var _items=Inventory.filter_by_tag(Global.pc.inventory.getItems(),[ItemTagEnum.Tool_Cut])
 	if(_items.size()<=0):
 		_res.OK=false
 		_res.Msg="Without a knife or something similiar you cant cut those lianes."

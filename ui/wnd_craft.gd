@@ -23,7 +23,7 @@ func update_list():
 		item.queue_free()
 		
 	if visible:
-		var _list=GR.getRecipesByTag(["Backpack"])
+		var _list=GR.getRecipesByTag([craftStation])		#TODO filter unknown recipes
 		for item in _list:
 			var _item=ListItem.create_item(item)
 			_item.selected.connect(_item_selected)

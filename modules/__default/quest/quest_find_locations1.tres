@@ -16,7 +16,7 @@ metadata/_custom_type_script = "uid://27gxkaeehmlu"
 [sub_resource type="Resource" id="Resource_xx3fv"]
 script = ExtResource("1_crjtx")
 moduleID = "Default"
-flagID = "Found_DeepWoods"
+flagID = "Found_Forest"
 valueMin = 1
 title = "Find the forest"
 hidden = 1

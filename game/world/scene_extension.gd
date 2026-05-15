@@ -16,14 +16,16 @@ class Button_Config:
 
 var parent_scene:DefaultScene
 
+## this is called when the scene is added to stack
 func on_setupScene():
 	pass
 
+## this is called when the scene is entered and aso if you return from subscene
 func on_enterScene():
 	pass
 
 # called when a menu is built
-func get_buttons(menuid:String,buttons:Array)->Array:
+func get_buttons(_menuid:String,buttons:Array)->Array:
 	return(buttons)
 
 func cb_menu(menuID:String,no_back:bool=false)->Callable:

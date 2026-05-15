@@ -29,7 +29,7 @@ func _on_visibility_changed() -> void:
 
 func updateSlots():
 	var _disallowSave=!_canSave()
-	
+	%lb_no_save.visible=_disallowSave
 	for item in %lst_saves.get_children():
 		%lst_saves.remove_child(item)
 		item.queue_free()

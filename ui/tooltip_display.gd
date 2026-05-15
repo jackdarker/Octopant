@@ -3,7 +3,6 @@ extends Control
 @export var showBelow = false
 @onready var _title:Label=$Panel/VBoxContainer/lb_header
 @onready var _body:RichTextLabel=$Panel/VBoxContainer/lb_body
-@onready var _tween:AnimationPlayer=$Tween
 
 var is_active:bool = false:
 	set(value):

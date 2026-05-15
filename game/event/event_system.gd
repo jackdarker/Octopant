@@ -21,7 +21,7 @@ func registerEventTriggers():
 	pass
 
 # location is either null or a location_id or a Tag-check
-func registerEvent(trigger,event:EventBase, location, args):
+func registerEvent(trigger,event:EventBase, location, _args):
 	if(location==null):
 		eventOther[event.ID]=event
 	else:
@@ -32,13 +32,13 @@ func registerEvent(trigger,event:EventBase, location, args):
 #	pass
 
 func triggerEvent(trigger,location,args)->bool:
-	var _events=getAvailableEvents(trigger,location,args)
+	var _events:Array=getAvailableEvents(trigger,location,args)
 	if(_events.size()<=0):
 		return false
-	
-	return _events[randi_range(0,_events.size()-1)].react("","")
+	var _evt=Util.pickRandomFromArray(_events,_events.map(func(x): return (x.getWeight())))
+	return _evt.react(trigger,location,args)
 
-func getAvailableEvents(trigger,location,args):
+func getAvailableEvents(trigger,location,_args):
 	var _events=[]
 	if(location==null):
 		pass #todo
@@ -46,6 +46,6 @@ func getAvailableEvents(trigger,location,args):
 		for evtkey in eventLocation.keys():
 			if(evtkey.location==location && evtkey.trigger==trigger):
 				var evt=eventLocation[evtkey]
-				if(evt.canRun()):
+				if(evt.canRun(trigger,location,_args)):
 					_events.push_back(evt)
 	return _events

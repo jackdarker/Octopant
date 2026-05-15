@@ -1,12 +1,12 @@
 extends SceneExtension
 
-const sceneID="nav_deepwood"
+const sceneID="nav_forest"
 
 func on_enterScene():
 	parent_scene.set_bg(load("res://assets/images/bg/nav_forest_sun.png"))
-	if (GR.getModuleFlag("Default","Found_DeepWoods",0)<=0):
+	if (GR.getModuleFlag("Default","Found_Forest",0)<=0):
 		Global.hud.say("Behind the beach begins a dense forest.")
-		GR.setModuleFlag("Default","Found_DeepWoods",1)
+		GR.setModuleFlag("Default","Found_Forest",1)
 
 func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):

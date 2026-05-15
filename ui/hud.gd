@@ -124,6 +124,8 @@ func addButton(text:String,tooltip:String,code:Callable,check=null):
 
 func fade():
 	$anim_fade.play("fade")
+	await $anim_fade.animation_finished
+	pass
 
 func toggleHud(_show:bool):
 	if _show:
