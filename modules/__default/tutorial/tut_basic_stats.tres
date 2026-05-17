@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://cyjnaa56abui5"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_sq46a"]
+
+[resource]
+script = ExtResource("1_sq46a")
+ID = "basic_stats"
+title = "Your stats"
+text = "There are those major stats:
+[b]Pain[/b]: increases if you get hurt and if it reaches max you passout
+[b]Fatigue[/b]: increases if you explore or work; if it reaches max you cannot continue
+All of the stats usually regenerate if you rest or sleep."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

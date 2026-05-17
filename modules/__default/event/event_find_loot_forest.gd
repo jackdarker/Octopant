@@ -44,5 +44,6 @@ func _cut_lianes():
 		Global.pc.inventory.addItem(_item)
 	else:
 		Global.hud.say("Damit, its not a liane but a snake !")
+		Global.hud.show_picture_center(load("res://assets/images/chars/snake_tree.png"))
 	Global.main.getCurrentScene().continueScene()
 	pass

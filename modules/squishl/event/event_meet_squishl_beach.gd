@@ -5,6 +5,7 @@ func _init():
 	ID="EventMeetSquishlBeach"
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearOutput()
 	Global.hud.say("As you walk the beach you spot a squid sitting in a small pool of water.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Inspect closer","",_inspect,null)
@@ -14,14 +15,12 @@ func canRun(_trigger,_location,_args)->bool:
 	return (GR.getModuleFlag("Squishl","Squishl_Saved",0)==0)
 
 func _ignore():
-	Global.hud.say("\n")
 	Global.hud.say("You quickly pass by, leaving the hapeless creature to its fate.")
 	GR.setModuleFlag("Squishl","Squishl_Saved",-1)
 	Global.main.getCurrentScene().continueScene()
 
 func _inspect():
 	Global.hud.clearInput()
-	Global.hud.say("\n")
 	Global.hud.say("Some octopus got trapped in this pool, possibly last night when the storm throwed the waves further up the shore then ever.")
 	Global.hud.say("The creature might not survive for much longer as the water heats up by the sun.")
 	Global.hud.addButton("Ignore it","",_ignore,null)

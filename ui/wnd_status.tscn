@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0ljoct2g12es"]
+
+[ext_resource type="Script" uid="uid://y32tvh0uuafy" path="res://ui/wnd_status.gd" id="1_d74ew"]
+[ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="2_fk6vg"]
+[ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="3_0dw1s"]
+
+[node name="Status" type="CanvasLayer"]
+script = ExtResource("1_d74ew")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_fk6vg")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("3_0dw1s")
+theme_type_variation = &"LabelHeader"
+text = "Map"
+horizontal_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="map_base" type="Sprite2D" parent="Panel/MarginContainer2"]
+
+[node name="map_fog" type="Sprite2D" parent="Panel/MarginContainer2"]
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer2"]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="bt_back" type="Button" parent="Panel/MarginContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Back"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Panel/MarginContainer2/MarginContainer/HBoxContainer/bt_back" to="." method="_on_bt_back_pressed"]

@@ -14,12 +14,15 @@ func setTint(under:Color,progress:Color):
 func setValue(v:float,maxv:float):
 	%barNeg.max_value=maxv
 	%barPos.max_value=maxv
+	var tw = create_tween()
 	if(v>=0):
-		%barPos.value=v
+		tw.tween_property(%barPos, "value", v, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		#%barPos.value=v
 		%barNeg.value=0.0
 	else:
 		%barPos.value=0.0
-		%barNeg.value=v*-1.0
+		tw.tween_property(%barNeg, "value", v*-1.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		#%barNeg.value=v*-1.0
 
 func adjustHeight(max2:float):
 	var maxH=self.size.x

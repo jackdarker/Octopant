@@ -11,6 +11,7 @@ var effects = []
 var skills = []
 var characters = []
 var recipes = []
+var tutorials = []
 var quests = []
 
 var flagsCache = null
@@ -51,6 +52,9 @@ func register():
 	
 	for character in characters:
 		GR.registerCharacter(ID,GR.module_basepath(character))
+	
+	for tutorial in tutorials:
+		GR.registerTutorial(ID,GR.module_basepath(tutorial))
 	
 	for quest in quests:
 		GR.registerQuest(ID,GR.module_basepath(quest))

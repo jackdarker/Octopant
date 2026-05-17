@@ -4,6 +4,7 @@ signal menu_requested
 signal log_requested
 signal map_requested
 signal inventory_requested
+signal status_requested
 
 enum HUDMODE { Explore=0, Combat=1, Interaction=2}
 
@@ -139,6 +140,8 @@ func toggleHud(_show:bool):
 func _on_bt_inventory_pressed() -> void:
 	inventory_requested.emit()
 
+func _on_bt_status_pressed() -> void:
+	status_requested.emit()
 
 func _on_bt_menu_pressed() -> void:
 	menu_requested.emit()

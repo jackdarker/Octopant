@@ -16,17 +16,17 @@ func get_buttons(menuid:String,buttons:Array):
 		Global.hud.say("And who are you?")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("answer1",true)))
 	if(menuid=="answer1"):
-		Global.hud.say("Iam a crab !",NPC_Format)
-		Global.hud.say("i need your help !",NPC_Format)
+		Global.hud.say("Iam a hermit crab !",NPC_Format)
+		Global.hud.say("I need your help !",NPC_Format)
 		buttons.push_back(Button_Config.new("Sure","",cb_menu("help1",true)))
 		buttons.push_back(Button_Config.new("Nope","",cb_menu("nohelp1")))
 	if(menuid=="help1"):
-		Global.hud.say("I need seashell",NPC_Format)
+		Global.hud.say("I need seashell, pretty pretty seashell.",NPC_Format)
 		buttons.push_back(Button_Config.new("Here you go","",cb_menu("help2",true),__hasSeashell))
 		buttons.push_back(Button_Config.new("I dont have one","",cb_menu("nohelp1",true)))
 	if(menuid=="help2"):
-		Global.hud.say("Thank you so much. Here let me give you this.\n
-		It squirts some green slime in front of you.",NPC_Format)
+		Global.hud.say("Thank you so much. Here let me give you this.
+		It squirts some [b]green slime[/b] in front of you.",NPC_Format)
 		__hasSeashell(true)
 		Global.main.item_trade.emit(Global.pc.uniqueID,"Crab","seashell",1)
 		Global.pc.inventory.addItemID("gel_green")

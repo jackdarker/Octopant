@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://game/global_script.gd"
+DbgConsole="*res://game/DbgConsole.gd"
+Tutorials="*res://game/tutorial/tutorial_manager.gd"
 GR="*res://game/GlobalRegistry.gd"
 
 [display]

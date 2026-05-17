@@ -29,7 +29,7 @@ var recipes: Dictionary = {}
 var recipesByTag: Dictionary = {}
 
 var quests: Dictionary = {}
-
+var tutorials: Dictionary = {}
 
 var effects: Dictionary = {}
 var skills: Dictionary = {}
@@ -39,7 +39,7 @@ var characterInstances: Dictionary = {}
 var currentUniqueID:int=1
 var isInitialized = false
 
-func getGameVersionString():
+func getGameVersionString()->String:
 	return str(game_version_major)+"."+str(game_version_minor)+"."+str(game_version_revision)+str(game_version_suffix)
 
 func generateUniqueID():
@@ -61,7 +61,7 @@ func registerEverything():
 	Log.print("GlobalRegistry fully initialized in: %s seconds" % [worker_time])
 	isInitialized = true
 	#deleteLoadLockFile()
-	emit_signal("loadingFinished")
+	loadingFinished.emit()
 
 #region save/load
 func loadData(data):
@@ -172,7 +172,7 @@ func setFlag(flagID, value):
 func increaseFlag( flagID, addvalue = 1):
 	setFlag( flagID, getFlag( flagID, 0) + addvalue)
 
-func getModuleFlag(moduleID, flagID, defaultValue = null):
+func getModuleFlag(moduleID, flagID, defaultValue = null)->Variant:
 	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
 		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
@@ -190,7 +190,7 @@ func getModuleFlag(moduleID, flagID, defaultValue = null):
 	
 	return moduleFlags[moduleID][flagID]
 
-func setModuleFlag(moduleID, flagID, value):
+func setModuleFlag(moduleID, flagID, value)->void:
 	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
 		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
@@ -310,6 +310,9 @@ func initGameModules():
 
 func getModules()->Dictionary:
 	return modules
+
+func getModuleIDs()->Array:
+	return modules.keys()
 
 func getModule(ID):
 	if(!modules.has(ID)):
@@ -442,6 +445,8 @@ func createItem(ID: String)->ItemBase:
 		return null
 	var newItem = items[ID].new()
 	return newItem
+func getItemIDs()->Array:
+	return items.keys()
 #endregion
 
 #region Recipes
@@ -505,6 +510,31 @@ func getQuest(ID: String)->Quest:
 	return newItem
 	
 #endregion
+
+#region Tutorials
+#path is file or directory
+func registerTutorial(moduleID:String,path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="tres":
+				registerTutorial(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item as TutorialData
+	tutorials[itemObject.ID] = item
+
+func getTutorial(ID: String)->TutorialData:
+	if(!tutorials.has(ID)):
+		Log.printerr("ERROR: tutorial with the ID "+ID+" wasn't found")
+		return null
+	var newItem = tutorials[ID]
+	return newItem
+	
+#endregion
+
 
 #region effects
 func registerEffect(moduleID:String,path: String):

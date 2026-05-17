@@ -161,9 +161,18 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="btInventory" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
+
+[node name="btInventory" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Inventory"
+
+[node name="btStats" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Status"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
@@ -415,7 +424,8 @@ libraries = {
 }
 
 [connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btInventory" to="." method="_on_bt_inventory_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2/btInventory" to="." method="_on_bt_inventory_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2/btStats" to="." method="_on_bt_status_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btQuest" to="." method="_on_bt_quest_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btMap" to="." method="_on_bt_map_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btMenu" to="." method="_on_bt_menu_pressed"]

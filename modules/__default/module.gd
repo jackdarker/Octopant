@@ -30,6 +30,9 @@ func _init()-> void :
 	characters = [
 		"res://modules/__default/character",
 	]
+	tutorials = [
+		"res://modules/__default/tutorial",
+	]
 	quests = [
 		"res://modules/__default/quest",
 	]

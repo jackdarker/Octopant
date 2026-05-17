@@ -20,7 +20,7 @@ func _ready() -> void:
 	Global.ES = EventSystem.new()
 	Global.QS =  QuestSystem.new()
 	Global.pc = Player.new()
-	$WndInventory.character=Global.pc
+	$WndInventory.character=Global.pc	#TODO what if need to modify other character?
 	
 	Global.ES.registerEventTriggers()
 	# connect events from UI & logic
@@ -28,8 +28,9 @@ func _ready() -> void:
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
 	Global.hud.inventory_requested.connect(func(): $WndInventory.visible=true)
+	Global.hud.status_requested.connect(func(): $WndStatus.visible=true)
 	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
-	
+		
 	postLoad()
 
 #region scene
@@ -297,6 +298,20 @@ func postLoad():
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
 	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()
+	addDebugCmds() # add debug-commands TODO is this correct place?
+
+func addDebugCmds():
+	DbgConsole.addCommand("getversion",GR,"getGameVersionString",[],["version"],"")
+	DbgConsole.addCommand("getmodules",GR,"getModuleIDs",[],["IDs"],"loaded modules")
+	DbgConsole.addCommand("getitems",GR,"getItemIDs",[],["IDs"],"available items")
+	DbgConsole.addCommand("pcadditem",Global.pc.inventory,"addItemID",["itemID"],[],"add item to player")
+	DbgConsole.addCommand("setflag",GR,"setModuleFlag",["moduleID","flagID","value"],[],"sets a flag")
+	DbgConsole.addCommand("setflagint",GR,"setModuleFlag",["moduleID","flagID","value:int"],[],"sets a NUMERIC flag")
+	DbgConsole.addCommand("getflag",GR,"getModuleFlag",["moduleID","flagID"],["value"],"gets a flag")
+	#combat encounter
+	#force quest 
+	#teleport location
+	#trigger interaction	
 	
 #endregion
 
