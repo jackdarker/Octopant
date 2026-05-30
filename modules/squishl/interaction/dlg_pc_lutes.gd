@@ -41,9 +41,14 @@ func get_buttons(menuid:String,buttons:Array):
 		elif(_met>1 && GR.getModuleFlag("Squishl","Lutes_Love",0)<=0):
 			Global.hud.say("Did you see that trinket on those rocks out in the sea? If you can get it for me, I would be grateful...",NPC_Format)
 			buttons.push_back(Button_Config.new("Trinket?","",cb_menu("questTrinket",true)))
-		else:	
-			Global.hud.say("You talk about this and that.")
-			buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))
+		else:
+			#add bitmask to disable/unlock entrys	
+			Global.hud.say("You have questions, I can see it in your face.",NPC_Format)
+			buttons.push_back(Button_Config.new("Where is this place?","",cb_menu("askBeach",true)))
+			buttons.push_back(Button_Config.new("There have to be other people around here.","",cb_menu("askInhabitants",true)))
+			buttons.push_back(Button_Config.new("But whats behind the beach and that forest. Is there a settlement or something?","",cb_menu("askMap",true)))
+			buttons.push_back(Button_Config.new("Are there fish to catch here?","",cb_menu("askFishing",true)))
+			buttons.push_back(Button_Config.new("I guess I will leave now","",cb_menu("leave",true)))
 	if(menuid=="questTrinket"):
 		var q=Global.QS.active.get_quest_from_id("lutes_trinket")
 		if(q):
@@ -71,9 +76,19 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("That sucks","All the effort for nothing?",cb_menu("leave",true)))
 		if Global.QS.active.get_quest_from_id("lutes_trinket"):
 			Log.error("quest should be complete")
-	if(menuid=="requestFuck"):
-		Global.hud.say("Sorry, I'm not in the mood.",NPC_Format)
-		buttons.push_back(Button_Config.new("Next","",cb_menu("requestFuck_Nope",true)))
+	if(menuid=="askBeach"):
+		Global.hud.say("This is a beach, obviously...",NPC_Format)
+		buttons.push_back(Button_Config.new("Next","",cb_menu("requestTalk",true)))
+	if(menuid=="askFishing"):
+		Global.hud.say("They will rather catch you....",NPC_Format)
+		buttons.push_back(Button_Config.new("Next","",cb_menu("requestTalk",true)))
+	if(menuid=="askInhabitants"):
+		Global.hud.say("You mean people like you?... ",NPC_Format)
+		buttons.push_back(Button_Config.new("Next","",cb_menu("requestTalk",true)))
+	if(menuid=="askMap"):
+		Global.hud.say("You mean a village of your ...kind? No, I never heard of that, but I'm mostly at the beach. ",NPC_Format)
+		Global.hud.say("And you shouldnt walk careless in the forest, its easy to get lost there. And there are things lurking... ",NPC_Format)
+		buttons.push_back(Button_Config.new("Next","",cb_menu("requestTalk",true)))
 	if(menuid=="requestFuck_Nope"):
 		Global.hud.say("No pressure....")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))

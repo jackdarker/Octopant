@@ -243,7 +243,6 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 0
 mouse_default_cursor_shape = 2
-theme = ExtResource("4_en2x2")
 follow_focus = true
 
 [node name="RichTextLabel" type="VBoxContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main"]
@@ -295,6 +294,7 @@ stretch_mode = 4
 clip_contents = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
+size_flags_vertical = 10
 theme = ExtResource("4_en2x2")
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel"]
