@@ -12,6 +12,7 @@ class_name CombatScene extends DefaultScene
 signal fight_next
 
 var scene_charWidget = preload("res://ui/character_hud.tscn")
+var scene_hudCombat = preload("res://ui/fragments/hud_center_combat.tscn")
 
 var combatSetup:CombatSetup
 
@@ -58,6 +59,9 @@ func next():
 	else:
 		assert(false,str(next_state))
 
+func set_state(newstate):
+	next_state=newstate
+
 func setupScene(_combatSetup:CombatSetup):
 	combatSetup=_combatSetup
 	turnCount=0
@@ -66,7 +70,8 @@ func setupScene(_combatSetup:CombatSetup):
 	playerParty=combatSetup.playerParty.duplicate()
 	enemyParty=combatSetup.enemyParty.duplicate()
 	Global.hud.hudMode = Hud.HUDMODE.Combat
-	next_state=STATE.battleInit
+	Global.hud.configureHudCenter(scene_hudCombat.instantiate())
+	set_state.call_deferred(STATE.battleInit)
 
 func battleInit():
 	Global.hud.clearOutput()
@@ -202,7 +207,7 @@ func _createEnemyWidgets():
 		_actualI.push_back(i)
 		i+=1
 	
-	for _widget in Global.hud.enemyList.get_children():
+	for _widget in Global.hud.hudCenter.enemyList.get_children():
 		i=_actual.find(_widget.characterName)
 		if(i<0):
 			_remove.push_back(_widget)
@@ -211,7 +216,7 @@ func _createEnemyWidgets():
 			_actualI.remove_at(i)
 	
 	for _char in _remove:
-		Global.hud.enemyList.remove_child(_char)
+		Global.hud.hudCenter.enemyList.remove_child(_char)
 		
 	for _index in _actualI:
 		var _char=enemyParty[_index]
@@ -221,7 +226,7 @@ func _createEnemyWidgets():
 		_char.status.registerSignalItemChanged(widget.on_stat_update.bind(_char).unbind(2),StatEnum.Lust)
 		_char.effects.registerSignalItemsChanged(func(ID):widget.on_effect_update(_char,ID))
 		widget.on_stat_update.call_deferred(_char)
-		Global.hud.enemyList.add_child(widget)
+		Global.hud.hudCenter.enemyList.add_child(widget)
 		widget.on_stat_update.call_deferred(_char)
 
 

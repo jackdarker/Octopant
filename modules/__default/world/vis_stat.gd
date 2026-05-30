@@ -5,4 +5,5 @@ func _init() -> void:
 
 func enterScene():
 	super()
-	Global.hud.say("You get quite sore and have a hard time concentrating on your tasks.")
+	Global.hud.say("You get tired and have a hard time concentrating on your tasks. 
+	Getting some rest would be fine.")

@@ -13,7 +13,7 @@ func react(_triggerID,_location,_args)->bool:
 func canRun(_trigger,_location,_args)->bool:
 	var _ret:=false
 	var _bev=Global.pc.getStat(StatEnum.Fatigue).value_percent
-	if(_bev>=50 && GR.getModuleFlag("Default","FatigueHigh",0)<50):
+	if(_bev>=80 && GR.getModuleFlag("Default","FatigueHigh",0)<80):
 		_ret=true
 	else:
 		GR.setModuleFlag("Default","FatigueHigh",_bev)

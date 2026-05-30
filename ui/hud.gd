@@ -7,8 +7,41 @@ signal inventory_requested
 signal status_requested
 
 enum HUDMODE { Explore=0, Combat=1, Interaction=2}
+enum HUDPANEL {Menu=0, Left=1, Center=2, Choice=3}
+## Explore		TODO Main-Layouts + swapable subpanels
+#   ---------------------------------
+#	|		|						|
+#	|	S	|		D				|
+#	|		|						|
+#	|		|						|
+#	---------						|
+#	|		|------------------------
+#	|	M	|		B				|
+#	|		|						|
+#	---------------------------------
+## Interaction
+#   ---------------------------------
+#	||								|
+#	||				D				|
+#	||								|
+#	||								|
+#	--								|
+#	||-------------------------------
+#	||				B				|
+#	||								|
+#	---------------------------------
+## Combat
+#   ---------------------------------
+#	|		|		NPC				|
+#	|	S	|-----------------------|
+#	|		|		D				|
+#	|		|						|
+#	---------						|
+#	|		|------------------------
+#	|	M	|		B				|
+#	|		|						|
+#	---------------------------------
 
-var text_bullet = preload("res://ui/fragments/text_bullet.tscn")
 
 
 @export var hudMode:HUDMODE=HUDMODE.Explore:
@@ -18,29 +51,39 @@ var text_bullet = preload("res://ui/fragments/text_bullet.tscn")
 		show_picture_right(null)
 		if(value==HUDMODE.Interaction):
 			$HBoxContainer/LeftPanel.visible=false
-			Util.delete_children(enemyList)	#cleanup list after combat
-			enemyList.get_parent_control().visible=false
 		elif(value==HUDMODE.Combat):
-			enemyList.get_parent_control().visible=true
+			pass
 		else:
 			$HBoxContainer/LeftPanel.visible=true
-			Util.delete_children(enemyList)	#cleanup list after combat
-			enemyList.get_parent_control().visible=false
 		hudMode=value
 
 @onready var fullhud=$HBoxContainer
 @onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
-@onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
-@onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
-@onready var pictureC=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_C
-@onready var pictureL=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_L
-@onready var pictureR=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_R
+#@onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
+#@onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
+#@onready var pictureC=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_C
+#@onready var pictureL=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_L
+#@onready var pictureR=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_R
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
-@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
+#@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
+@onready var hudCenter=$HBoxContainer/Panel/Center
 
 func _ready() -> void:
 	hudMode=HUDMODE.Explore
+	pass
+	
+func configureHudCenter(hudNew:Control):
+	#if the actual control matches the type of new control, dont change
+	#because get_class does only handle builtin types, we have to compare script paths 
+	if(hudCenter.get_script().resource_path==hudNew.get_script().resource_path):
+		return
+	var _p=hudCenter.get_parent()
+	_p.remove_child(hudCenter)
+	_p.add_child(hudNew)
+	hudCenter.queue_free()
+	hudCenter=hudNew
+	pass
 
 func on_time_passed(_time):
 	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getTime())
@@ -51,77 +94,32 @@ func on_pc_stat_update(_key,_data):
 
 func on_pc_effect_update(_key):
 	playerHud.on_effect_update(Global.pc,_key)
+	
 ## who is dictionary of formating {"bgcolor":#49c9}	
 func say(text,who:Dictionary={}):
-	#msg.append_text("\n"+text)
-	var label = text_bullet.instantiate()
-	label.set_use_bbcode(true)
-	label.set_fit_content(true)
-	if(who.has("bgcolor")):
-		text="[bgcolor=#"+who.bgcolor.to_html()+"]"+text+"[/bgcolor]"
-	label.set_text(text)
-	msg.add_child(label)
-	await get_tree().process_frame
-	if(label):  #there might be occasions where clearOutput() is a called before the frame and label is already destroyed
-		msg.get_parent().ensure_control_visible(label)
+	hudCenter.say(text,who)
 
-	#msg.typewrite("\n"+text)	doeant work with keeping old text
-
+#Todo  "Global.hud.hudCenter.show_..."
 func show_picture_center(_texture:Texture):
-	pictureC.texture=_texture
-	pictureC.visible=true if _texture!=null else false
+	hudCenter.show_picture_center(_texture)
 
 func show_picture_left(_texture:Texture):
-	pictureL.texture=_texture
-	pictureL.visible=true if _texture!=null else false
+	hudCenter.show_picture_left(_texture)
 
 func show_picture_right(_texture:Texture):
-	pictureR.texture=_texture
-	pictureR.visible=true if _texture!=null else false
+	hudCenter.show_picture_right(_texture)
 
 func clearOutput():
 	$img_fade.visible=false
-	#msg.text=""
-	for child in msg.get_children():
-		msg.remove_child(child)
-		child.queue_free()
+	hudCenter.clearOutput()
 
 # hide buttons
 func clearInput():
-	for bt:BaseButton in buttons.get_children():
-		bt.disabled=true
-		bt.visible=false
-		bt.text=""
-		var pressed=bt.pressed.get_connections()			#Todo make lambda
-		for evt in pressed:
-			bt.pressed.disconnect(evt.callable)
-		var mouse_entered=bt.mouse_entered.get_connections()
-		for evt in mouse_entered:
-			bt.mouse_entered.disconnect(evt.callable)
-		var mouse_exited=bt.mouse_exited.get_connections()
-		for evt in mouse_exited:
-			bt.mouse_exited.disconnect(evt.callable)
-	pass
+	hudCenter.clearInput()
 
 func addButton(text:String,tooltip:String,code:Callable,check=null):
-	for bt:BaseButton in buttons.get_children():	#TODO more...page if to many buttons
-		#TODO favour undisabled button against disabled
-		var tooltip2=tooltip
-		if(!bt.visible): #choose the next unused button
-			bt.text=text
-			#bt.tooltip_text=tooltip
-			bt.disabled=false
-			if(check):
-				var _res:Result=(check as Callable).call()
-				if !_res.OK:
-					bt.disabled=true
-				tooltip2+=_res.Msg
-			bt.visible=true
-			bt.pressed.connect(code)
-			bt.mouse_entered.connect(Global.toolTip.showTooltip.bind(bt,text,tooltip2))
-			bt.mouse_exited.connect(Global.toolTip.hideTooltip.bind(bt))
-			break
-	pass
+	hudCenter.addButton(text,tooltip,code,check)
+
 
 func fade():
 	$anim_fade.play("fade")
