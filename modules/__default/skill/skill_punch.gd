@@ -1,4 +1,4 @@
-extends Skill
+extends CombatSkill
 
 func _init():
 	super()
@@ -11,11 +11,8 @@ func getName()->String:
 func getDescription()->String:
 	return "Hit them with your fist."
 
-func canUseInCombat()->bool:
-	return true
-
 func applyAction(_action:String,_target:Character):
 	var _res=Result.create(true,"")
 	_target.getStat(StatEnum.Pain).modify(15)
-	_res.Msg=user.getName() +" hits " + _target.getName()
+	_res.Msg=user.getName() +" punches " + _target.getName()
 	Global.hud.say(_res.Msg)

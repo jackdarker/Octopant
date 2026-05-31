@@ -8,5 +8,5 @@ func _init():
 	self.combatAI=CombatAIBase.new()
 	self.combatAI.char=self
 
-func getBustImage()->String:
-	return("res://assets/images/chars/lizardman.png")
+func getBustImage()->Texture2D:
+	return load("res://assets/images/chars/lizardman.png")

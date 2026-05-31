@@ -5,5 +5,5 @@ func _init():
 	super()
 	self.ID="Lutes"
 
-func getBustImage()->String:
-	return("res://assets/images/chars/lutes.png")
+func getBustImage()->Texture2D:
+	return load("res://assets/images/chars/lutes.png")

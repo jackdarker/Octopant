@@ -36,8 +36,8 @@ func getName()->String:
 	return (uniqueID)
 
 #override this !
-func getBustImage()->String:
-	return "res://assets/images/icons/ic_unknown.svg"
+func getBustImage()->Texture2D:
+	return load("res://assets/images/icons/ic_unknown.svg")
 
 
 func getStat(key)->Status:

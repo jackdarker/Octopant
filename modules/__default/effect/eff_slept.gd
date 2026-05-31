@@ -2,6 +2,10 @@ extends Effect
 
 func _init():
 	ID="eff_slept"
+	self.duration=3*60*60
+
+func getName()->String:
+	return("well rested")
 
 func processTime(_delta:int):
 	timeDelta=timeDelta+_delta
@@ -18,10 +22,6 @@ func processTime(_delta:int):
 		destroyMe()
 		return
 	
-	
-func onApply():
-	self.duration=3*60*60
-	changed.emit(ID)
 
 func getDescription()->String:
 	return("well rested")

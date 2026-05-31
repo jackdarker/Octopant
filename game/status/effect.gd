@@ -80,7 +80,6 @@ func applyTo(_char:Character):
 
 func onApply():
 	changed.emit(ID)
-	pass
 
 func onRemove():
 	changed.emit(ID)

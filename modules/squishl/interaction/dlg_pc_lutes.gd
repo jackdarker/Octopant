@@ -2,14 +2,13 @@ extends SceneExtension
 
 const sceneID="dlg_pc_lutes"
 var avatar_player
-const avatar_lutes = "res://assets/images/chars/lutes.png"
+var avatar_lutes = load("res://assets/images/chars/lutes.png")
 const NPC_Format = {"bgcolor":Color.DARK_ORANGE}
 
 func on_enterScene():
 	avatar_player = Global.pc.getBustImage()
 	parent_scene.__displayImage(1,avatar_player)
-	
-	pass
+
 
 func get_buttons(menuid:String,buttons:Array):
 	var _met:int=GR.getModuleFlag("Squishl","Lutes_Met",0)

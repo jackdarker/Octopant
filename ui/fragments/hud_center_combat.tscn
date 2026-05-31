@@ -69,6 +69,7 @@ gfhfshr
 fit_content = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 

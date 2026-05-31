@@ -2,13 +2,13 @@ extends SceneExtension
 
 const sceneID="dlg_pc_crab"
 var avatar_player
-const avatar_crab = "res://assets/images/chars/Crab.png"
+var avatar_crab = load("res://assets/images/chars/Crab.png")
 const NPC_Format = {"bgcolor":Color.DARK_ORANGE}
 
 func on_enterScene():
 	avatar_player = Global.pc.getBustImage()
 	parent_scene.__displayImage(1,avatar_player)
-	parent_scene.__displayImage(2,avatar_crab)
+	parent_scene.__displayImage(2,Util.createSilhouette(avatar_crab))
 	pass
 
 func get_buttons(menuid:String,buttons:Array):
@@ -16,8 +16,7 @@ func get_buttons(menuid:String,buttons:Array):
 		Global.hud.say("And who are you?")
 		buttons.push_back(Button_Config.new("Next","",cb_menu("answer1",true)))
 	if(menuid=="answer1"):
-		Global.hud.say("Iam a hermit crab !",NPC_Format)
-		Global.hud.say("I need your help !",NPC_Format)
+		Global.hud.say("Iam a hermit crab !\nI need your help !",NPC_Format)
 		buttons.push_back(Button_Config.new("Sure","",cb_menu("help1",true)))
 		buttons.push_back(Button_Config.new("Nope","",cb_menu("nohelp1")))
 	if(menuid=="help1"):

@@ -217,7 +217,8 @@ func gotoSleep():
 #endregion
 
 func defaultDefeat(_scene):
-	Global.main.clearSceneStack()
+	Global.main.clearSceneStack()	
+	Global.pc.getStat(StatEnum.Pain).modify(-9) # lower pain or it triggers defeat again
 	Global.main.runScene("nav_home")
 			
 func defaultGameOver(_scene):
@@ -235,9 +236,9 @@ func checkForGameOver():
 	if _n.atUL || _n.atLL:	#Sanity -> Game over
 		defaultGameOver(Global.main.getCurrentScene())
 		
-	_n =Global.pc.getStat(StatEnum.Fatigue)
-	if _n.atUL:		#Pass out -> Teleport
-		defaultDefeat(Global.main.getCurrentScene())
+	#TODO ? _n =Global.pc.getStat(StatEnum.Fatigue)
+	#if _n.atUL:		#Pass out -> Teleport
+	#	defaultDefeat(Global.main.getCurrentScene())
 
 #region save/load
 #called by save-dialog

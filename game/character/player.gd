@@ -5,6 +5,7 @@ func _init():
 	self.ID="Player"
 	status.addItem(Status.create(StatEnum.Insanity,0,-30,30))
 	self.skills.addItem(GR.createSkill("Skill_Slash"))
+	self.skills.addItem(GR.createSkill("Skill_Cleave"))
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)
@@ -12,5 +13,5 @@ func post_sleep():
 	getStat(StatEnum.Lust).modify(getStat(StatEnum.Lust).value*-0.5)
 	GR.createEffect("eff_slept").applyTo(self)
 	
-func getBustImage()->String:
-	return "res://assets/images/chars/bust_pc_start.png"
+func getBustImage()->Texture2D:
+	return load("res://assets/images/chars/bust_pc_start.png")

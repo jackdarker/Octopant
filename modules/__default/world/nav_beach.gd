@@ -25,7 +25,11 @@ func _on_bt_fight_pressed():
 	var _setup=CombatSetup.new()
 	var _x=Global.pc.effects.getItems()
 	_setup.playerParty.push_back(Global.pc)
-	_setup.enemyParty.push_back(GR.createCharacter("Crab"))
+	var _i:=0
+	for _mob in [GR.createCharacter("Crab"),GR.createCharacter("Crab")]:
+		_i=_i+1
+		_mob.uniqueID=_mob.ID+"#"+str(_i)
+		_setup.enemyParty.push_back(_mob)
 	Global.main.runScene("combat_scene",
 		[_setup],self.uniqueSceneID)
 

@@ -4,6 +4,9 @@ func _init():
 	ID="eff_bleed"
 	duration=3
 
+func getName()->String:
+	return("bleeding")
+
 # combat-only effects are removed post-combat
 func isCombatOnly()->bool:
 	return true
@@ -18,15 +21,9 @@ func processCombatTurn(_contex = {}):
 	if duration<=0:
 		destroyMe()
 	
-func onFightStart(_contex = {}):
-	pass
-
 func onFightEnd(_contex = {}):
 	destroyMe()
 	
-	
-func onApply():
-	changed.emit(ID)
 	
 func combine(_newEffect:Effect)->Effect:
 	self.duration+=_newEffect.duration

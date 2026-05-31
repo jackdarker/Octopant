@@ -10,4 +10,5 @@ func on_enterScene():
 func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):
 		buttons.push_back(Button_Config.new("Restart","",Global.goto_scene.bind("res://ui/main_menu.tscn")))
+		buttons.push_back(Button_Config.new("Continue Anyway","This is kind of cheating...",Global.main.defaultDefeat.bind(self.parent_scene)))
 	return(buttons)

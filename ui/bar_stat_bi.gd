@@ -27,3 +27,6 @@ func setValue(v:float,maxv:float):
 func adjustHeight(max2:float):
 	var maxH=self.size.x
 	$HBoxContainer.scale.x=maxH/($HBoxContainer.size.x)*(%barPos.max_value+%barNeg.max_value)/max2
+
+func _on_mouse_entered() -> void:
+	Global.toolTip.showTooltip(self,text,str(%barNeg.max_value)+"<"+str(max(%barNeg.value,%barPos.value))+"<"+str(%barPos.max_value))

@@ -2,6 +2,10 @@ extends Effect
 
 func _init():
 	ID="eff_nausea"
+	duration=8*60*60
+
+func getName()->String:
+	return("nauseous")
 
 func processTime(_delta:int):
 	timeDelta=timeDelta+_delta
@@ -17,10 +21,5 @@ func processTime(_delta:int):
 		destroyMe()
 		return
 	
-	
-func onApply():
-	self.duration=8*60*60
-	changed.emit(ID)
-
 func getDescription()->String:
 	return("Feeling a little sick")

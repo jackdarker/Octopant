@@ -23,7 +23,7 @@ var turnCount:int=0
 var playerFleeing:bool
 var playerSubmitting:bool
 var actor:Character
-var target:Character
+var target:Array
 var skill:Skill
 
 enum STATE {undef,battleInit,checkDefeat,preTurn,selectActor,selectSkill,selectItem,selectTarget,execSkill,battleEnd}
@@ -117,7 +117,7 @@ func preTurn():
 
 func checkDefeat():
 	Global.hud.clearInput()
-	#handle player fleeing
+	#TODO handle player fleeing
 	#is any party down?
 	if(isPartyDefeated(enemyParty) || isPartyDefeated(playerParty)):
 		next_state=STATE.battleEnd
@@ -125,12 +125,16 @@ func checkDefeat():
 		next_state=STATE.selectActor
 
 func selectActor():
-	if(turnStack.size()>0):
+	while(turnStack.size()>0):
 		actor=turnStack.pop_front()
-		skill=null
-		next_state=STATE.selectSkill
-	else:
-		next_state=STATE.preTurn	#next turn after all done
+		if actor.isKnockedOut():
+			continue
+		else:
+			skill=null
+			next_state=STATE.selectSkill
+			return
+	
+	next_state=STATE.preTurn	#next turn after all done
 
 func selectSkill():
 	Global.hud.clearInput()
@@ -149,25 +153,26 @@ func selectSkill():
 		else:
 			_res=actor.combatAI.selectCombatSkill(playerParty,enemyParty)
 		skill=_res.skill
-		target=_res.target
+		target=_res.targets
 		next_state=STATE.execSkill
 
 func selectTarget():
 	Global.hud.clearInput()
 	Global.hud.say("select target for "+skill.getName())
 	Global.hud.addButton("Back","",selectSkill)
-	var _targets=skill.targetFilter(enemyParty,playerParty)
-	if _targets.size()==1:	#skip select for lone enemys
-		_postTargetSelect(_targets[0])
+	var _targetgroups=skill.targetFilter(enemyParty,playerParty)
+	if _targetgroups.size()==1:	#skip select for lone enemys
+		_postTargetSelect(_targetgroups[0])
 	else:
-		for _target in _targets:
-			Global.hud.addButton(_target.getName(),"",_postTargetSelect.bind(_target))
+		for _targetgroup in _targetgroups:
+			var _name:String=Util.join(_targetgroup.map(func(_e): return _e.getName())) 
+			Global.hud.addButton(_name,"",_postTargetSelect.bind(_targetgroup))
 
 func execSkill():
 	if !skill || !target:
 		Global.hud.say(actor.getName() +"doesnt know what to do.")
 	else:
-		Global.hud.say(actor.getName() +" is going to "+skill.getName()+" "+target.uniqueID)
+		Global.hud.say(actor.getName() +" is going to "+skill.getName()+" "+Util.join(target.map(func(_e): return _e.uniqueID)) )
 		skill.doAction("",target)
 	_postExecute()
 	
@@ -235,10 +240,3 @@ func isPartyDefeated(party:Array[Character]):
 		if(!_char.isKnockedOut()):
 			return(false)
 	return(true)
-
-func targetFilerAlive(party):
-	var _targets=[]
-	for _char:Character in party:
-		if(!_char.isKnockedOut()):
-			_targets.push_back(_char)
-	return _targets

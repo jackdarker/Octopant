@@ -16,7 +16,7 @@ var onSubmit:Callable = defaultDefeat			#hook to display battle outro
 var onFlee:Callable = defaultFlee			#hook to display battle outro
 
 static func defaultVictory(scene:CombatScene):
-	Global.hud.clearOutput()
+	#Global.hud.clearOutput()
 	Global.hud.clearInput()
 	Global.hud.say("You have won this fight")	#todo fetchloot
 	Global.hud.addButton("Next","",func():Global.main.removeScene(scene))
@@ -25,7 +25,7 @@ static func defaultDefeat(scene:CombatScene):
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
 	Global.hud.say("You lost")
-	Global.hud.addButton("Next","",func():Global.main.removeScene(scene))
+	Global.hud.addButton("Next","",func():Global.main.defaultGameOver(scene))
 
 static func defaultFlee(scene:CombatScene):
 	Global.hud.clearOutput()

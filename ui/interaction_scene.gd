@@ -22,12 +22,8 @@ func enterScene():
 func canSave()->bool:
 	return false	#TODO fix saving Interactions 
 
-func __displayImage(where,path):
-	var _texture:Texture=null
-	if path!="":
-		_texture= load(path)
+func __displayImage(where,_texture:Texture2D):
 	if(where==1):
-		#%img_char_1.texture=_texture
 		Global.hud.show_picture_left(_texture)
 	else:
 		Global.hud.show_picture_right(_texture)

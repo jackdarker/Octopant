@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://cjtpr2rjr38sx"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_5qcgk"]
+
+[resource]
+script = ExtResource("1_5qcgk")
+ID = "basic_tired"
+title = "You are tired"
+text = "You are getting tired and should return to your hometurf to rest.
+Sleeping at a save location will usually reduce fatigue and pain and give you a well rested bonus if you slept until next morning. "
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

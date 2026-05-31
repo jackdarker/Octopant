@@ -6,8 +6,9 @@ static func delete_children(node):
 	for n in node.get_children():
 		node.remove_child(n)
 		n.queue_free()
-		
-static func join(arr: Array, separator: String = "") -> String:
+
+## ["a","b"] -> "a,b"		
+static func join(arr: Array, separator: String = ",") -> String:
 	var output = ""
 	for s in arr:
 		output += str(s) + separator
@@ -65,3 +66,20 @@ static func pickRandomFromArray(items:Array,weights:Array=[])-> Variant:
 		_up=_lo
 		
 	return _item
+
+## creates a silhouette-image from image
+static func createSilhouette(src_texture:Texture2D)->Texture2D:
+	var threshold = 0.5                          # 0..1 alpha threshold
+	var silhouette_color = Color(0,0,0,1)        # desired silhouette color (RGB, alpha=1)
+	var src_img = src_texture.get_image()
+	var w = src_img.get_width()
+	var h = src_img.get_height()
+	var dst_img = Image.create(w, h, false, Image.FORMAT_RGBA8)
+	for y in range(h):
+		for x in range(w):
+			var c = src_img.get_pixel(x, y) # Color(r,g,b,a)
+			if c.a > threshold:
+				dst_img.set_pixel(x, y, Color(silhouette_color.r, silhouette_color.g, silhouette_color.b, 1.0))
+			else:
+				dst_img.set_pixel(x, y, Color(0,0,0,0)) # fully transparent
+	return ImageTexture.create_from_image(dst_img);

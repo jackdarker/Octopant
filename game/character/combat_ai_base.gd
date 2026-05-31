@@ -2,7 +2,7 @@ class_name CombatAIBase extends Node
 
 class CombatSkillResult extends Result:
 	var skill:Skill
-	var target:Character
+	var targets:Array[Character]
 	static func create(ok,msg)->CombatSkillResult:
 		var _n=CombatSkillResult.new()
 		_n.OK=ok
@@ -21,9 +21,9 @@ func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->
 	var _res:CombatSkillResult=CombatSkillResult.create(true,"")
 	var skills=Inventory.filter_by_tag(char.skills.getItems(),[SkillTagEnum.Attack])
 	skills.shuffle()
-	_res.target=enemyParty[randf_range(0,enemyParty.size())]
+	_res.targets=[enemyParty[randf_range(0,enemyParty.size())]]
 	for skill:Skill in skills:
-		if skill.canDo("",_res.target).OK:
+		if skill.canDo("",_res.targets).OK:
 			_res.skill=skill
 			break
 	return _res

@@ -10,7 +10,7 @@ func _init():
 	super()
 	cost=SkillCost.new()
 	
-func canDo(_action:String,_target:Character)->Result:
+func canDo(_action:String,_target)->Result:
 	var res=Result.create(true,"")
 	#TODO res=this.isValidStance()
 	if(!res.OK): 
@@ -28,7 +28,7 @@ func previewAction(_action:String,_target:Character)->Result:
 	var _res=Result.create(true,user.name +" will use "+ name +" on " + _target.name)
 	return(_res)
 
-func doAction(_action:String,_target:Character):
+func doAction(_action:String,_target):
 	getCost().pay(user)
 	applyAction(_action,_target)
 	coolDown=defCoolDown
@@ -41,6 +41,9 @@ func applyAction(_action:String,_target:Character):
 func getCost()->SkillCost:
 	return(cost)
 
+func canUseInCombat()->bool:
+	return false
+
 func onCombatStart():
 	coolDown=startDelay
 
@@ -51,4 +54,15 @@ func onTurnStart():
 #the function returns a array of arrays containing the targets  
 #f.e. [[dragon],[mole1,mole2]] to indicate that the skill can be used on dragon or both moles at same time
 func targetFilter(enemys:Array[Character],_own:Array[Character]):
-	return enemys
+	var _targets:Array=[];
+	var _enemys=Skill.targetFilterAlive(enemys)
+	for _t in _enemys:
+		_targets.push_back([_t])
+	return _targets
+
+static func targetFilterAlive(party):
+	var _targets=[]
+	for _char:Character in party:
+		if(!_char.isKnockedOut()):
+			_targets.push_back(_char)
+	return _targets

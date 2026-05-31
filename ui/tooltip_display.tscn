@@ -44,6 +44,8 @@ custom_minimum_size = Vector2(250, 0)
 offset_right = 250.0
 offset_bottom = 135.0
 pivot_offset = Vector2(0, 20)
+mouse_filter = 2
+mouse_behavior_recursive = 1
 theme = ExtResource("2_r80qv")
 script = ExtResource("1_01or2")
 

@@ -67,4 +67,4 @@ func on_effect_update_all(who:Character):
 
 func on_bust_update(who:Character):
 	characterName=who.getName()
-	%icon.texture_normal=load(who.getBustImage())
+	%icon.texture_normal=who.getBustImage()

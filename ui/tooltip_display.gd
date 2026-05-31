@@ -44,6 +44,7 @@ func _process(_delta: float) -> void:
 		_pos.y = min(_viewsize.y - 10 - size.y, _pos.y)
 	global_position=_pos
 
+
 func set_text(title: String, body: String):
 	_title.text = title	#.capitalize()
 	_body.text=(body)
