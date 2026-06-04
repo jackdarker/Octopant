@@ -5,23 +5,24 @@ const sceneID="nav_beach"
 func on_enterScene():
 	parent_scene.set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
 	if (GR.getModuleFlag("Default","Found_Beach",0)<=0):
-		Global.hud.say("You found yourself at a beach.")
+		Global.hud.say("You found yourself at a beach. If you would have any memory how you got here, you would be abel to appreciate it.")
+		Global.hud.say("There seems to be no one around and none of the typical signs of civilsation - rubbish and prohibition signs - are visible.")
+		Global.hud.say("Maybe you should check what is next to this sandy coast.")
+		Global.QS.start_quest(GR.getQuest("find_locations1"))
 		GR.setModuleFlag("Default","Found_Beach",1)
-		Global.QS.start_quest(GR.getQuest("craft_knife")) #TODO
-		Global.QS.start_quest(GR.getQuest("find_locations1")) #TODO
 	else:
 		Global.hud.say("Visiting the the beach again.")
 
 func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):
-		buttons.push_back(Button_Config.new("go somewhere else...","",parent_scene.menu.bind("walk")))
+		if(GR.getModuleFlag("Default","Beach_Shack",0)!=0):
+			buttons.push_back(Button_Config.new("go somewhere else...","",parent_scene.menu.bind("walk")))
 		buttons.push_back(Button_Config.new("explore","",parent_scene._on_bt_explore_pressed,parent_scene._requiresFatigue))
-		buttons.push_back(Button_Config.new("sunbathing","tan your body",sunbathing,maySunbath))
+		#TODO buttons.push_back(Button_Config.new("sunbathing","tan your body",sunbathing,maySunbath))
 		buttons.push_back(Button_Config.new("talk to crab","",parent_scene._on_bt_crab_pressed))
-		buttons.push_back(Button_Config.new("testfight","",parent_scene._on_bt_fight_pressed))
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")
-		buttons.push_back(Button_Config.new("go home","",parent_scene.navigate_home))
+		buttons.push_back(Button_Config.new("shack","",parent_scene.navigate_home))
 		if(GR.getModuleFlag("Default","Found_Cliff",0)>0):
 			buttons.push_back(Button_Config.new("Cliff","",Global.main.runScene.bind("nav_cliff")))
 		if(GR.getModuleFlag("Default","Found_Forest",0)>0):

@@ -5,7 +5,7 @@ func _ready() -> void:
 
 func _on_visibility_changed() -> void:
 	if visible:
-		Tutorials.show("basic_stats")
+		Tutorials.tutorial_trigger.emit("basic_stats")
 		pass #TODO
 
 func _on_bt_back_pressed() -> void:

@@ -24,6 +24,9 @@ func _ready() -> void:
 	
 	Global.ES.registerEventTriggers()
 	# connect events from UI & logic
+	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
+	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name))
+	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	time_passed.connect(Global.hud.on_time_passed)
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
@@ -293,9 +296,7 @@ func postLoad():
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	Global.pc.inventory.item_added.connect(func(itemID): Global.toolTip.showNotification("Item added",itemID))
 	Global.pc.inventory.item_removed.connect(func(itemID): Global.toolTip.showNotification("Item removed",itemID))
-	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
-	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name))
-	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
+
 	#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
 	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()

@@ -8,7 +8,7 @@ func _on_bt_explore_pressed():
 	Global.main.doTimeProcess(30*60)
 	_requiresFatigue(true)
 	GR.increaseModuleFlag("Default","Explored_Forest",1)
-	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_forests_explore",[]):
+	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_forest_explore",[]):
 		Global.hud.say("Nothing was found")
 		continueScene()
 

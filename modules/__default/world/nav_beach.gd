@@ -9,7 +9,9 @@ func _on_bt_explore_pressed():
 	Global.main.doTimeProcess(30*60)
 	Global.pc.getStat(StatEnum.Fatigue).modify(10)
 	GR.increaseModuleFlag("Default","Explored_Beach",1)
-	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_beach_explore",[]):
+	if(GR.getModuleFlag("Default","Beach_Shack",0)==0):
+		navigate_home()	#force finding shack
+	elif !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_beach_explore",[]):
 		Global.hud.say("Nothing was found")
 		continueScene()
 

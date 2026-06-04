@@ -10,8 +10,8 @@ func on_enterScene():
 	if (GR.getModuleFlag("Default","Found_Cliff",0)<=0):
 		Global.hud.say("Your walk at the beach finally brings you to a high cliff.")
 		GR.setModuleFlag("Default","Found_Cliff",1)
-	Global.hud.say("The cliff looks climbable even for your poor abilitys.")
-	Global.hud.say("As long as you have some rope with you it should be safe enough.")
+	Global.hud.say("The cliff looks climbable even for your poor abilitys. As long as you have some rope with you it should be safe enough.")
+	Global.hud.say("From base to top it's around "+str(max_h)+"meters to climb.")
 	var _r=GR.getModuleFlag("Default","Cliff_Ropes",0)
 	if(_r>0):
 		Global.hud.say(str(_r)+" ropes are installed by you. They should make it easier to climb.")
@@ -53,6 +53,7 @@ func _on_climb_down():
 	GR.setModuleFlag("Default","Cliff_Height",0)
 	Global.hud.clearInput()
 	Global.hud.clearOutput()
+	GR.setModuleFlag("Default","Cliff_Height",0)
 	Global.hud.say("Gladly you made it back to the ground without much hassle.")
 	parent_scene.menu("")
 
@@ -71,9 +72,9 @@ func _on_climb():
 func _can_climb(apply:bool=false):
 	var _h=GR.getModuleFlag("Default","Cliff_Height",0)
 	var _r=GR.getModuleFlag("Default","Cliff_Ropes",0)
-	if (_r >=(floor(_h/10.0)-1) ):
+	if (_r >=(floor(_h/10.0)+0.1) ):
 		return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,20)]).check(Global.pc,apply)
-	return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,40)]).check(Global.pc,apply)
+	return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,50)]).check(Global.pc,apply)
 
 func _on_rope():
 	_can_rope(true)

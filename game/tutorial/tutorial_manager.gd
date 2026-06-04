@@ -3,7 +3,8 @@ class_name TutorialManager extends Node
 # add to autoload!
 
 # Signals
-signal tutorial_shown(id: String)
+signal tutorial_trigger(id: String) #call this to trigger tutorial instead of using show()
+signal tutorial_shown(id: String)	#called when showing
 signal tutorial_closed(id: String)
 
 @export var popup_scene: PackedScene = preload("res://ui/tutorial_popup.tscn")
@@ -15,6 +16,7 @@ var current_popup = null
 var queue := []                  # Array of tutorial IDs or Dictionaries
 
 func _ready() -> void:
+	tutorial_trigger.connect(show)
 	pass
 
 # Show API (immediate or queued)

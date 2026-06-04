@@ -9,8 +9,7 @@ func _init():
 func react(_triggerID,_location,_args)->bool:
 	var i=randi_range(0, 100)
 	if(i>50):
-		Global.hud.say("Some lianes are dangling down from the branches of some trees.\n
-		With some tool you could cut them and use them for rope.")
+		Global.hud.say("Some lianes are dangling down from the branches of some trees.\nWith some tool you could cut them and use them for rope.")
 		Global.hud.addButton("Ignore it","",_ignore,null)
 		Global.hud.addButton("Cut them","",_cut_lianes,_can_cut)
 	else:
@@ -33,6 +32,7 @@ func _can_cut()->Result:
 	if(_items.size()<=0):
 		_res.OK=false
 		_res.Msg="Without a knife or something similiar you cant cut those lianes."
+		Global.QS.start_quest(GR.getQuest("craft_knife"))
 	return _res
 
 func _cut_lianes():

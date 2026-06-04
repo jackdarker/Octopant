@@ -20,10 +20,12 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("Sure","",cb_menu("help1",true)))
 		buttons.push_back(Button_Config.new("Nope","",cb_menu("nohelp1")))
 	if(menuid=="help1"):
+		Global.hud.say("What kind of help do you need?")
 		Global.hud.say("I need seashell, pretty pretty seashell.",NPC_Format)
 		buttons.push_back(Button_Config.new("Here you go","",cb_menu("help2",true),__hasSeashell))
 		buttons.push_back(Button_Config.new("I dont have one","",cb_menu("nohelp1",true)))
 	if(menuid=="help2"):
+		Global.hud.say("I have one rigth here..")
 		Global.hud.say("Thank you so much. Here let me give you this.
 		It squirts some [b]green slime[/b] in front of you.",NPC_Format)
 		__hasSeashell(true)
@@ -31,6 +33,7 @@ func get_buttons(menuid:String,buttons:Array):
 		Global.pc.inventory.addItemID("gel_green")
 		buttons.push_back(Button_Config.new("Thats nasty","",cb_menu("leave",true)))
 	if(menuid=="nohelp1"):
+		Global.hud.say("I can't help you right now.")
 		Global.hud.say("But I need seashell!",NPC_Format)
 		Global.QS.start_quest(GR.getQuest("crab_seashell"))
 		buttons.push_back(Button_Config.new("I have to leave","",cb_menu("leave",true)))

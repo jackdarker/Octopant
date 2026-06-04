@@ -39,6 +39,7 @@ func _init()-> void :
 
 func getFlags():
 	return {
+		"Beach_Shack": flag(FlagType.Number),
 		"Found_Beach": flag(FlagType.Number),	#has found region
 		"Found_Cliff": flag(FlagType.Number),
 		"Found_Forest": flag(FlagType.Number),

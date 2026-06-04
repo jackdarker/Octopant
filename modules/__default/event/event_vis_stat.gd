@@ -14,7 +14,7 @@ func canRun(_trigger,_location,_args)->bool:
 	var _ret:=false
 	var _bev=Global.pc.getStat(StatEnum.Fatigue).value_percent
 	if(_bev>=80 && GR.getModuleFlag("Default","FatigueHigh",0)<80):
-		Tutorials.show("basic_tired")
+		Tutorials.tutorial_trigger.emit("basic_tired")
 		_ret=true
 	else:
 		GR.setModuleFlag("Default","FatigueHigh",_bev)
