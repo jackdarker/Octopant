@@ -23,7 +23,6 @@ func postLoad()->void:
 		return
 	Global.pc.inventory.item_added.connect(_on_item_added)
 	Global.pc.inventory.item_removed.connect(_on_item_removed)
-	gathered = Global.pc.inventory.hasItemID(itemID)
 	meets_condition()
 
 func meets_condition() -> bool:

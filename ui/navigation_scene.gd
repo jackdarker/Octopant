@@ -14,7 +14,7 @@ func _ready() -> void:
 	enterScene()
 
 #override this
-func setupScene(_args:Array):
+func setupScene():
 	scene_ext=GR.getSceneExtensions(self.sceneID,self)
 	for ext in scene_ext:
 		ext.on_setupScene()

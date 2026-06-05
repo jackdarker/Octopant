@@ -62,6 +62,7 @@ func showNotification(title: String, message: String, _icon: Texture2D = null):
 	panel.set_size(Vector2(10,10))
 	panel.title=title 
 	panel.message=message
+	panel.icon=_icon
 	
 	var y = margin
 	for p in notificationStack.get_children():	#TODO if multiple notifications added at same time, they have huge spacing, why?

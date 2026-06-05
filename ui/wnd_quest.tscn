@@ -31,99 +31,161 @@ horizontal_alignment = 1
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 40
+theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 40
+theme_override_constants/margin_right = 8
 
-[node name="HSplitContainer" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Quest-Log" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 0
+
+[node name="Hsplit" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log"]
 layout_mode = 2
 split_offset = 300
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer"]
 layout_mode = 2
 text = "Incomplete"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="lst_active" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer"]
+[node name="lst_active" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer/lst_active"]
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer/lst_active"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer/lst_active"]
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer/lst_active"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer/lst_active"]
+[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer/lst_active"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer/lst_active"]
+[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer/lst_active"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer"]
 layout_mode = 2
 text = "Completed"
 
-[node name="ScrollContainer2" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer"]
+[node name="ScrollContainer2" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="lst_complete" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2"]
+[node name="lst_complete" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button5" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button5" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button6" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button6" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button7" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button7" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button8" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button8" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button9" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button9" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer/VBoxContainer/ScrollContainer2/lst_complete"]
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer/ScrollContainer2/lst_complete"]
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="lbl_questdesc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/HSplitContainer"]
+[node name="lbl_questdesc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Hello
+world"
+
+[node name="Tutorials" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+metadata/_tab_index = 1
+
+[node name="HSplit" type="HSplitContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials"]
+layout_mode = 2
+split_offset = 300
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="lst_tutorials" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer/ScrollContainer/lst_tutorials"]
+layout_mode = 2
+text = "quest  dfgdg  "
+
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer/ScrollContainer/lst_tutorials"]
+layout_mode = 2
+text = "quest  dfgdg  "
+
+[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer/ScrollContainer/lst_tutorials"]
+layout_mode = 2
+text = "quest  dfgdg  "
+
+[node name="Button4" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit/VBoxContainer/ScrollContainer/lst_tutorials"]
+layout_mode = 2
+text = "quest  dfgdg  "
+
+[node name="lbl_tutorial" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Tutorials/HSplit"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3

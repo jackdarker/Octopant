@@ -42,8 +42,12 @@ func _cut_lianes():
 		Global.hud.say("Cutting some [b]liane[/b].")
 		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
+		Global.main.getCurrentScene().continueScene()
 	else:
 		Global.hud.say("Damit, its not a liane but a snake !")
-		Global.hud.show_picture_center(load("res://assets/images/chars/snake_tree.png"))
-	Global.main.getCurrentScene().continueScene()
+		var _setup=CombatSetup.new()
+		_setup.playerParty.push_back(Global.pc)
+		_setup.enemyParty.push_back(GR.createCharacter("Snake	"))
+		Global.main.runScene("combat_scene",[_setup],Global.main.currentSceneUID)
+	
 	pass

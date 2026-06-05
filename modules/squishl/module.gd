@@ -38,6 +38,7 @@ func getFlags():
 		"Daily_Treasure": flag(FlagType.Number),
 		"Lutes_Met":flag(FlagType.Number),
 		"Lutes_Love":flag(FlagType.Number),
+		"Lutes_Visitable":flag(FlagType.Number),
 	}
 
 func resetFlagsOnNewDay():

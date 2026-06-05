@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=7 format=3 uid="uid://b3oauibakahy6"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_mp55w"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_st0ga"]
+[ext_resource type="Script" uid="uid://cxwgqp6o2f1xo" path="res://game/quest/step/kill_mob.gd" id="3_bsgwh"]
+[ext_resource type="Script" uid="uid://ddi4oox6majay" path="res://game/quest/step/talk_theme.gd" id="4_mp55w"]
+
+[sub_resource type="Resource" id="Resource_st0ga"]
+script = ExtResource("3_bsgwh")
+mobID = "Crab"
+quantity = 4
+title = "Kill crabs"
+metadata/_custom_type_script = "uid://cxwgqp6o2f1xo"
+
+[sub_resource type="Resource" id="Resource_0m4w6"]
+script = ExtResource("4_mp55w")
+npcID = "Lutes"
+themeID = "talk_kill_crab"
+title = "Return to Lutes to get your prize."
+metadata/_custom_type_script = "uid://ddi4oox6majay"
+
+[resource]
+script = ExtResource("1_mp55w")
+ID = "lutes_kill_crab"
+quest_name = "Get rid of some crabs"
+quest_objective = "Crabs are swarming the beach. Teach them a lesson and send them back were they came from."
+repeatable = true
+steps = Array[ExtResource("2_st0ga")]([SubResource("Resource_st0ga"), SubResource("Resource_0m4w6")])
+metadata/_custom_type_script = "uid://0jbnqgdlwjeo"

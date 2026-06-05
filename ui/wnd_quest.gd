@@ -6,6 +6,7 @@ func _ready() -> void:
 func _on_visibility_changed() -> void:
 	if visible:
 		updateQuests()
+		updateTutorials()
 
 func _on_bt_back_pressed() -> void:
 	visible = false
@@ -45,3 +46,20 @@ func viewQuest(ID:String):
 		text+=step.title if (step.hidden==Quest.HIDE.NONE || step.completed) else "???"
 		text+=("\n\t"+_progress) if (_progress!="" && (step.hidden==Quest.HIDE.NONE || step.completed)) else "" 	
 	%lbl_questdesc.text=text
+
+func updateTutorials():
+	for item in %lst_tutorials.get_children():
+		%lst_tutorials.remove_child(item)
+		item.queue_free()
+	%lbl_tutorial.text=""
+	
+	var bt:Button
+	var _items=Tutorials.shown.keys()
+	_items.sort()
+	for item in Tutorials.shown.keys():
+		if Tutorials.shown[item]:
+			#var data:=Tutorials.get_tutorial_data(item)
+			bt=Button.new()
+			bt.text=item
+			bt.pressed.connect(Tutorials.show.bind(item,true))	#TODO its possible to press multiple buttons which will queue the popups
+			%lst_tutorials.add_child(bt)

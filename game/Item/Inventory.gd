@@ -37,11 +37,14 @@ func addItemID(itemID:String):
 
 func removeItem(item:ItemBase,_amount:int=1):
 	if(items.has(item)):
-		item.amount-=_amount
-		if item.amount<=0:
+		var _new_amount=item.amount-_amount
+		if _new_amount<=0:
 			items.erase(item)
-			item.wrefInventory = null
-	item_removed.emit(item.ID)
+			item.destroyMe()
+			#item.wrefInventory = null
+		else:
+			item.amount-=_amount
+		item_removed.emit(item.ID)
 
 func removeItemID(itemID:String,_amount:int=1):
 	var _item=getItemByID(itemID)

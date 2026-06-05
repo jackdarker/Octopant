@@ -49,11 +49,11 @@ func clearInput():
 		var pressed=bt.pressed.get_connections()			#Todo make lambda
 		for evt in pressed:
 			bt.pressed.disconnect(evt.callable)
-		var mouse_entered=bt.mouse_entered.get_connections()
-		for evt in mouse_entered:
+		var _mouse_entered=bt.mouse_entered.get_connections()
+		for evt in _mouse_entered:
 			bt.mouse_entered.disconnect(evt.callable)
-		var mouse_exited=bt.mouse_exited.get_connections()
-		for evt in mouse_exited:
+		var _mouse_exited=bt.mouse_exited.get_connections()
+		for evt in _mouse_exited:
 			bt.mouse_exited.disconnect(evt.callable)
 	pass
 

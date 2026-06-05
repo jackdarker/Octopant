@@ -8,7 +8,7 @@ static var SceneListItem
 static func create_item(theItem)-> ListItem:
 	if(!SceneListItem):
 		SceneListItem = load("res://ui/image_list_item.tscn")
-	var _Item=SceneListItem.instantiate()
+	var _Item:ListItem=SceneListItem.instantiate()
 	var _tex:Texture2D = load(theItem.getInventoryImage())
 	var image = _tex.get_image()
 	var ThumbnailSize = 128	#TODO

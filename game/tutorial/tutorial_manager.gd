@@ -21,7 +21,7 @@ func _ready() -> void:
 
 # Show API (immediate or queued)
 func show(id: String, force: bool = false) -> void:
-	var data:= GR.getTutorial(id)
+	var data:= get_tutorial_data(id)
 	if !data:
 		return
 	if data.show_once and shown.get(id, false) and not force:
@@ -57,12 +57,22 @@ func _on_popup_closed(id: String) -> void:
 		var next = queue.pop_front()
 		_present(next)
 
-
-
 # Utility: reset shown flags (for debug / replay)
 func reset_all_shown() -> void:
 	shown = {}
+
+func get_tutorial_data(id:String)->TutorialData:
+	return GR.getTutorial(id)
  
 # Query
 func has_shown(id: String) -> bool:
 	return shown.get(id, false)
+
+func loadData(data):
+	var _shown=data["shown"]
+	for id in _shown:
+		self.shown[id]=true
+			
+func saveData()->Variant:
+	var _shown:Array=self.shown.keys().filter(func(x):return self.shown[x])
+	return({"shown":_shown})

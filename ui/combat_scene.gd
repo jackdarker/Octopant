@@ -96,6 +96,8 @@ func battleEnd():
 	elif(playerSubmitting==true): 
 		combatSetup.onSubmit.call(self);
 	elif(isPartyDefeated(enemyParty)):
+		for item in enemyParty:
+			Global.npc_defeated.emit(item)
 		combatSetup.onVictory.call(self);
 	elif(isPartyDefeated(playerParty)):
 		combatSetup.onDefeat.call(self)

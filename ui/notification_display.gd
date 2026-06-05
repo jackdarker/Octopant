@@ -6,7 +6,8 @@ signal request_close(panel)
 @export var title:String ="MyTitle"
 @export var message:String ="My message"
 
-@onready var _title:RichTextLabel=$Panel/VBoxContainer/lb_header
+@onready var _title:RichTextLabel=$Panel/VBoxContainer/HBoxContainer/lb_header
+@onready var _icon:TextureRect=$Panel/VBoxContainer/HBoxContainer/icon
 @onready var _body:RichTextLabel=$Panel/VBoxContainer/lb_body
 @onready var hideTimer:Timer = $hideTimer	#Note hideTimer is used by Notification-System
 
@@ -16,6 +17,7 @@ func _ready()->void:
 func _show_notification():
 	_title.text = title	#.capitalize()
 	_body.text=message
+	_icon.texture=icon
 	size.y = 0	#the label would not shrink back otherwise
 	size.x = 0
 

@@ -33,9 +33,10 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("Next","",cb_menu("leave",true)))
 	if(menuid=="requestTalk"):
 		GR.increaseModuleFlag("Squishl","Lutes_Met",1)
-		if(_met>5):
+		if(_met>5 && GR.getModuleFlag("Squishl","Lutes_Visitable",0)<1):
 			Global.hud.say("You talk about this and that.")
 			Global.hud.say("[Lutes is now available via menu]",Constants.GM_Format)
+			GR.setModuleFlag("Squishl","Lutes_Visitable",1)
 			buttons.push_back(Button_Config.new("Thats cool","",cb_menu("leave",true)))
 		elif(_met>1 && GR.getModuleFlag("Squishl","Lutes_Love",0)<=0):
 			Global.hud.say("Did you see that trinket on those rocks out in the sea? If you can get it for me, I would be grateful...",NPC_Format)
@@ -43,6 +44,11 @@ func get_buttons(menuid:String,buttons:Array):
 		else:
 			#add bitmask to disable/unlock entrys	
 			Global.hud.say("You have questions, I can see it in your face.",NPC_Format)
+			var q=Global.QS.active.get_quest_from_id("lutes_kill_crab")
+			if(q && q.get_first_uncompleted_step() && q.get_first_uncompleted_step().index==1):  # means PC was there and has item
+				buttons.push_back(Button_Config.new("Mission done","",cb_menu("finishMission",true)))
+			else:
+				buttons.push_back(Button_Config.new("Mission please","",cb_menu("startMission",true)))
 			buttons.push_back(Button_Config.new("Where is this place?","",cb_menu("askBeach",true)))
 			buttons.push_back(Button_Config.new("There have to be other people around here.","",cb_menu("askInhabitants",true)))
 			buttons.push_back(Button_Config.new("But whats behind the beach and that forest. Is there a settlement or something?","",cb_menu("askMap",true)))
@@ -75,6 +81,21 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("That sucks","All the effort for nothing?",cb_menu("leave",true)))
 		if Global.QS.active.get_quest_from_id("lutes_trinket"):
 			Log.error("quest should be complete")
+	if(menuid=="startMission"):
+		Global.hud.say("One cannot set foot on this beach without getting pinched by those pesky scissor-guys. Go and teach them a lesson.",NPC_Format)
+		Global.QS.start_quest(GR.getQuest("lutes_kill_crab"))
+		buttons.push_back(Button_Config.new("Sure","",cb_menu("leave",true)))
+	if(menuid=="finishMission"):
+		Global.npc_talked.emit("Lutes","talk_kill_crab")
+		Global.hud.say("Well done, here is your prize.",NPC_Format)
+		Global.hud.say("Oh my godness...another of those useless bottles. I am so excited.")
+		Global.hud.say("Stuff it (throws the bottle at your head).",NPC_Format)
+		Global.pc.inventory.addItem(GR.createItem("vial_empty"))
+		GR.increaseModuleFlag("Squishl","Lutes_Love",1)
+		buttons.push_back(Button_Config.new("I'm out","",cb_menu("leave",true)))
+		
+		if Global.QS.active.get_quest_from_id("lutes_trinket"):
+			Log.error("quest should be complete")	
 	if(menuid=="askBeach"):
 		Global.hud.say("This is a beach, obviously...",NPC_Format)
 		buttons.push_back(Button_Config.new("Next","",cb_menu("requestTalk",true)))

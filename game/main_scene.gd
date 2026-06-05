@@ -25,7 +25,7 @@ func _ready() -> void:
 	Global.ES.registerEventTriggers()
 	# connect events from UI & logic
 	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
-	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name))
+	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name,load("res://assets/images/icons/ic_unknown.svg")))
 	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	time_passed.connect(Global.hud.on_time_passed)
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
@@ -59,7 +59,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	else:
 		Global.hud.hudMode=Hud.HUDMODE.Explore
 		actual_scene = GR.createScene(ID)
-		actual_scene.setupScene(_args)
+		actual_scene.setupScene()
 	if(parentSceneUniqueID >= 0):
 		actual_scene.parentSceneUniqueID = parentSceneUniqueID
 	# Add it to the active scene, as child of root.
@@ -260,9 +260,9 @@ func loadData(data):
 	for _id in _scenes.keys():
 		var _scene=GR.createScene(_id)
 		_scene.loadData(_scenes[_id])
+		_scene.setupScene()
 		sceneStack.push_back(_scene)
 		get_node("Scene").add_child(_scene)
-	getCurrentScene().setupScene([])
 	getCurrentScene().enterScene()
 			
 func saveData()->Variant:
@@ -285,6 +285,8 @@ func saveData()->Variant:
 func beforeLoad():
 	# to not spam signal when inventory items are re-added
 	for evt in Global.pc.inventory.item_added.get_connections():
+		evt.signal.disconnect(evt.callable)
+	for evt in Global.pc.inventory.item_removed.get_connections():
 		evt.signal.disconnect(evt.callable)
 
 func postLoad():

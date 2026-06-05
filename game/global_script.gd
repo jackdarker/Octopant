@@ -9,6 +9,10 @@ var ES: EventSystem
 var QS: QuestSystem
 
 var current_scene = null
+@warning_ignore("unused_signal")
+signal npc_defeated(npc:Character)	#triggered when mob is defeated in combat
+@warning_ignore("unused_signal")
+signal npc_talked(npcID:String,themeID:String)	#triggered when player talked to NPC about something
 
 func _ready() -> void:
 	#directory.make_dir("user://mods")
@@ -80,27 +84,46 @@ func getAllSaves()->Array:
 func deleteSaveFile(slot):
 	DirAccess.remove_absolute(SAVE_DIR.path_join(slot))
 
+var compress_save:=true
 func saveToFile(slot):
 	var _path=SAVE_DIR.path_join(slot)
 	var _saveData = saveData()
-	var save_game=FileAccess.open(_path, FileAccess.WRITE)
-	save_game.store_string(JSON.stringify(_saveData))
-	save_game.close()
+	if(compress_save):
+		var writer = ZIPPacker.new()
+		var err = writer.open(_path)
+		if err != OK:
+			return err	#TODO?
+		writer.start_file("save")
+		writer.write_file(JSON.stringify(_saveData).to_utf8_buffer())
+		writer.close_file()
+	else:
+		var save_game=FileAccess.open(_path, FileAccess.WRITE)
+		save_game.store_string(JSON.stringify(_saveData))
+		save_game.close()
 
 func loadFromFileRaw(path)->Variant:
 	if not FileAccess.file_exists(path):
 		#Log.error("Save file is not found in "+str(_path))
 		#assert(false, "Save file is not found in "+str(_path))
 		return # Error! We don't have a save to load.
-	
-	var save_game=FileAccess.open(path, FileAccess.READ)
-	#var saveData = parse_json(save_game.get_as_text())
 	var json=JSON.new()
-	var jsonResult = json.parse(save_game.get_as_text())
+	var jsonResult
+	var save_game
+	if(compress_save):
+		var reader = ZIPReader.new()
+		var err = reader.open(path)
+		if err != OK:
+			return PackedByteArray()
+		save_game = reader.read_file("save")
+		reader.close()
+		jsonResult = json.parse(save_game.get_string_from_utf8())
+	else:
+		save_game=FileAccess.open(path, FileAccess.READ)
+		jsonResult = json.parse(save_game.get_as_text())
+		save_game.close()
 	if(jsonResult != OK):
 		assert(false, "Trying to load a bad save file "+str(path))
 		return null
-	save_game.close()
 	return json.data
 		
 func loadFromFile(slot):
@@ -116,6 +139,7 @@ func loadData(data):
 	Global.main.loadData(data.main)
 	Global.pc.loadData(data.pc)
 	Global.QS.loadData(data["quests"]) #done after characters because checking inventory!
+	Tutorials.loadData(data.tutorials)
 	Global.main.postLoad()
 			
 func saveData()->Variant:
@@ -123,7 +147,8 @@ func saveData()->Variant:
 		"globalregistry":GR.saveData(),
 		"main":Global.main.saveData(),
 		"pc": Global.pc.saveData(),
-		"quests":Global.QS.saveData()
+		"quests":Global.QS.saveData(),
+		"tutorials":Tutorials.saveData()
 	}
 		
 	return(data)

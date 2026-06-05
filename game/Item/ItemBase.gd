@@ -99,8 +99,10 @@ func destroyMe():
 		return
 	if __destroyInProcess<=0:
 		__destroyInProcess=1
-		wrefInventory.get_ref().removeItem(self)
-		__destroyInProcess=0
+		wrefInventory.get_ref().removeItem(self,self.amount)
+		queue_free()
+		#__destroyInProcess=0
+		
 
 func useCharge(_amount = 1):
 	#charges -= amount
