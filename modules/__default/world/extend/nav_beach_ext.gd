@@ -19,6 +19,7 @@ func get_buttons(menuid:String,buttons:Array):
 			buttons.push_back(Button_Config.new("go somewhere else...","",parent_scene.menu.bind("walk")))
 		buttons.push_back(Button_Config.new("explore","",parent_scene._on_bt_explore_pressed,parent_scene._requiresFatigue))
 		#TODO buttons.push_back(Button_Config.new("sunbathing","tan your body",sunbathing,maySunbath))
+		buttons.push_back(Button_Config.new("testdungeon","",Global.main.runScene.bind("dng_tidal_cave",[],Global.main.getCurrentScene().uniqueSceneID)))
 		buttons.push_back(Button_Config.new("talk to crab","",parent_scene._on_bt_crab_pressed))
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")

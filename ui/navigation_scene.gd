@@ -7,7 +7,7 @@ var scene_ext:Array[SceneExtension]
 var msg_scn=ResourceLoader.load("res://ui/message_box.tscn")
 var scene_hud = preload("res://ui/fragments/hud_center_default.tscn")
 var msg:MessageBox
-var state:int =0
+
 var menustack:Array[String]=[]	#sub-menu path
 
 func _ready() -> void:

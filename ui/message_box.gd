@@ -1,5 +1,7 @@
-extends Panel
-class_name MessageBox
+class_name MessageBox extends Panel
+
+## Popup-Message with optional buttons
+
 
 @export var text:String = "Choose something"
 @export var bt1Text:String ="Next"
@@ -15,8 +17,6 @@ var _buttonRefs:Array=[]
 
 signal on_button(bt_id)
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$CenterContainer/Panel/MarginContainer/VBoxContainer/RichTextLabel.text=text
 	_buttonRefs= [$CenterContainer/Panel/MarginContainer/VBoxContainer/bt1,

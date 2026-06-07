@@ -27,4 +27,5 @@ Kind of Visual Novel Framework.
 - shop/tradding logic
 - random loot to find/from combat
 - support for multiresolutions
+- quest with failed-state; alternate quest-steps
 - might need optimisations (use tres instead tsnc, use compression for saves & mods,...)

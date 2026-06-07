@@ -20,7 +20,7 @@ func enterScene():
 	#%bg_image.scale=Vector2(0.5+(0.15*room),0.5+(0.15*room))
 	#%bg_image.size=imgSize*(0.5+(0.15*room))  no effect
 	if(_defeated):
-		Global.hud.addButton("Next","",	func():Global.main.removeScene(self)		)
+		Global.hud.addButton("Next","",	func():Global.main.removeScene(self))
 	elif (room<=1):
 		Global.hud.say("You walk into the water. There is something around your feet...")
 		Global.hud.addButton("Next","",_on_bt_fight_pressed)
@@ -53,7 +53,7 @@ func _postVictory(combatScene):
 func _postDefeat(combatScene):
 	self._defeated=true
 	Global.hud.say("After loosing that fight you find yourself washed up at the shoreline.")	#todo fetchloot
-	Global.hud.addButton("Next","",	func():Global.main.removeScene(combatScene)		)
+	Global.hud.addButton("Next","",	func():Global.main.removeScene(combatScene))
 
 func _on_prize_claim():	
 	Global.main.removeScene(self)
