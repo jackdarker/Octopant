@@ -3,6 +3,7 @@ class_name Hud extends CanvasLayer
 signal menu_requested
 signal log_requested
 signal map_requested
+signal setup_requested
 signal inventory_requested
 signal status_requested
 
@@ -60,13 +61,7 @@ enum HUDPANEL {Menu=0, Left=1, Center=2, Choice=3}
 @onready var fullhud=$HBoxContainer
 @onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
-#@onready var buttons=$HBoxContainer/Panel/MarginContainer/VBoxContainer/Panel/MarginContainer/ScrollContainer/ButtonGrid
-#@onready var msg=$HBoxContainer/Panel/MarginContainer/VBoxContainer/txt_main/RichTextLabel
-#@onready var pictureC=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_C
-#@onready var pictureL=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_L
-#@onready var pictureR=$HBoxContainer/Panel/MarginContainer/VBoxContainer/HBoxContainer/img_pic_R
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
-#@onready var enemyList=$HBoxContainer/Panel/MarginContainer/VBoxContainer/list_enemys/HFlowContainer
 @onready var hudCenter=$HBoxContainer/Panel/Center
 
 func _ready() -> void:
@@ -152,6 +147,8 @@ func _on_bt_hud_off_pressed() -> void:
 func _on_bt_map_pressed() -> void:
 	map_requested.emit()
 
+func _on_bt_settings_pressed() -> void:
+	setup_requested.emit()
 
 func _on_bt_quest_pressed() -> void:
 	log_requested.emit()

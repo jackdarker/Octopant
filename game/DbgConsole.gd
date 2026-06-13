@@ -60,7 +60,7 @@ func addCommand(command_name : String, object : Object, function_name : String, 
 			_func=_foo
 			break
 	if !_func:
-		Log.printerr("no function of name "+function_name)
+		Log.error("no function of name "+function_name)
 	#else:							#because methods sometimes have no type or varianttype declared, we cannot infere proper type
 	#	for _arg in _func.args:
 	#		_params.push_back(_arg.name)

@@ -6,7 +6,6 @@ var scene_ext:Array[SceneExtension]
 
 var msg_scn=ResourceLoader.load("res://ui/message_box.tscn")
 var scene_hud = preload("res://ui/fragments/hud_center_default.tscn")
-var msg:MessageBox
 
 var menustack:Array[String]=[]	#sub-menu path
 
@@ -62,7 +61,7 @@ func menu(menuid:String,no_back:=false):
 		buttons=ext.get_buttons(menuid,buttons)
 	
 	if(menuid=="" && buttons.size()==0):	#fallback if no extension
-		Log.print("Warning: no buttons in scene="+sceneID+" menuid="+menuid)
+		Log.verbose("Warning: no buttons in scene="+sceneID+" menuid="+menuid)
 		Global.hud.addButton("Next","",Global.main.removeScene.bind(self))
 	
 	for bt in buttons:		#TODO if to many buttons make subpages

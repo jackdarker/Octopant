@@ -58,7 +58,7 @@ func registerEverything():
 	
 	var end = Time.get_ticks_usec()
 	var worker_time = (end-start)/1000000.0
-	Log.print("GlobalRegistry fully initialized in: %s seconds" % [worker_time])
+	Log.verbose("GlobalRegistry fully initialized in: %s seconds" % [worker_time])
 	isInitialized = true
 	#deleteLoadLockFile()
 	loadingFinished.emit()
@@ -136,7 +136,7 @@ func getFlag(flagID, defaultValue = null):
 	
 	
 	if(!flagsCache.has(flagID)):
-		#Log.printerr("getFlag(): Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		#Log.error("getFlag(): Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return defaultValue
 	
 	if(!flags.has(flagID)):
@@ -158,13 +158,13 @@ func setFlag(flagID, value):
 	#	return
 	
 	if(!flagsCache.has(flagID)):
-		Log.printerr("setFlag(): Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		Log.error("setFlag(): Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return
 	
 	if("type" in flagsCache[flagID]):
 		var flagType = flagsCache[flagID]["type"]
 		if(!FlagType.isCorrectType(flagType, value)):
-			Log.printerr("setFlag(): Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
+			Log.error("setFlag(): Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
 			return
 			
 	flags[flagID] = value
@@ -175,14 +175,14 @@ func increaseFlag( flagID, addvalue = 1):
 func getModuleFlag(moduleID, flagID, defaultValue = null)->Variant:
 	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
-		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
+		Log.error("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return defaultValue
 	
 	var module:Module = _modules[moduleID]
 	var _moduleFlagsCache = module.getFlagsCache()
 	
 	if(!_moduleFlagsCache.has(flagID)):
-		Log.printerr("getModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		Log.error("getModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return defaultValue
 	
 	if(!moduleFlags.has(moduleID) || !moduleFlags[moduleID].has(flagID)):
@@ -193,20 +193,20 @@ func getModuleFlag(moduleID, flagID, defaultValue = null)->Variant:
 func setModuleFlag(moduleID, flagID, value)->void:
 	var _modules = GR.getModules()
 	if(!_modules.has(moduleID)):
-		Log.printerr("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
+		Log.error("getModuleFlag(): Module "+str(moduleID)+" doesn't exist "+Util.getStackFunction())
 		return
 	
 	var module:Module = modules[moduleID]
 	var _moduleFlagsCache = module.getFlagsCache()
 	
 	if(!_moduleFlagsCache.has(flagID)):
-		Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
+		Log.error("setModuleFlag(): Module is "+str(moduleID)+". Detected the usage of an unknown flag: "+str(flagID)+" "+Util.getStackFunction())
 		return
 	
 	if("type" in _moduleFlagsCache[flagID]):
 		var flagType = _moduleFlagsCache[flagID]["type"]
 		if(!FlagType.isCorrectType(flagType, value)):
-			Log.printerr("setModuleFlag(): Module is "+str(moduleID)+". Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
+			Log.error("setModuleFlag(): Module is "+str(moduleID)+". Wrong type for flag "+str(flagID)+". Value: "+str(value)+" "+Util.getStackFunction())
 			return
 	
 	if(!moduleFlags.has(moduleID)):
@@ -231,10 +231,11 @@ func resetFlagsOnNewDay():
 
 #region modules
 func module_basepath(_folder:String)->String:
-	if( OS.has_feature("editor_runtime")):
+	if( OS.has_feature("template")):	#editor_runtime
 		return _folder
 	else:
 		var _base="D:/Projects/Godot/Octopant"#OS.get_executable_path().get_base_dir()
+		_base = ProjectSettings.globalize_path("res:/")
 		if _folder.begins_with(_base):
 			return _folder
 		else:
@@ -246,15 +247,14 @@ func preinitModulesFolder(folder: String):
 	var start = Time.get_ticks_usec()
 	
 	var moduleFiles: Array = []
-	var dir = DirAccess.open(folder)
+	preInitBuiltinModules()
+	var dir = DirAccess.open(folder) #Exe might fail if folder doesnt exist; also web fails
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
 			if dir.current_is_dir():
-				var full_path = folder.path_join(file_name)
-				#print("FOUND DIR: "+full_path)
-				
+				var full_path = folder.path_join(file_name)				
 				var modulePath:String = full_path.path_join("module.gd")
 				if(dir.file_exists(modulePath)):
 					moduleFiles.append([file_name, modulePath])
@@ -269,12 +269,12 @@ func preinitModulesFolder(folder: String):
 			preInitModule(moduleFile[1])
 			loadedModuleCount += 1
 	else:
-		#Log.printerr("An error occurred when trying to access the path "+folder)
+		#Log.error("An error occurred when trying to access the path "+folder)
 		pass
 
 	var end = Time.get_ticks_usec()
 	var worker_time = (end-start)/1000000.0
-	Log.print("MODULES pre-initialized in: %s seconds" % [worker_time])
+	Log.verbose("MODULES pre-initialized in: %s seconds" % [worker_time])
 
 func registerModules():
 	var progressBase = 15.0/totalStages
@@ -286,7 +286,7 @@ func registerModules():
 		var progressValue = progressBase + (progressStep * loadedModuleCount / moduleCount)
 		emit_signal("loadingUpdate", progressValue, moduleObject.ID)		
 		moduleObject.register()
-		print("Module "+moduleObject.ID+" by "+moduleObject.author+" was registered")
+		Log.verbose("Module "+moduleObject.ID+" by "+moduleObject.author+" was registered")
 		loadedModuleCount += 1
 		
 	postInitModules()
@@ -295,13 +295,21 @@ func postInitModules():
 	for moduleID in modules:
 		var moduleObject = modules[moduleID]
 		moduleObject.postInit()
-
+		
+# Note: Web & EXE cannot load files from disk so we make direct reference here
+# the register...() still works but now has to handle .gdc and .remap files from the Resourcepackager
+func preInitBuiltinModules():
+	var moduleObjects = [Module_Default.new()	]
+	for moduleObject in moduleObjects:
+		moduleObject.preInit()
+		modules[moduleObject.ID] = moduleObject
 
 func preInitModule(path: String):
 	var module = load(path)
 	var moduleObject = module.new()
-	moduleObject.preInit()
-	modules[moduleObject.ID] = moduleObject
+	if(!modules.has(moduleObject.ID)):
+		moduleObject.preInit()
+		modules[moduleObject.ID] = moduleObject
 
 func initGameModules():
 	for moduleID in modules:
@@ -316,7 +324,7 @@ func getModuleIDs()->Array:
 
 func getModule(ID):
 	if(!modules.has(ID)):
-		#Log.printerr("ERROR: module with the ID "+ID+" wasn't found")
+		#Log.error("ERROR: module with the ID "+ID+" wasn't found")
 		return null
 	return modules[ID]
 #endregion
@@ -327,7 +335,7 @@ func registerEvent(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerEvent(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -338,7 +346,7 @@ func registerEvent(moduleID:String,path: String):
 		
 func getEvent(ID: String):
 	if(!events.has(ID)):
-		Log.printerr("ERROR: event with the ID "+ID+" wasn't found")
+		Log.error("ERROR: event with the ID "+ID+" wasn't found")
 		return null
 	return events[ID]
 
@@ -357,7 +365,8 @@ func registerScene(moduleID:String,path: String, _creator = null):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="tscn":
+			if file.get_extension().to_lower()=="tscn" || file.matchn("*.tscn.remap"):
+				file = file.replace(".tscn.remap", ".tscn")
 				registerScene(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -365,7 +374,7 @@ func registerScene(moduleID:String,path: String, _creator = null):
 	
 	var scene = load(path)
 	if(!scene):
-		Log.printerr("ERROR: couldn't load scene from path "+path)
+		Log.error("ERROR: couldn't load scene from path "+path)
 		return
 	var sceneObject = scene.instantiate()
 	scenes[sceneObject.sceneID] = scene
@@ -374,7 +383,7 @@ func registerScene(moduleID:String,path: String, _creator = null):
 	
 func createScene(ID: String):
 	if(!scenes.has(ID) ):
-		Log.printerr("ERROR: scene with the ID "+ID+" wasn't found")
+		Log.error("ERROR: scene with the ID "+ID+" wasn't found")
 		return null
 	var scene
 	scene = scenes[ID].instantiate()
@@ -390,7 +399,7 @@ func registerSceneExtension(moduleID:String,path: String, _creator = null):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerSceneExtension(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -398,7 +407,7 @@ func registerSceneExtension(moduleID:String,path: String, _creator = null):
 	
 	var script = load(path)
 	if(!script):
-		Log.printerr("ERROR: couldn't load script from path "+path)
+		Log.error("ERROR: couldn't load script from path "+path)
 		return
 	var sceneObject = script.new()
 	if !scene_ext.has(sceneObject.sceneID):
@@ -410,7 +419,7 @@ func registerSceneExtension(moduleID:String,path: String, _creator = null):
 func getSceneExtensions(sceneID: String, parent:Node)->Array[SceneExtension]:
 	var ext:Array[SceneExtension]=[]
 	if(!scene_ext.has(sceneID) ):
-		Log.printerr("ERROR: extension with the ID "+sceneID+" wasn't found")
+		Log.error("ERROR: extension with the ID "+sceneID+" wasn't found")
 		return ext
 	for scene in scene_ext[sceneID]:
 		var script= scene_ext[sceneID][scene].new()
@@ -427,7 +436,7 @@ func registerItem(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerItem(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -441,7 +450,7 @@ func registerItem(moduleID:String,path: String):
 
 func createItem(ID: String)->ItemBase:
 	if(!items.has(ID)):
-		Log.printerr("ERROR: item with the ID "+ID+" wasn't found")
+		Log.error("ERROR: item with the ID "+ID+" wasn't found")
 		return null
 	var newItem = items[ID].new()
 	return newItem
@@ -456,7 +465,7 @@ func registerRecipe(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerRecipe(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -470,7 +479,7 @@ func registerRecipe(moduleID:String,path: String):
 
 func getRecipe(ID: String)->Recipe:
 	if(!recipes.has(ID)):
-		Log.printerr("ERROR: recipe with the ID "+ID+" wasn't found")
+		Log.error("ERROR: recipe with the ID "+ID+" wasn't found")
 		return null
 	var newItem = recipes[ID].new()
 	return newItem
@@ -494,7 +503,8 @@ func registerQuest(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="tres":
+			if file.get_extension().to_lower()=="tres" || file.matchn("*.tres.remap"):
+				file = file.replace(".tres.remap", ".tres")
 				registerQuest(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -504,7 +514,7 @@ func registerQuest(moduleID:String,path: String):
 
 func getQuest(ID: String)->Quest:
 	if(!quests.has(ID)):
-		Log.printerr("ERROR: quest with the ID "+ID+" wasn't found")
+		Log.error("ERROR: quest with the ID "+ID+" wasn't found")
 		return null
 	var newItem = quests[ID]#.new()
 	return newItem
@@ -518,7 +528,8 @@ func registerTutorial(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="tres":
+			if file.get_extension().to_lower()=="tres" || file.matchn("*.tres.remap"):
+				file = file.replace(".tres.remap", ".tres")
 				registerTutorial(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -528,7 +539,7 @@ func registerTutorial(moduleID:String,path: String):
 
 func getTutorial(ID: String)->TutorialData:
 	if(!tutorials.has(ID)):
-		Log.printerr("ERROR: tutorial with the ID "+ID+" wasn't found")
+		Log.error("ERROR: tutorial with the ID "+ID+" wasn't found")
 		return null
 	var newItem = tutorials[ID]
 	return newItem
@@ -542,7 +553,7 @@ func registerEffect(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerEffect(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -553,7 +564,7 @@ func registerEffect(moduleID:String,path: String):
 
 func createEffect(ID: String)->Effect:
 	if(!effects.has(ID)):
-		Log.printerr("ERROR: effect with the ID "+ID+" wasn't found")
+		Log.error("ERROR: effect with the ID "+ID+" wasn't found")
 		return null
 	var newItem = effects[ID].new()
 	return newItem
@@ -566,7 +577,7 @@ func registerSkill(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerSkill(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -577,7 +588,7 @@ func registerSkill(moduleID:String,path: String):
 
 func createSkill(ID: String)->Skill:
 	if(!skills.has(ID)):
-		Log.printerr("ERROR: skill with the ID "+ID+" wasn't found")
+		Log.error("ERROR: skill with the ID "+ID+" wasn't found")
 		return null
 	var newItem = skills[ID].new()
 	return newItem
@@ -590,7 +601,7 @@ func registerCharacter(moduleID:String,path: String):
 	#if path is dir, import dir
 	if(DirAccess.dir_exists_absolute(path)):
 		for file in DirAccess.get_files_at(path):
-			if file.get_extension().to_lower()=="gd":
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
 				registerCharacter(moduleID,path.path_join(file))
 		return
 	#-------------------------------------------------------------------
@@ -601,7 +612,7 @@ func registerCharacter(moduleID:String,path: String):
 #TODO Unique characters should not be created multiple times
 func createCharacter(ID: String)->Character:
 	if(!characters.has(ID)):
-		Log.printerr("ERROR: character with the ID "+ID+" wasn't found")
+		Log.error("ERROR: character with the ID "+ID+" wasn't found")
 		return null
 	if characterInstances.has(ID):
 		return characterInstances[ID]
@@ -613,7 +624,7 @@ func createCharacter(ID: String)->Character:
 ## data is stored in savegame
 func addCharacterAsUnique(character:Character):
 	if characterInstances.has(character.uniqueID):
-		Log.printerr("ERROR: character with the ID "+character.uniqueID+" already unique")
+		Log.error("ERROR: character with the ID "+character.uniqueID+" already unique")
 		return
 	characterInstances[character.uniqueID]=character
 #endregion

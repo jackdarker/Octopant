@@ -13,7 +13,7 @@ func _init()-> void :
 		"res://modules/__default/interaction",
 		]
 	items = [
-		"res://modules/__default/Item",
+		"res://modules/__default/item",
 	]
 	recipes = [
 		"res://modules/__default/recipe",

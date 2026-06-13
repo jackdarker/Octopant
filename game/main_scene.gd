@@ -29,6 +29,7 @@ func _ready() -> void:
 	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	time_passed.connect(Global.hud.on_time_passed)
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
+	Global.hud.setup_requested.connect(func(): $WndSettings.visible=true)
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
 	Global.hud.inventory_requested.connect(func(): $WndInventory.visible=true)
 	Global.hud.status_requested.connect(func(): $WndStatus.visible=true)
@@ -46,7 +47,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 		sceneStack.erase(actual_scene)
 		actual_scene.free()
 	# Load the new scene.
-	print("Starting scene "+ID)
+	Log.verbose("Starting scene "+ID)
 	#var s = ResourceLoader.load(path)
 	if(ID=="interaction_scene"):
 		#Global.hud.visible=false
@@ -86,7 +87,7 @@ func defferedRemoveScene(scene, args = []):
 		#	sceneStack.back().updateCharacter()
 		#runCurrentScene()
 	if(sceneStack.size() == 0):
-		Log.print("Error: no more scenes in the scenestack")
+		Log.verbose("Error: no more scenes in the scenestack")
 		Global.hud.clearInput()
 		Global.hud.say("Error: no more scenes in the scenestack. Please let the developer know")
 		return

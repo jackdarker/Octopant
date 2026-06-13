@@ -7,6 +7,7 @@ var pc: Player
 var world: GameWorld
 var ES: EventSystem
 var QS: QuestSystem
+var Setup:Settings
 
 var current_scene = null
 @warning_ignore("unused_signal")
@@ -20,6 +21,7 @@ func _ready() -> void:
 	var root = get_tree().root
 	# Using a negative index counts from the end, so this gets the last child node of `root`.
 	current_scene = root.get_child(-1)
+	Setup = Settings.new()
 
 func quitGodot():
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
@@ -54,7 +56,8 @@ func _deferred_goto_scene(path,data):
 		current_scene.runScene("nav_beach")	#TODO intro   
 
 #region save/load
-var SAVE_DIR="user://Save/"	
+var SAVE_DIR="user://save/"
+var SETTING_FILE="user://setting"	
 #located in C:\Users\xxx\AppData\Roaming\Godot\app_userdata\THE_APP
 # it is assumed the filename looks like: yyyy_mm_dd_hhmmss.save
 #  Time.get_datetime_string_from_system(true,false)
@@ -79,33 +82,33 @@ func getAllSaves()->Array:
 			if(data):
 				saves_info.push_back({"file":_file,"info":data.main.info})
 	return saves_info
-	
 
 func deleteSaveFile(slot):
 	DirAccess.remove_absolute(SAVE_DIR.path_join(slot))
 
 var compress_save:=true
-func saveToFile(slot):
-	var _path=SAVE_DIR.path_join(slot)
-	var _saveData = saveData()
+func saveToFileRaw(path,saveData):
 	if(compress_save):
 		var writer = ZIPPacker.new()
-		var err = writer.open(_path)
+		var err = writer.open(path)
 		if err != OK:
 			return err	#TODO?
 		writer.start_file("save")
-		writer.write_file(JSON.stringify(_saveData).to_utf8_buffer())
+		writer.write_file(JSON.stringify(saveData).to_utf8_buffer())
 		writer.close_file()
 	else:
-		var save_game=FileAccess.open(_path, FileAccess.WRITE)
-		save_game.store_string(JSON.stringify(_saveData))
+		var save_game=FileAccess.open(path, FileAccess.WRITE)
+		save_game.store_string(JSON.stringify(saveData))
 		save_game.close()
+		
+func saveToFile(slot):
+	var _path=SAVE_DIR.path_join(slot)
+	var _saveData = saveData()
+	saveToFileRaw(_path,_saveData)
 
 func loadFromFileRaw(path)->Variant:
 	if not FileAccess.file_exists(path):
-		#Log.error("Save file is not found in "+str(_path))
-		#assert(false, "Save file is not found in "+str(_path))
-		return # Error! We don't have a save to load.
+		return null # Error! We don't have a save to load.
 	var json=JSON.new()
 	var jsonResult
 	var save_game
@@ -153,4 +156,14 @@ func saveData()->Variant:
 		
 	return(data)
 
+## note: all games share same settings-file
+func loadSettings():
+	var data = loadFromFileRaw(SETTING_FILE)
+	Setup.reset()
+	if(data):	#there might be no file yet 
+		Setup.loadData(data)
+
+func saveSettings():
+	saveToFileRaw(SETTING_FILE,Setup.saveData())
+	
 #endregion

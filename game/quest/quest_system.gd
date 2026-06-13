@@ -140,7 +140,7 @@ func loadData(data):
 	for item in data["quest_active"]:
 		var _item=GR.getQuest(item["ID"])
 		if !_item:
-			Log.printerr("ERROR: quest with the ID "+item["ID"]+" wasn't found")
+			Log.error("ERROR: quest with the ID "+item["ID"]+" wasn't found")
 		else:
 			_item.loadData(item)
 			active.add_quest(_item)
@@ -149,7 +149,7 @@ func loadData(data):
 	for item in data["quest_completed"]:
 		var _item=GR.getQuest(item["ID"])
 		if !_item:
-			Log.printerr("ERROR: quest with the ID "+item["ID"]+" wasn't found")
+			Log.error("ERROR: quest with the ID "+item["ID"]+" wasn't found")
 		else:
 			_item.loadData(item)
 			completed.add_quest(_item)

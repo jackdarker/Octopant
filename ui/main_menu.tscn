@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dxmro2suwyvuy"]
+[gd_scene load_steps=6 format=3 uid="uid://dxmro2suwyvuy"]
 
 [ext_resource type="Script" uid="uid://dnm3msdi0pt4j" path="res://ui/main_menu.gd" id="1_t7e0r"]
 [ext_resource type="PackedScene" uid="uid://sjpxi1bjmpxx" path="res://ui/wnd_pause.tscn" id="2_0dkrt"]
 [ext_resource type="Texture2D" uid="uid://cjcy62q3hhhks" path="res://assets/images/bg/titlescreen.png" id="2_wk0pr"]
+[ext_resource type="PackedScene" uid="uid://k4pb6lejjlwg" path="res://ui/wnd_settings.tscn" id="4_rmr83"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmr83"]
 texture = ExtResource("2_wk0pr")
@@ -25,16 +26,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_rmr83")
 
-[node name="Label" type="Label" parent="PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-size_flags_stretch_ratio = 0.0
-theme_override_colors/font_color = Color(0.6913755, 0.27835065, 0.34872746, 1)
-theme_override_font_sizes/font_size = 24
-text = "Scaled Island"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
 size_flags_vertical = 4
@@ -44,6 +35,22 @@ theme_override_constants/margin_right = 40
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_colors/font_color = Color(0.6913755, 0.27835065, 0.34872746, 1)
+theme_override_colors/font_outline_color = Color(0.6676994, 0.74166167, 0.65906245, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 30
+theme_override_constants/shadow_outline_size = 20
+theme_override_font_sizes/font_size = 36
+text = "Scaled Island"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="btStart" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "New game"
@@ -52,6 +59,10 @@ text = "New game"
 layout_mode = 2
 text = "Load game"
 
+[node name="btSettings" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
 [node name="btQuit" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Quit"
@@ -59,6 +70,10 @@ text = "Quit"
 [node name="WndPause" parent="." instance=ExtResource("2_0dkrt")]
 visible = false
 
+[node name="WndSettings" parent="." instance=ExtResource("4_rmr83")]
+visible = false
+
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/btStart" to="." method="_on_bt_start_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/btLoad" to="." method="_on_bt_load_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/btSettings" to="." method="_on_bt_settings_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/btQuit" to="." method="_on_bt_quit_pressed"]

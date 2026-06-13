@@ -18,6 +18,9 @@ func _on_bt_start_pressed() -> void:
 func _on_bt_load_pressed() -> void:
 	$WndPause.visible=true
 
+func _on_bt_settings_pressed() -> void:
+	$WndSettings.visible=true
+
 #called by save-dialog
 func canSave()->bool:
 	return false

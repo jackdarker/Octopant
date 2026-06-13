@@ -163,7 +163,7 @@ size_flags_vertical = 10
 [node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
 
-[node name="btInventory" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2"]
+[node name="btInventary" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Inventory"
@@ -186,9 +186,18 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Map"
 
-[node name="btMenu" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
+[node name="HBoxContainer3" type="HBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
+
+[node name="btSave" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "Save/Load"
+
+[node name="btSettings" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Settings"
 
 [node name="bt_hud_off" type="Button" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2
@@ -217,9 +226,10 @@ libraries = {
 }
 
 [connection signal="pressed" from="bt_hud_on" to="." method="_on_bt_hud_off_pressed"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2/btInventory" to="." method="_on_bt_inventory_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2/btInventary" to="." method="_on_bt_inventory_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer2/btStats" to="." method="_on_bt_status_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btQuest" to="." method="_on_bt_quest_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer/btMap" to="." method="_on_bt_map_pressed"]
-[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/btMenu" to="." method="_on_bt_menu_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer3/btSave" to="." method="_on_bt_menu_pressed"]
+[connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/HBoxContainer3/btSettings" to="." method="_on_bt_settings_pressed"]
 [connection signal="pressed" from="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3/bt_hud_off" to="." method="_on_bt_hud_off_pressed"]

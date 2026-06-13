@@ -13,7 +13,7 @@ func _init()-> void :
 		"res://modules/squishl/interaction",
 		]
 	#items = [
-	#	"res://modules/squishl/Item",
+	#	"res://modules/squishl/item",
 	#]
 	events = [
 		"res://modules/squishl/event",		#dont forget to setup events in initGame !

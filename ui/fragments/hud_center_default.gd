@@ -9,6 +9,17 @@ func _ready() -> void:
 	show_picture_right(null)
 	pass
 
+#func _input(event):
+#	for action in Constants.KEYSHORTS.keys():
+#		if event.is_action_released(action):
+#			var _k=Constants.KEYSHORTS[action].key
+#			#button grid shortkeys
+#			if _k>=1 && _k<=5:
+#				var _bt:Button=%buttons.get_children()[_k-1]
+#				if(_bt && !_bt.disabled):
+#					_bt.pressed.emit()
+#			break
+
 ## who is dictionary of formating {"bgcolor":#49c9}	
 func say(text,who:Dictionary={}):
 	#msg.append_text("\n"+text)
@@ -57,12 +68,23 @@ func clearInput():
 			bt.mouse_exited.disconnect(evt.callable)
 	pass
 
+
 func addButton(text:String,tooltip:String,code:Callable,check=null):
+	var _i=0
 	for bt:BaseButton in %buttons.get_children():	#TODO more...page if to many buttons
 		#TODO favour undisabled button against disabled
+		_i+=1
 		var tooltip2=tooltip
 		if(!bt.visible): #choose the next unused button
-			bt.text=text
+			var _act="action_"+str(_i)
+			var _key=Global.Setup.getKeyForAction(_act)
+			if(_key!=""):
+				bt.text= "["+_key+"]  "+text
+				var short:=Shortcut.new()
+				short.events=InputMap.action_get_events(_act)
+				bt.shortcut=short
+			else:
+				bt.text=text
 			#bt.tooltip_text=tooltip
 			bt.disabled=false
 			if(check):

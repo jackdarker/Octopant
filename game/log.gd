@@ -1,20 +1,18 @@
-extends Object
-class_name Log
+class_name Log extends Object
+
+static var start_time=Time.get_ticks_usec()
+
+static func _deltaTimeText()->String:
+	return (str((Time.get_ticks_usec()-start_time)/1000)+"ms   ")
 
 static func error(text: String):
-	printerr(text)
+	printerr(_deltaTimeText()+text)
 	#Console.printLine("[color=red]"+text+"[/color]")
 
-static func printerr(text: String):
-	error(text)
-
-static func warning(text: String):
-	print(text)
+static func warn(text: String):
+	print(_deltaTimeText()+text)
 	#Console.printLine("[color=yellow]"+text+"[/color]")
 
-static func print(text: String):
-	print(text)
+static func verbose(text: String):
+	print(_deltaTimeText()+text)
 	#Console.printLine(text)
-
-static func printVerbose(text: String):
-	print(text)
