@@ -5,6 +5,10 @@ func _init()-> void :
 	ID = "Default"
 	author = "TheAuthor"
 	
+	map_floors = [
+		"res://modules/__default/world/dungeon",
+		]
+	
 	scenes = [
 		"res://modules/__default/world",
 		]

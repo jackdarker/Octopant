@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://clb3xpqvsj3ho"]
+
+[ext_resource type="Texture2D" uid="uid://ddedoxotg5t0h" path="res://assets/images/map/connection.png" id="1_bhgms"]
+
+[node name="DungeonConnection" type="Sprite2D"]
+z_index = -1
+texture = ExtResource("1_bhgms")

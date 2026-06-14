@@ -25,6 +25,8 @@ var events: Dictionary = {}		#see ES !
 var items: Dictionary = {}
 var itemsByTag: Dictionary = {}
 
+var maps: Dictionary = {}
+
 var recipes: Dictionary = {}
 var recipesByTag: Dictionary = {}
 
@@ -352,6 +354,29 @@ func getEvent(ID: String):
 
 func getEvents():
 	return events
+	
+#endregion
+
+#region maps
+#path is file or directory
+func registerMapFloor(moduleID:String,path: String, _creator = null):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="tscn" || file.matchn("*.tscn.remap"):
+				file = file.replace(".tscn.remap", ".tscn")
+				registerMapFloor(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	# maps are instantiated in world !
+	if(false):#TODO
+		Log.error("ERROR: couldn't load map from path "+path)
+		return
+	maps[path.get_file().get_basename()]=path	#
+	
+func getMapFloors()->Dictionary:
+	return maps
 	
 #endregion
 

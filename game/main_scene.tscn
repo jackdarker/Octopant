@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn3bc54cdibds"]
+[gd_scene load_steps=12 format=3 uid="uid://bn3bc54cdibds"]
 
 [ext_resource type="Script" uid="uid://2y302sd0k6ap" path="res://game/main_scene.gd" id="1_qk4lp"]
+[ext_resource type="PackedScene" uid="uid://c3us0b41xj0ji" path="res://game/world/game_world.tscn" id="2_2lkib"]
 [ext_resource type="PackedScene" uid="uid://deyv2v8gvtbsu" path="res://ui/hud.tscn" id="2_bg2q0"]
 [ext_resource type="PackedScene" uid="uid://sjpxi1bjmpxx" path="res://ui/wnd_pause.tscn" id="3_w8ko4"]
 [ext_resource type="PackedScene" uid="uid://bg7r17yt0ibm5" path="res://ui/tooltip_system.tscn" id="3_yrdys"]
@@ -15,6 +16,8 @@
 script = ExtResource("1_qk4lp")
 
 [node name="MessageHolder" type="Node" parent="."]
+
+[node name="GameWorld" parent="." instance=ExtResource("2_2lkib")]
 
 [node name="Scene" type="CanvasLayer" parent="."]
 layer = -2

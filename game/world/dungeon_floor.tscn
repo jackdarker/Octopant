@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://sdyxsqh17pkw"]
+
+[ext_resource type="Script" uid="uid://uxioixhyt6qd" path="res://game/world/dungeon_floor.gd" id="1_0c5ol"]
+
+[node name="DungeonFloor" type="Node2D"]
+script = ExtResource("1_0c5ol")

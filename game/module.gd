@@ -5,6 +5,7 @@ var ID = "badmodule"
 var author = "no author"
 var scenes = []
 var scene_ext = []
+var map_floors = []
 var items = []
 var events = []
 var effects = []
@@ -37,6 +38,9 @@ func register():
 	
 	for item in items:
 		GR.registerItem(ID,GR.module_basepath(item))
+	
+	for map in map_floors:
+		GR.registerMapFloor(ID,GR.module_basepath(map))
 		
 	for recipe in recipes:
 		GR.registerRecipe(ID,GR.module_basepath(recipe))

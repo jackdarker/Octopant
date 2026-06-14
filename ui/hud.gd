@@ -63,10 +63,15 @@ enum HUDPANEL {Menu=0, Left=1, Center=2, Choice=3}
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
 @onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
 @onready var hudCenter=$HBoxContainer/Panel/Center
+@onready var map=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/Map
 
 func _ready() -> void:
 	hudMode=HUDMODE.Explore
 	pass
+
+func _process(delta: float) -> void:
+	pass #map.texture=Global.World.mapview.get_texture()
+	
 	
 func configureHudCenter(hudNew:Control):
 	#if the actual control matches the type of new control, dont change

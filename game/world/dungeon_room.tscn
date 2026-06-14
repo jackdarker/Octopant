@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmqjt3osqo5g"]
+
+[ext_resource type="Script" uid="uid://cbdjyqryvle2n" path="res://game/world/dungeon_room.gd" id="1_d8bmp"]
+[ext_resource type="Texture2D" uid="uid://xvsrn7nb8vus" path="res://assets/images/map/room.png" id="2_up8uv"]
+
+[node name="DungeonRoom" type="Node2D"]
+script = ExtResource("1_d8bmp")
+
+[node name="room" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_up8uv")

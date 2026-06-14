@@ -10,9 +10,9 @@ func on_setupScene():
 	# setup the dungeon
 	parent_scene.player_pos=entry
 	parent_scene.map_data=DungeonScene.DungeonMap.new()
-	var roomA=DungeonScene.DungeonRoom.create(Vector3i(0,1,0),"Room1")
-	var roomB=DungeonScene.DungeonRoom.create(Vector3i(0,2,0),"Room2")
-	var roomC=DungeonScene.DungeonRoom.create(Vector3i(0,3,0),"Room3")
+	var roomA=DungeonScene.Dungeon_Room.create(Vector3i(0,1,0),"Room1")
+	var roomB=DungeonScene.Dungeon_Room.create(Vector3i(0,2,0),"Room2")
+	var roomC=DungeonScene.Dungeon_Room.create(Vector3i(0,3,0),"Room3")
 	roomC.exit="nav_beach"
 	parent_scene.map_data.addRoom(roomA).addRoom(roomB).addRoom(roomC)
 	parent_scene.map_data.addDoor(DungeonScene.DungeonDoor.create(roomA,roomB,false))
@@ -38,10 +38,10 @@ func get_buttons(menuid:String,buttons:Array):
 
 
 ## called when a room is entered
-func on_move(target:DungeonScene.DungeonRoom):
+func on_move(target:DungeonScene.Dungeon_Room):
 	state=0
 
-func beforeMove(from:DungeonScene.DungeonRoom,to:DungeonScene.DungeonRoom)->Result:
+func beforeMove(from:DungeonScene.Dungeon_Room,to:DungeonScene.Dungeon_Room)->Result:
 	var _res:=Result.create(true,"")
 	if(state<1):
 		state=1

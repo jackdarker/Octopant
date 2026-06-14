@@ -13,7 +13,7 @@ class DungeonMap:
 	var rooms:Dictionary
 	var doors:Dictionary
 	
-	func addRoom(room:DungeonRoom)->DungeonMap:
+	func addRoom(room:Dungeon_Room)->DungeonMap:
 		rooms[room.pos]=room
 		return self
 	
@@ -21,7 +21,7 @@ class DungeonMap:
 		doors[[door.roomA,door.roomB]]=door
 		return self
 		
-	func getRoomByPos(_pos:Vector3i)->DungeonRoom:
+	func getRoomByPos(_pos:Vector3i)->Dungeon_Room:
 		var room=self.rooms[_pos]
 		return room
 	
@@ -36,7 +36,7 @@ class DungeonMap:
 				_doors2[x]=doors[x].roomA
 		return (_doors2)
 
-class DungeonRoom:
+class Dungeon_Room:
 	var label:String
 	var pos:Vector3i
 	var exit:String=""	#set with target nav_scene for option to leave dungeon
@@ -48,14 +48,14 @@ class DungeonRoom:
 		return room
 
 class DungeonDoor:
-	var roomA:DungeonRoom
-	var roomB:DungeonRoom
+	var roomA:Dungeon_Room
+	var roomB:Dungeon_Room
 	var bidi:bool=true
 	
 	func canPass(_from,_to):
 		return true
 
-	static func create(_roomA:DungeonRoom, _roomB:DungeonRoom, _bidi:bool=true):
+	static func create(_roomA:Dungeon_Room, _roomB:Dungeon_Room, _bidi:bool=true):
 		var door=new()
 		door.bidi=_bidi
 		door.roomA=_roomA
@@ -74,7 +74,7 @@ func enterScene():
 		#Global.hud.addButton("Next","",	func():Global.main.removeScene(self))
 		Global.main.removeScene(self)
 
-func attemptMove(target:DungeonRoom):
+func attemptMove(target:Dungeon_Room):
 	var from= map_data.getRoomByPos(player_pos)
 	var to=target
 	if(!beforeMove(from,to).OK):
@@ -82,14 +82,14 @@ func attemptMove(target:DungeonRoom):
 	else:
 		moveTo(to) 
 
-func moveTo(target:DungeonRoom):
+func moveTo(target:Dungeon_Room):
 	for ext in scene_ext:
 		ext.on_move(target)
 	player_pos=target.pos
 	enterScene()
 
 ## if this returns false, the move is unsuccesful (stays in old room) and a scene is shown
-func beforeMove(from:DungeonScene.DungeonRoom,to:DungeonScene.DungeonRoom)->Result:
+func beforeMove(from:DungeonScene.Dungeon_Room,to:DungeonScene.Dungeon_Room)->Result:
 	var _res:=Result.create(true,"")
 	for ext in scene_ext:
 		_res=ext.beforeMove(from,to)
@@ -98,6 +98,6 @@ func beforeMove(from:DungeonScene.DungeonRoom,to:DungeonScene.DungeonRoom)->Resu
 	return(_res)
 
 ## if this returns false, a scene is injected and if the outcome is successful, the move is completed
-func inbetweenMove(from:DungeonScene.DungeonRoom,to:DungeonScene.DungeonRoom)->Result:
+func inbetweenMove(from:DungeonScene.Dungeon_Room,to:DungeonScene.Dungeon_Room)->Result:
 	var _res:=Result.create(true,"")
 	return(_res)

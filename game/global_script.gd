@@ -4,7 +4,7 @@ var hud: Hud
 var toolTip:CanvasLayer
 var main: MainScene
 var pc: Player
-var world: GameWorld
+var World: GameWorld
 var ES: EventSystem
 var QS: QuestSystem
 var Setup:Settings
@@ -17,7 +17,6 @@ signal npc_talked(npcID:String,themeID:String)	#triggered when player talked to 
 
 func _ready() -> void:
 	#directory.make_dir("user://mods")
-	
 	var root = get_tree().root
 	# Using a negative index counts from the end, so this gets the last child node of `root`.
 	current_scene = root.get_child(-1)
