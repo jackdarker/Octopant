@@ -1,5 +1,7 @@
 extends SceneExtension
 
+## scene extension for dungeon scene
+
 const sceneID="dng_tidal_cave"
 const entry:Vector3i=Vector3i(0,1,0)
 
@@ -7,41 +9,21 @@ var state:int=0
 
 
 func on_setupScene():
-	# setup the dungeon
-	parent_scene.player_pos=entry
-	parent_scene.map_data=DungeonScene.DungeonMap.new()
-	var roomA=DungeonScene.Dungeon_Room.create(Vector3i(0,1,0),"Room1")
-	var roomB=DungeonScene.Dungeon_Room.create(Vector3i(0,2,0),"Room2")
-	var roomC=DungeonScene.Dungeon_Room.create(Vector3i(0,3,0),"Room3")
-	roomC.exit="nav_beach"
-	parent_scene.map_data.addRoom(roomA).addRoom(roomB).addRoom(roomC)
-	parent_scene.map_data.addDoor(DungeonScene.DungeonDoor.create(roomA,roomB,false))
-	parent_scene.map_data.addDoor(DungeonScene.DungeonDoor.create(roomB,roomC,false))
+	parent_scene.player_pos=Global.World.getRoomByID("TidalCaveEntry")
+	assert(parent_scene.player_pos!=null)
+	pass
 
 func on_enterScene():
-	var room=parent_scene.map_data.getRoomByPos(parent_scene.player_pos)
 	parent_scene.set_bg(load("res://assets/images/bg/nav_beach_sun.png"))
-	#TODO update map
-	Global.hud.say("You are in "+room.label)
 
 func get_buttons(menuid:String,buttons:Array):
-	var room=parent_scene.map_data.getRoomByPos(parent_scene.player_pos)
-	var doors=parent_scene.map_data.getDoorsByPos(parent_scene.player_pos)
-	if(menuid==""):
-		Global.hud.say("Where would you like to go?")
-		for x in doors.values():
-			buttons.push_back(Button_Config.new("to "+x.label,"",parent_scene.attemptMove.bind(x)))
-		if(room.exit!=""):
-			buttons.push_back(Button_Config.new("Leave","",Global.main.runScene.bind(room.exit)))
-	
 	return(buttons)
 
-
 ## called when a room is entered
-func on_move(target:DungeonScene.Dungeon_Room):
-	state=0
+func on_move(target:DungeonRoom):
+	state=0		
 
-func beforeMove(from:DungeonScene.Dungeon_Room,to:DungeonScene.Dungeon_Room)->Result:
+func beforeMove(from:DungeonRoom,to:DungeonRoom)->Result:
 	var _res:=Result.create(true,"")
 	if(state<1):
 		state=1

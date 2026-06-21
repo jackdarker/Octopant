@@ -7,7 +7,7 @@ class Button_Config:
 	var tooltip:String=""
 	var cb:Callable
 	var enabled:Variant
-	
+		
 	func _init(_text:String,_tooltip:String,_cb:Callable,_enabled=null):
 		text=_text
 		tooltip=_tooltip
@@ -24,7 +24,8 @@ func on_setupScene():
 func on_enterScene():
 	pass
 
-# called when a menu is built
+# called when a menu is built; 
+#TODO: there is a Next-button inserted if no buttons were added just as emergency exit
 func get_buttons(_menuid:String,buttons:Array)->Array:
 	return(buttons)
 

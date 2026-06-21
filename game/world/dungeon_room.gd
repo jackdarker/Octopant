@@ -1,7 +1,7 @@
 class_name DungeonRoom extends Node2D
 
-@export var roomName := ""
-@export var roomID := ""
+@export var roomName := ""	#leave mepty to auto-generate
+@export var roomID := ""	#id needs to be unique in world; leave mepty to auto-generate
 @export_multiline var roomDescription := ""
 @export_multiline var blindRoomDescription := ""
 @export var canWest = true
@@ -14,25 +14,21 @@ signal onPreEnter(room)
 #signal onReact(room, key)
 
 var astarID
-@export var astarConnectedTo:Array[String]= []
+@export var astarConnectedTo:Array[String]= []	# this is used by NPC; add ActionLeave for PC!
 var astarConnections:Array = []
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
 	if(!roomID):
-		roomID = name
+		roomID = getFloorID()+"@"+name	# "DngABC_Floor1@Room 1
 	if(!roomName):
-		roomName = roomID
+		roomName = name
 
 func addActions():
-	return
-#	for action in get_children():
-#		if(action is RoomAction):
-#			var roomAction:RoomAction = action
-#			if(roomAction._shouldShow()):
-#				if(roomAction._canRun()):
-#					GM.ui.addButton(roomAction.ActionName, roomAction.ActionTooltip, "actionCallback", [roomAction.ActionScene])
-#				else:
-#					GM.ui.addDisabledButton(roomAction.ActionName, roomAction.ActionTooltip)
+	var actions = get_children().filter(func(x): return (x is RoomAction))
+	for action in actions:
+		if(action.hidden()==0):
+			Global.hud.addButton(action.label, action.get_tooltip(),action.run,action.can_run )
+	
 
 func _onPreEnter():
 	emit_signal("onPreEnter", self)

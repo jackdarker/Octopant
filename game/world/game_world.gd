@@ -5,6 +5,8 @@ enum Direction {WEST, NORTH, EAST, SOUTH}
 const GRID:int=64	#room to room grid
 const HIGHLIGHT:=Color.CHOCOLATE
 
+signal on_enter_room(room:DungeonRoom)
+
 static func getAllDirections():
 	return [Direction.WEST, Direction.NORTH, Direction.EAST, Direction.SOUTH]
 
@@ -76,7 +78,7 @@ func hasRoom(floorid: String, pos: Vector2):
 	
 	return true
 
-func getRoomByID(id:String):
+func getRoomByID(id:String)->DungeonRoom:
 	if(!roomDict.has(id)):
 		return null
 	return roomDict[id]
@@ -123,24 +125,24 @@ func canGo(floorid: String, pos: Vector2, dir):
 	var room1 = cells[floorid][pos]
 	var room2 = cells[floorid][pos2]
 	if(dir == Direction.WEST):
-		if(room1.canWest && room2.canEast):
+		if(room1.canWest):# && room2.canEast):
 			return true
 		return false
 	if(dir == Direction.EAST):
-		if(room1.canEast && room2.canWest):
+		if(room1.canEast):# && room2.canWest):
 			return true
 		return false
 	if(dir == Direction.NORTH):
-		if(room1.canNorth && room2.canSouth):
+		if(room1.canNorth):# && room2.canSouth):
 			return true
 		return false
 	if(dir == Direction.SOUTH):
-		if(room1.canSouth && room2.canNorth):
+		if(room1.canSouth):# && room2.canNorth):
 			return true
 		return false
 	return false
 
-func registerRoom(floorid, room):
+func registerRoom(floorid, room:DungeonRoom):
 	var pos:Vector2 = room.getCell()
 	
 	if(hasRoom(floorid, pos)):
@@ -164,6 +166,7 @@ func registerRoom(floorid, room):
 	room.astarID = astar.get_available_point_id()
 	astar.add_point(room.astarID, pos)
 	astarIDToRoomIDMap[room.astarID] = room.roomID
+	room.onEnter.connect(entering_room)
 
 func clearFloor(floorID:String):
 	if(!cells.has(floorID)):
@@ -191,6 +194,7 @@ func addTransitions(floorIDs:Array = []):
 	
 	for floorid in floorIDs:
 		var floorcells = cells[floorid]
+		var connectors = []
 		for pos in floorcells:
 			var _room = floorcells[pos]
 			for extraAstarConnection in _room.astarConnectedTo:
@@ -198,7 +202,10 @@ func addTransitions(floorIDs:Array = []):
 				if(extraRoom != null):
 					astar.connect_points(_room.astarID, extraRoom.astarID)
 					_room.astarConnections.append(extraRoom.astarID)
-			
+			#TODO oneway connections
+			# update connector for each cell: connectors[[E-Room,W-Room]]={leftToright:true,rightToleft:false}
+			# or   connectors[[N-Room,S-Room]]={NToS:false}
+			# 
 			if(canGo(floorid, pos, Direction.EAST)):
 				var transitionLine = roomConnectionScene.instantiate()
 				_room.add_child(transitionLine)
@@ -240,7 +247,6 @@ func aimCamera(roomID, instantly:bool = false) -> bool:
 		return false
 		
 	switchToFloor(room.getFloorID())
-		
 	camera.global_position = room.global_position
 	
 	if(highlightedRoom):
@@ -275,6 +281,8 @@ func updateDarknessSize():
 	pass #TODO
 #endregion
 
+func entering_room(room:DungeonRoom):
+	on_enter_room.emit(room)
 
 func _on_bt_w_pressed() -> void:
 	if(canGoID(highlightedRoom.roomID,Direction.WEST)):

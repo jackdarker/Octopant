@@ -9,17 +9,19 @@ script = ExtResource("1_424hr")
 position_smoothing_enabled = true
 
 [node name="bt_w" type="Button" parent="Camera2D"]
+visible = false
 offset_left = -80.0
-offset_top = 120.0
+offset_top = -80.0
 offset_right = -56.0
-offset_bottom = 151.0
+offset_bottom = -49.0
 text = "W"
 
 [node name="bt_e" type="Button" parent="Camera2D"]
+visible = false
 offset_left = 48.0
-offset_top = 120.0
+offset_top = -80.0
 offset_right = 72.0
-offset_bottom = 151.0
+offset_bottom = -49.0
 text = "E"
 
 [connection signal="pressed" from="Camera2D/bt_w" to="." method="_on_bt_w_pressed"]
