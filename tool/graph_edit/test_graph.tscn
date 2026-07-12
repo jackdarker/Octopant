@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://32588p3fceat"]
+
+[ext_resource type="PackedScene" uid="uid://dysf28d81cl0c" path="res://tool/graph_edit/room.tscn" id="1_4mfo5"]
+[ext_resource type="Script" uid="uid://b2jkjlev0cr04" path="res://tool/graph_edit/graph2d.gd" id="1_27nll"]
+
+[node name="TestGraph" type="Node2D"]
+script = ExtResource("1_27nll")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(134.89009, 51.077126)
+
+[node name="Room" parent="." instance=ExtResource("1_4mfo5")]
+
+[node name="Room2" parent="." instance=ExtResource("1_4mfo5")]
+position = Vector2(184, -24)

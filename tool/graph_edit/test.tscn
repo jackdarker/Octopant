@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgqg20awgq6qp"]
+
+[ext_resource type="Texture2D" uid="uid://bfsnd42fd1rpm" path="res://icon.svg" id="1_qnyi7"]
+[ext_resource type="Script" uid="uid://60dwv8yvvkuy" path="res://tool/graph_edit/test.gd" id="2_wp2s1"]
+
+[node name="Test" type="Node2D"]
+
+[node name="TextureRect" type="Sprite2D" parent="."]
+rotation = -3610.684
+texture = ExtResource("1_qnyi7")
+script = ExtResource("2_wp2s1")
+speed = -1
