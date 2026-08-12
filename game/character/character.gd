@@ -8,7 +8,7 @@ var ID:String = "Unknown":		# just crab
 		if(ID!=value && value!=""):
 			uniqueID=value
 			ID=value
-		
+var isPlayer:=false		
 var status:StatusList
 var effects:EffectsList
 var inventory:Inventory
@@ -56,8 +56,12 @@ func isKnockedOut()->bool:
 func processTime(_delta:int):
 	for item in effects.getItems():
 		item.processTime(_delta)
-   
 
+## override for NPC
+func think():
+	pass
+
+# region load/save
 func loadData(data):
 	location=data["location"]
 	ID=data["id"]
@@ -78,3 +82,4 @@ func saveData()->Variant:
 		"effects":effects.saveData(),
 	}
 	return(data)
+#endregion

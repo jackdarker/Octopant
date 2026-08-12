@@ -29,7 +29,8 @@ func _ignore():
 func _can_cut()->Result:
 	var _res:Result=Result.create(true,"")
 	var _items=Inventory.filter_by_tag(Global.pc.inventory.getItems(),[ItemTagEnum.Tool_Cut])
-	if(_items.size()<=0):
+	var _items2=Inventory.filter_by_tag(Global.pc.outfit.getItems(),[ItemTagEnum.Tool_Cut])
+	if((_items2.size()+_items.size())<=0):
 		_res.OK=false
 		_res.Msg="Without a knife or something similiar you cant cut those lianes."
 		Global.QS.start_quest(GR.getQuest("craft_knife"))

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnov0pm53vcf"]
 
-[ext_resource type="Script" uid="uid://dyciptvwtgklv" path="res://ui/message_box.gd" id="1_otacr"]
+[ext_resource type="Script" uid="uid://dyciptvwtgklv" path="res://ui/fragments/message_box.gd" id="1_otacr"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_i6k76"]
 
 [node name="MessageBox" type="Panel"]

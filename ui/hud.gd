@@ -61,9 +61,11 @@ enum HUDPANEL {Menu=0, Left=1, Center=2, Choice=3}
 @onready var fullhud=$HBoxContainer
 @onready var bt_hud_off=$bt_hud_on
 @onready var ui_time=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/time_left
-@onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/PlayerStatus
+@onready var playerHud=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer/Stats
 @onready var hudCenter=$HBoxContainer/Panel/Center
-@onready var map=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/Map
+@onready var map=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer/Map
+@onready var inv=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer/Inv
+@onready var outfit=$HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer/Outfit
 
 func _ready() -> void:
 	hudMode=HUDMODE.Explore
@@ -85,8 +87,8 @@ func configureHudCenter(hudNew:Control):
 	hudCenter=hudNew
 	pass
 
-func on_time_passed(_time):
-	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getTime())
+func processTime(_time):
+	ui_time.get_node("Label").text= "Day "+var_to_str(Global.main.getDays()) + "      "+ Util.getTimeStringHHMM(Global.main.getDayTime())
 	pass
 
 func on_pc_stat_update(_key,_data):

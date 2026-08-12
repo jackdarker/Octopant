@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cdl8clus04ra4"]
 
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="1_hytq8"]
-[ext_resource type="Script" uid="uid://yygx72tbd1yv" path="res://ui/bar_stat.gd" id="2_svxqm"]
+[ext_resource type="Script" uid="uid://yygx72tbd1yv" path="res://ui/fragments/bar_stat.gd" id="2_svxqm"]
 
 [sub_resource type="Gradient" id="Gradient_svxqm"]
 interpolation_mode = 1

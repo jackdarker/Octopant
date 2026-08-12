@@ -35,16 +35,22 @@ func say(text,who:Dictionary={}):
 		%msg.get_parent().ensure_control_visible(label)
 
 func show_picture_center(_texture:Texture):
-	%pictureC.texture=_texture
-	%pictureC.visible=true if _texture!=null else false
+	__fix_image_size(_texture,%pictureC)
+	%pictureC.get_parent().visible=(_texture!=null)
 
 func show_picture_left(_texture:Texture):
-	%pictureL.texture=_texture
-	%pictureL.visible=true if _texture!=null else false
+	__fix_image_size(_texture,%pictureL)
 
 func show_picture_right(_texture:Texture):
-	%pictureR.texture=_texture
-	%pictureR.visible=true if _texture!=null else false
+	__fix_image_size(_texture,%pictureR)
+
+func __fix_image_size(_texture:Texture,control:TextureRect):
+	control.texture=_texture
+	if(_texture && _texture.get_size()<control.size  ):
+		control.stretch_mode=TextureRect.StretchMode.STRETCH_KEEP
+	else:
+		control.stretch_mode=TextureRect.StretchMode.STRETCH_KEEP_ASPECT	
+	control.visible=(_texture!=null)
 
 func clearOutput():
 	for child in %msg.get_children():
@@ -68,7 +74,9 @@ func clearInput():
 			bt.mouse_exited.disconnect(evt.callable)
 	pass
 
-
+## adds a button to the screen-menu
+# code is Callable connected to button click. It either do something + ContinueScene, switch to different scene, open submenu or open window
+# check is Callable that returns Result; if OK==false the button is disabled; Msg is displayed as tooltip
 func addButton(text:String,tooltip:String,code:Callable,check=null):
 	var _i=0
 	for bt:BaseButton in %buttons.get_children():	#TODO more...page if to many buttons

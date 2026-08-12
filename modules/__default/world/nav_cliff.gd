@@ -8,7 +8,7 @@ func _on_bt_explore_pressed():
 	Global.main.doTimeProcess(30*60)
 	_requiresFatigue(true)
 	GR.increaseModuleFlag("Default","Explored_Cliff",1)
-	if !Global.ES.triggerEvent(EventSystem.TRIGGER.EnterRoom,"nav_cliff_explore",[]):
+	if !Global.ES.triggerEvent(EventSystem.TRIGGER.Explore,"nav_cliff_explore",[]):
 		Global.hud.say("Nothing was found")
 		continueScene()
 

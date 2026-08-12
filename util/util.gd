@@ -47,13 +47,15 @@ static func getStackFunction(depth = 2):
 
 ## picks an item from an array; you might define different weight (float or int) per item 
 static func pickRandomFromArray(items:Array,weights:Array=[])-> Variant:
+	var _item=null
 	if weights.size()==0:
 		weights=items.map(func(_elmt):return 1)
 	if(weights.size()!=items.size()):
 		push_error("sizes dont match")
 	var _max=weights.reduce(func(accum,elmnt):return(accum+elmnt))
+	if(_max==null):
+		return _item	#empty array
 	var _rnd=randf_range(0.001,_max)
-	var _item=null
 	var _lo
 	var _up=_max
 	var i=items.size()

@@ -39,7 +39,7 @@ layout_mode = 2
 theme_override_constants/side_margin = 8
 current_tab = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer"]
+[node name="Key-mapping" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 4
@@ -47,28 +47,28 @@ theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 4
 metadata/_tab_index = 0
 
-[node name="Shortkeys" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer"]
+[node name="Shortkeys" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer/Shortkeys"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping/Shortkeys"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="bt_reset_shorts" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer/Shortkeys/VBoxContainer"]
+[node name="bt_reset_shorts" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping/Shortkeys/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "Reset shortkeys"
 
-[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer/Shortkeys/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping/Shortkeys/VBoxContainer"]
 layout_mode = 2
 
-[node name="lst_shortkeys" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer/Shortkeys/VBoxContainer"]
+[node name="lst_shortkeys" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping/Shortkeys/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/MarginContainer/Shortkeys/VBoxContainer/lst_shortkeys"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Key-mapping/Shortkeys/VBoxContainer/lst_shortkeys"]
 layout_mode = 2
 text = "keybind"
 

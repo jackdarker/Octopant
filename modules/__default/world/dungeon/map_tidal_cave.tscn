@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c58jfg6xk6iom"]
+[gd_scene load_steps=3 format=3 uid="uid://c58jfg6xk6iom"]
 
 [ext_resource type="Script" uid="uid://d25ggodt0sa5l" path="res://modules/__default/world/dungeon/map_tidal_cave.gd" id="1_3f7mp"]
 [ext_resource type="PackedScene" uid="uid://bmqjt3osqo5g" path="res://game/world/dungeon_room.tscn" id="2_3f7mp"]
-[ext_resource type="Script" uid="uid://mwuf7c0h4tm2" path="res://game/world/room_actions/action_leave.gd" id="3_psaaq"]
 
 [node name="map_tidal_cave" type="Node2D"]
 script = ExtResource("1_3f7mp")
@@ -18,11 +17,6 @@ position = Vector2(64, 0)
 canWest = false
 canNorth = false
 canEast = false
-
-[node name="ActionLeave2" type="Node" parent="room 2"]
-script = ExtResource("3_psaaq")
-target = "TidalCaveSecret"
-metadata/_custom_type_script = "uid://mwuf7c0h4tm2"
 
 [node name="room 4" parent="." instance=ExtResource("2_3f7mp")]
 position = Vector2(0, 64)
@@ -40,8 +34,3 @@ canNorth = false
 canEast = false
 canSouth = false
 astarConnectedTo = Array[String](["nav_beach"])
-
-[node name="ActionLeave" type="Node" parent="room 3"]
-script = ExtResource("3_psaaq")
-target = "nav_beach"
-metadata/_custom_type_script = "uid://mwuf7c0h4tm2"

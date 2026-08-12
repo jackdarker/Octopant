@@ -7,7 +7,7 @@ signal hide_tooltip(path:String)
 static var SceneListItem
 static func create_item(theItem)-> ListItem:
 	if(!SceneListItem):
-		SceneListItem = load("res://ui/image_list_item.tscn")
+		SceneListItem = load("res://ui/fragments/image_list_item.tscn")
 	var _Item:ListItem=SceneListItem.instantiate()
 	var _tex:Texture2D = load(theItem.getInventoryImage())
 	var image = _tex.get_image()
@@ -89,3 +89,9 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	Global.toolTip.hideTooltip(self)
+
+
+func _on_gui_input(event: InputEvent) -> void:
+	if(event is InputEventMouseButton):
+		selected.emit(self.data.getID())
+	pass # Replace with function body.

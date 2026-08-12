@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://crvgbwupgvyr0" path="res://ui/wnd_inventory.gd" id="1_cgda4"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_p5x5a"]
-[ext_resource type="PackedScene" uid="uid://c8qw0h1nshdir" path="res://ui/image_list_item.tscn" id="2_pk74w"]
+[ext_resource type="PackedScene" uid="uid://c8qw0h1nshdir" path="res://ui/fragments/image_list_item.tscn" id="2_pk74w"]
 [ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="3_p5x5a"]
 
 [node name="WndInventory" type="CanvasLayer"]

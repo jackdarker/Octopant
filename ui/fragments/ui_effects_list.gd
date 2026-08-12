@@ -1,6 +1,6 @@
 class_name UI_EffectsList extends HFlowContainer
 
-var effectIcon = preload("res://ui/ui_effect_icon.tscn")
+var effectIcon = preload("res://ui/fragments/ui_effect_icon.tscn")
 @onready var list =  $"."
 
 func _ready():

@@ -2,8 +2,16 @@ class_name Outfit extends Node
 
 # equipped clothing and weapons
 
+## returns only items that use all the slots
+static func filter_by_slotuse(allItems:Array,_slots:Array)->Array[EquipmentBase]:
+	var _ret:Array[EquipmentBase]=[] 
+	for item:EquipmentBase in allItems:
+		if _slots.all(func(x):return(item.slotUse.has(x))):
+			_ret.push_back(item)
+	return _ret
+	
 var list:Array=[]	#[{item:x, slots:['Legs']}]
-var slots:Array[int]=[]	#see BodySlotEnum
+#var slots:Array[int]=[]	#see BodySlotEnum	TODO different bodys have different slots
 var wrefCharacter:WeakRef=null
 var user:Character:
 	set(value):
@@ -14,8 +22,12 @@ var user:Character:
 func getAllIds()->Array:
 	return(list.map(func(x):return(x.item.ID)))
 
-func getItems()->Array:
-	return(list.map(func(x):return(x.item)))
+func getItems()->Array[EquipmentBase]:
+	var items:Array[EquipmentBase]=[]
+	var _items2=list.map(func(x):return(x.item))
+	for item in _items2: #hack cannot assing empty array to Array[EquipmentBase]
+		items.push_back(item)
+	return(items)
 
 func getItem(ID:String)->EquipmentBase:
 	for n in list:
@@ -51,7 +63,7 @@ func canUnequipItem(ID)->Result:
 	var _item = getItem(ID)
 	var result = _item.canUnequip()
 	#for _slot in _idx:
-	#	var _tmp = canUnequipSlot(_slot)	TODO
+	#	var _tmp = canUnequipSlot(_slot)	TODO ??
 	#	if(!_tmp.OK): 
 	#		result.msg +=_tmp.msg+" "
 	#	result.OK = result.OK && _tmp.OK;
@@ -96,8 +108,12 @@ func addItem(item:EquipmentBase)->Result:		#TODO force:bool=false?
 	var _item=item
 	#if item is from wardrobe/Inventory, remove it there
 	if(item.wrefInventory):
-		item.wrefInventory.get_ref().removeItem(item);
-		_item=item.duplicate()	#you might have multiple helmets in inventory, we need a separate instance	
+		if(item.canStack()):
+			_item=item.duplicate()	#you might have multiple helmets in inventory, we need a separate instance	
+			item.wrefInventory.get_ref().removeItem(item);
+		else:
+			_item=item	#hack: duplicate does not work for property-arrays of object f.e. cursed items 
+			item.wrefInventory.get_ref().removeItem(item,1,true);
 	#Todo currently we have 2 copies of equipment - 1 for wardrobe 1 for outfit otherwise this will not work
 	list.push_back({"item":_item, "slots":_item.slotUse})
 	result=_item.equip(user);
@@ -110,7 +126,7 @@ func removeItem(ID:String, _force:bool=false)->Result:
 	var _allIds=getAllIds();
 	if(!_allIds.has(ID)):
 			return(result)	#already unequipped
-	#TODO result =(force)?result:this.canUnequipItem(ID);
+	result =canUnequipItem(ID) if !_force else result
 	if(!result.OK):
 		#this.postItemChange(ID,"unequip_fail",result.msg);
 		return(result);
@@ -119,7 +135,7 @@ func removeItem(ID:String, _force:bool=false)->Result:
 	result=_item.unequip()
 	list.remove_at(_idx)
 	#unequipped items go into wardrobe except bodyparts
-	if(_item.hasTags([ItemTagEnum.Body])):
+	if(_item.hasAllTags([ItemTagEnum.Body])):
 		pass# store bodyparts 
 	#elif(_item.hasTag(.Weapon)){
 		#this.parent.Inv.addItem(_item);
@@ -132,8 +148,8 @@ func removeItem(ID:String, _force:bool=false)->Result:
    
 #region load/save
 func loadData(data):
-	for slot in data["slots"]:
-		slots.push_back(slot)
+	#for slot in data["slots"]:
+	#	slots.push_back(slot)
 		
 	for item in data["items"]:
 		var _item=GR.createItem(item["ID"])
@@ -147,5 +163,5 @@ func saveData()->Variant:
 	var _itemArray:Array = []
 	for item in list:
 		_itemArray.push_back(item.item.saveData())	#slots is not safed and will be restored
-	return({"items":_itemArray,"slots":slots})
+	return({"items":_itemArray})#,"slots":slots})
 #endregion

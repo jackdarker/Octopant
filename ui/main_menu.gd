@@ -1,9 +1,6 @@
 extends Control
 
 func _ready() -> void:
-	#var node=$CanvasLayer/MarginContainer/MenuContainer
-	#node=node.get_child(0)# /btStart")
-	#node.grab_focus()
 	pass
 
 func _on_bt_quit_pressed() -> void:

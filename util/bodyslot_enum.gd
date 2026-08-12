@@ -33,6 +33,7 @@ const Legs    =   102
 const Thighs  =   104      #
 const Hips    =   104     #belt
 const Torso   =   105     #dont use !
+const Belly   =   132
 const Breast  =   106 
 const Nipples =   107 
 const Penis =     108 

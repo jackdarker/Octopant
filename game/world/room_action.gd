@@ -1,5 +1,8 @@
 class_name RoomAction extends Node
 
+## something the player can interact with in a room
+
+
 @export var label:="some action"
 
 func _ready() -> void:

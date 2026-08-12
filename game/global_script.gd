@@ -26,6 +26,8 @@ func quitGodot():
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 	get_tree().quit()
 
+## if data!=null, it will call loaddata (used for restoring gamestate)
+## if path is main_scene, it will init the game (called only once at game startup)
 func goto_scene(path,data=null):
 	# This function will usually be called from a signal callback,
 	# or some other function in the current scene.
@@ -105,6 +107,7 @@ func saveToFile(slot):
 	var _saveData = saveData()
 	saveToFileRaw(_path,_saveData)
 
+## loads savegame-data from a file
 func loadFromFileRaw(path)->Variant:
 	if not FileAccess.file_exists(path):
 		return null # Error! We don't have a save to load.
@@ -127,12 +130,14 @@ func loadFromFileRaw(path)->Variant:
 		assert(false, "Trying to load a bad save file "+str(path))
 		return null
 	return json.data
-		
+
+## triggers fileloading and switching to scene
 func loadFromFile(slot):
 	var _path=SAVE_DIR.path_join(slot)
 	var data = loadFromFileRaw(_path)
 	Global.goto_scene("res://game/main_scene.tscn",data)
 
+## initializes all game-object with the loaded data and triggers postLoad
 func loadData(data):
 	#TODO Global.settings.loadData(data.settings)		store settings in separate file?
 	#Note: data["info"] used by save-UI !
@@ -142,18 +147,60 @@ func loadData(data):
 	Global.pc.loadData(data.pc)
 	Global.QS.loadData(data["quests"]) #done after characters because checking inventory!
 	Tutorials.loadData(data.tutorials)
+	loadDataTree(data.nodes)
 	Global.main.postLoad()
-			
+
+
+## restore nodes ; existing Prsist-Nodes will be deleted before!
+# only plain attributes can be restored; you have to implement some restore by adding property-setter (se pickup.gd)
+func loadDataTree(nodes_data):
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for i in save_nodes:
+		if(i):	#nodes might be already null because they are subnodes of already deleted nodes
+			i.free()
+		#await i.tree_exited
+	for data in nodes_data:
+		# Firstly, we need to create the object and add it to the tree and set its position.
+		var new_object = load(data["scene"]).instantiate()
+		get_node(data["parent"]).add_child(new_object)
+		new_object.position = Vector2(data["pos_X"], data["pos_Y"])
+
+		# Now we set the remaining variables.
+		for i in data.keys():
+			if i == "filename" or i=="scene" or i == "parent" or i == "pos_x" or i == "pos_y":
+				continue
+			new_object.set(i, data[i])
+		new_object.postLoad()
+
+## calls saveData() on all games objects to extract data
 func saveData()->Variant:
 	var data ={
 		"globalregistry":GR.saveData(),
 		"main":Global.main.saveData(),
 		"pc": Global.pc.saveData(),
 		"quests":Global.QS.saveData(),
-		"tutorials":Tutorials.saveData()
+		"tutorials":Tutorials.saveData(),
+		"nodes":saveDataTree()
 	}
-		
+	
 	return(data)
+
+## walks the node-tree and extracts data from "Persist" nodes by calling saveData
+func saveDataTree()->Variant:
+	var data:Array[Dictionary]=[]
+	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	for node in save_nodes:
+		# Check the node is an instanced scene so it can be instanced again during load.
+		if node.scene_file_path.is_empty():
+			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			continue
+		# Check the node has a save function.
+		if !node.has_method("saveData"):
+			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+			continue
+		# Call the node's save function.
+		data.push_back(node.call("saveData"))
+	return data
 
 ## note: all games share same settings-file
 func loadSettings():

@@ -10,3 +10,6 @@ func getName()->String:
 
 func getDescription()->String:
 	return "Some meters of a sturdy liane."
+
+func canStack()->bool:
+	return true

@@ -25,6 +25,8 @@ var events: Dictionary = {}		#see ES !
 var items: Dictionary = {}
 var itemsByTag: Dictionary = {}
 
+var loottables: Dictionary = {}
+
 var maps: Dictionary = {}
 
 var recipes: Dictionary = {}
@@ -83,6 +85,7 @@ func loadData(data):
 		var _char=GR.createCharacter(_charID)	#instead of just constructing Character+loadData recreate from specific script
 		if (_char):	#TODO version-fixing of renamed/altered chars
 			_char.loadData(data["uniqueChars"][_charID])
+			characterInstances[_charID]=_char
 	
 func saveData()->Variant:
 	var data:Dictionary ={
@@ -98,7 +101,7 @@ func saveData()->Variant:
 			_moduleDic[flagid]=moduleFlags[moduleid][flagid]
 		data[moduleid]=_moduleDic
 	
-	for _char:Character in characterInstances.keys():
+	for _char:String in characterInstances.keys():
 		data["uniqueChars"][_char]=characterInstances[_char].saveData()
 	
 	return(data)
@@ -370,7 +373,7 @@ func registerMapFloor(moduleID:String,path: String, _creator = null):
 		return
 	#-------------------------------------------------------------------
 	# maps are instantiated in world !
-	if(false):#TODO
+	if(false):#TODO only add them to world if player enters them or they have force_instantiate set
 		Log.error("ERROR: couldn't load map from path "+path)
 		return
 	maps[path.get_file().get_basename()]=path	#
@@ -479,6 +482,7 @@ func createItem(ID: String)->ItemBase:
 		return null
 	var newItem = items[ID].new()
 	return newItem
+	
 func getItemIDs()->Array:
 	return items.keys()
 #endregion
@@ -571,6 +575,34 @@ func getTutorial(ID: String)->TutorialData:
 	
 #endregion
 
+#region Loottables
+#path is file or directory
+func registerLoottable(moduleID:String,path: String):
+	#-------------------------------------------------------------------
+	#if path is dir, import dir
+	if(DirAccess.dir_exists_absolute(path)):
+		for file in DirAccess.get_files_at(path):
+			if file.get_extension().to_lower()=="gd" || file.get_extension().to_lower()=="gdc" :
+				registerLoottable(moduleID,path.path_join(file))
+		return
+	#-------------------------------------------------------------------
+	var item = load(path)
+	var itemObject = item.new()
+	if !loottables.has(itemObject.ID):
+		loottables[itemObject.ID]={}
+	loottables[itemObject.ID][itemObject.tier] = itemObject	#we instantiate right here not in get...
+
+func getLoottable(ID:String, tier:int)->LootTable:
+	if(!loottables.has(ID)):
+		Log.error("ERROR: loottable with the ID "+ID+" wasn't found")
+		return null
+	if(!loottables[ID].has(tier)):
+		Log.error("ERROR: loottable "+ID+" has no tier "+str(tier))
+		return null
+	var newItem = loottables[ID][tier]
+	return newItem
+	
+#endregion
 
 #region effects
 func registerEffect(moduleID:String,path: String):
@@ -634,7 +666,6 @@ func registerCharacter(moduleID:String,path: String):
 	var itemObject = item.new()
 	characters[itemObject.ID] = item
 
-#TODO Unique characters should not be created multiple times
 func createCharacter(ID: String)->Character:
 	if(!characters.has(ID)):
 		Log.error("ERROR: character with the ID "+ID+" wasn't found")
@@ -644,6 +675,9 @@ func createCharacter(ID: String)->Character:
 	var newItem:Character = characters[ID].new()
 	
 	return newItem
+
+func getUniqueCharacter(uniqueID:String)->Character:
+	return characterInstances[uniqueID]
 
 ## call this once after createCharacter to make them persistent; createCharacter will then reuse them and not create anew
 ## data is stored in savegame

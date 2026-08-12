@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5ige5efic3t1"]
+
+[ext_resource type="Script" uid="uid://c3dvsffp4k4mc" path="res://ui/fragments/mini_map.gd" id="1_a6yrk"]
+
+[node name="Map" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 200.0
+script = ExtResource("1_a6yrk")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(200, 200)
+render_target_update_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="bt_zoom_in" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "-"
+
+[node name="bt_zoom_out" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "+"
+
+[connection signal="pressed" from="HBoxContainer/bt_zoom_in" to="." method="_on_bt_zoom_in_pressed"]
+[connection signal="pressed" from="HBoxContainer/bt_zoom_out" to="." method="_on_bt_zoom_out_pressed"]

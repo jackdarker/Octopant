@@ -1,5 +1,8 @@
 class_name GameWorld extends Node2D
 
+#TODO when zooming out expand darkcenter to cover everything
+#TODO func to modify darkness-area
+
 ## contains all floors
 enum Direction {WEST, NORTH, EAST, SOUTH}
 const GRID:int=64	#room to room grid
@@ -37,24 +40,21 @@ var highlightedRoom:DungeonRoom
 func _ready()->void:
 	astar = AStar2D.new()
 	# load all the (persistent) maps and merge them into world
-	var mapFloors = {"map1": "res://modules/__default/world/dungeon/map_tidal_cave.tscn"} #GR.getMapFloors()
+	var mapFloors = GR.getMapFloors() # {"mapMuseum": "res://modules/__default/world/dungeon/map_museum.tscn",	"mapMansion": "res://modules/__default/world/dungeon/map_mansion.tscn"}
 	for mapID in mapFloors:
 		var mapPath = mapFloors[mapID]
 		var mapObject = load(mapPath).instantiate()
-		
-		#var newWorldFloor = worldFloorScene.instantiate()
-		#newWorldFloor.ID = mapID
-		#add_child(newWorldFloor)
-		#newWorldFloor.add_child(mapObject)
 		add_child(mapObject)
+	#setupMaps()
 	
+func setupMaps():	
 		#if(mapObject.get("canMeetNPCs")):
 		#	newWorldFloor.canMeetNPCs = mapObject.canMeetNPCs
 	
 	for f in get_children():
 		if(f.has_method("getRooms")):
-			if(floorDict.has(f.ID)):
-				assert(false)
+			#if(floorDict.has(f.ID)):
+			#	assert(false)
 			floorDict[f.ID] = f
 			if(!cells.has(f.ID)):
 				cells[f.ID] = {}
@@ -69,13 +69,20 @@ func _ready()->void:
 	addTransitions()
 	aimCamera("room 1",true)
 
-func hasRoom(floorid: String, pos: Vector2):
+## ticks all rooms
+func processTime(_dt:int):
+	for floor in floorDict.values():
+		floor.processTime(_dt)
+	pass
+
+func hasRoom(floorid: String, pos: Vector2)->bool:
 	if(!cells.has(floorid)):
 		return false
 	
 	if(!cells[floorid].has(pos)):
 		return false
-	
+	if(!cells[floorid][pos]):
+		return false
 	return true
 
 func getRoomByID(id:String)->DungeonRoom:
@@ -142,6 +149,13 @@ func canGo(floorid: String, pos: Vector2, dir):
 		return false
 	return false
 
+func getConnectedRooms(roomid: String)->Array:
+	var _rooms:Array=[applyDirectionID(roomid,Direction.WEST),
+		applyDirectionID(roomid,Direction.NORTH),
+		applyDirectionID(roomid,Direction.EAST),
+		applyDirectionID(roomid,Direction.SOUTH)]
+	return(_rooms.filter(func(x):return(x!="")))
+
 func registerRoom(floorid, room:DungeonRoom):
 	var pos:Vector2 = room.getCell()
 	
@@ -153,7 +167,7 @@ func registerRoom(floorid, room:DungeonRoom):
 	if(!room.roomID):
 		Log.error("Map Error: room at "+str(pos)+" has no roomID")
 	else:
-		if(roomDict.has(room.roomID)):
+		if(roomDict.has(room.roomID) && roomDict[room.roomID]):
 			Log.error("Map Error: room with id "+room.roomID+" is already registered")
 			room.queue_free()
 			return
@@ -284,11 +298,19 @@ func updateDarknessSize():
 func entering_room(room:DungeonRoom):
 	on_enter_room.emit(room)
 
-func _on_bt_w_pressed() -> void:
-	if(canGoID(highlightedRoom.roomID,Direction.WEST)):
-		aimCamera(applyDirectionID(highlightedRoom.roomID,Direction.WEST))
+#func _on_bt_w_pressed() -> void:
+#	if(canGoID(highlightedRoom.roomID,Direction.WEST)):
+#		aimCamera(applyDirectionID(highlightedRoom.roomID,Direction.WEST))
 
 
-func _on_bt_e_pressed() -> void:
-	if(canGoID(highlightedRoom.roomID,Direction.EAST)):
-		aimCamera(applyDirectionID(highlightedRoom.roomID,Direction.EAST))
+#func _on_bt_e_pressed() -> void:
+#	if(canGoID(highlightedRoom.roomID,Direction.EAST)):
+#		aimCamera(applyDirectionID(highlightedRoom.roomID,Direction.EAST))
+
+
+func _on_bt_zoom_out_pressed() -> void:
+	zoomOut()
+
+
+func _on_bt_zoom_in_pressed() -> void:
+	zoomIn()

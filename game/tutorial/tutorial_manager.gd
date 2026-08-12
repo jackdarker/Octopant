@@ -7,7 +7,7 @@ signal tutorial_trigger(id: String) #call this to trigger tutorial instead of us
 signal tutorial_shown(id: String)	#called when showing
 signal tutorial_closed(id: String)
 
-@export var popup_scene: PackedScene = preload("res://ui/tutorial_popup.tscn")
+@export var popup_scene: PackedScene = preload("res://ui/fragments/tutorial_popup.tscn")
 @export var max_queue_items: int = 5
 
 # State

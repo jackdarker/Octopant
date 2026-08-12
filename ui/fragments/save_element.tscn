@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b2o62ybymunau"]
 
-[ext_resource type="Script" uid="uid://dsp5e78uqoqqm" path="res://ui/save_element.gd" id="1_ahut3"]
+[ext_resource type="Script" uid="uid://dsp5e78uqoqqm" path="res://ui/fragments/save_element.gd" id="1_ahut3"]
 
 [node name="SaveElement" type="Control"]
 custom_minimum_size = Vector2(0, 49)

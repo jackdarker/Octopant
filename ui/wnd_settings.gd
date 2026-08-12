@@ -3,7 +3,7 @@ extends CanvasLayer
 var listening_action: String = ""
 var action_buttons := {} # action -> Button node
 
-var msg_scn=ResourceLoader.load("res://ui/message_box.tscn")
+var msg_scn=ResourceLoader.load("res://ui/fragments/message_box.tscn")
 
 func _ready() -> void:
 	%bt_reset_shorts.pressed.connect(_on_reset_defaults_pressed)

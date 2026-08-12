@@ -41,7 +41,7 @@ func removeItem(item:Effect):
 func removeItemID(itemID:String):
 	var _item=getItemByID(itemID)
 	if(_item):
-		_item.removeItem()
+		removeItem(_item)
 
 func hasItem(item:Effect):
 	return items.has(item.ID)

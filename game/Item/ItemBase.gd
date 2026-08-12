@@ -10,7 +10,7 @@ var user:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 		
 var amount:int = 1:
 	set(value):
@@ -51,13 +51,19 @@ func getID()-> String:
 func getTags()->Array:
 	return tags
 
-
-func hasTags(_tags:Array)->bool:
+## true if all tags present
+func hasAllTags(_tags:Array)->bool:
 	var _res=true
 	for tag in _tags:
 		_res=_res && tags.has(tag)
 	return(_res);
-
+	
+## true if some tags present
+func hasSomeTags(_tags:Array)->bool:
+	var _res=false
+	for tag in _tags:
+		_res=_res || tags.has(tag)
+	return(_res);
 
 #override this !
 func getInventoryImage()->String:
@@ -103,6 +109,10 @@ func destroyMe():
 		queue_free()
 		#__destroyInProcess=0
 		
+
+func onTimeChange(now):		#TODO not called yet!
+	for n in bonus:
+		n.onTimeChange(now)
 
 func useCharge(_amount = 1):
 	#charges -= amount

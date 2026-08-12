@@ -40,6 +40,9 @@ func _init()-> void :
 	quests = [
 		"res://modules/__default/quest",
 	]
+	loottables = [
+		"res://modules/__default/loottables",
+	]
 
 func getFlags():
 	return {
@@ -62,13 +65,14 @@ func getFlags():
 func initGame():
 	#setup triggers for events
 	Global.ES.registerEvent(EventSystem.TRIGGER.InRoom,GR.getEvent("EventVisStat"),"",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventNothing"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventHurtBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindTroubleBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindPathForest"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventExploreUpgrade"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootForest"),"nav_forest_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventExploreUpgrade"),"nav_forest_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventFindLootCliff"),"nav_cliff_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventNothing"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootBasicCloths"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventHurtBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindTroubleBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindPathForest"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventExploreUpgrade"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootForest"),"nav_forest_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventExploreUpgrade"),"nav_forest_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootCliff"),"nav_cliff_explore",[])

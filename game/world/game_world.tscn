@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3us0b41xj0ji"]
+[gd_scene load_steps=4 format=3 uid="uid://c3us0b41xj0ji"]
 
 [ext_resource type="Script" uid="uid://du4o1blvqmya4" path="res://game/world/game_world.gd" id="1_424hr"]
+
+[sub_resource type="Gradient" id="Gradient_424hr"]
+offsets = PackedFloat32Array(0, 0.2, 0.25)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0.5644769, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2kuo4"]
+gradient = SubResource("Gradient_424hr")
+width = 800
+height = 800
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [node name="GameWorld" type="Node2D"]
 script = ExtResource("1_424hr")
@@ -8,21 +19,26 @@ script = ExtResource("1_424hr")
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
 
-[node name="bt_w" type="Button" parent="Camera2D"]
+[node name="bt_zoom_out" type="Button" parent="Camera2D"]
 visible = false
 offset_left = -80.0
 offset_top = -80.0
 offset_right = -56.0
 offset_bottom = -49.0
-text = "W"
+text = "+"
 
-[node name="bt_e" type="Button" parent="Camera2D"]
+[node name="bt_zoom_in" type="Button" parent="Camera2D"]
 visible = false
 offset_left = 48.0
 offset_top = -80.0
 offset_right = 72.0
 offset_bottom = -49.0
-text = "E"
+text = "-"
 
-[connection signal="pressed" from="Camera2D/bt_w" to="." method="_on_bt_w_pressed"]
-[connection signal="pressed" from="Camera2D/bt_e" to="." method="_on_bt_e_pressed"]
+[node name="DarkCenter" type="Sprite2D" parent="Camera2D"]
+z_index = 100
+position = Vector2(1.5258789e-05, -2.2888184e-05)
+texture = SubResource("GradientTexture2D_2kuo4")
+
+[connection signal="pressed" from="Camera2D/bt_zoom_out" to="." method="_on_bt_zoom_out_pressed"]
+[connection signal="pressed" from="Camera2D/bt_zoom_in" to="." method="_on_bt_zoom_in_pressed"]

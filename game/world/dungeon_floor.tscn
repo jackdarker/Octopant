@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://uxioixhyt6qd" path="res://game/world/dungeon_floor.gd" id="1_0c5ol"]
 
-[node name="DungeonFloor" type="Node2D"]
+[node name="DungeonFloor" type="Node2D" groups=["Persist"]]
 script = ExtResource("1_0c5ol")

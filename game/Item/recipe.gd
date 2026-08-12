@@ -56,7 +56,7 @@ func craftItem(character:Character):
 		_res.Msg="cant craft this"		
 	return _res
 
-func hasTags(_tags:Array)->bool:
+func hasAllTags(_tags:Array)->bool:
 	var _res=true
 	var tags=getTags()
 	for tag in _tags:

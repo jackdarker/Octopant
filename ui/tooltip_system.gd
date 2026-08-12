@@ -15,7 +15,7 @@ signal request_close(panel)
 @onready var tooltip = $TooltipDisplay
 @onready var notificationStack = $Notifications
 
-var NotificationScene: PackedScene = preload("res://ui/notification_display.tscn")
+var NotificationScene: PackedScene = preload("res://ui/fragments/notification_display.tscn")
 
 var tooltipParentRef:WeakRef
 

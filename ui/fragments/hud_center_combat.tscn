@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://qh0fm8m58tqj"]
 
 [ext_resource type="Script" uid="uid://os8ygfdqb6by" path="res://ui/fragments/hud_center_combat.gd" id="2_u0vi6"]
-[ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_x8e87"]
+[ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/fragments/character_hud.tscn" id="2_x8e87"]
 [ext_resource type="Theme" uid="uid://deq103rwplhd" path="res://ui/theme_text_bullet.tres" id="3_ajk0k"]
 [ext_resource type="Texture2D" uid="uid://bjmunitvs80eh" path="res://assets/images/chars/Crab.png" id="4_hvfrf"]
 [ext_resource type="Texture2D" uid="uid://bpfguvnmwowwd" path="res://assets/images/items/Seashell.png" id="5_bu8ab"]

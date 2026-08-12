@@ -18,6 +18,7 @@ script = ExtResource("1_qk4lp")
 [node name="MessageHolder" type="Node" parent="."]
 
 [node name="GameWorld" parent="." instance=ExtResource("2_2lkib")]
+visible = false
 
 [node name="Scene" type="CanvasLayer" parent="."]
 layer = -2
@@ -28,7 +29,6 @@ layer = -2
 layer = 2
 
 [node name="WndPause" parent="." instance=ExtResource("3_w8ko4")]
-visible = false
 
 [node name="WndInventory" parent="." instance=ExtResource("4_qinjo")]
 visible = false

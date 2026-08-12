@@ -5,6 +5,8 @@ class_name MainScene extends Node
 signal time_passed(_secondsPassed)
 signal item_trade(giverId:String,receiverId:String,itemid:String,amount:int)	#used by queststep_deliver_item
 
+const TIME_STEP=300	#a single slot is 5min
+
 var sceneStack:Array=[]
 var currentSceneUID:int:
 	get():
@@ -28,7 +30,8 @@ func _ready() -> void:
 	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
 	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name,load("res://assets/images/icons/ic_unknown.svg")))
 	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
-	time_passed.connect(Global.hud.on_time_passed)
+	time_passed.connect(Global.hud.processTime)
+	time_passed.connect(Global.World.processTime)
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
 	Global.hud.setup_requested.connect(func(): $WndSettings.visible=true)
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
@@ -36,18 +39,18 @@ func _ready() -> void:
 	Global.hud.status_requested.connect(func(): $WndStatus.visible=true)
 	Global.hud.menu_requested.connect(func(): $WndPause.visible=true)
 	
-	#var Camera_rid1 = Global.World.camera.get_camera_rid()			doesnt work with camera2D
-	#var viewport_rid1 = Global.hud.map.get_child(0).get_viewport_rid()
-	#RenderingServer.viewport_attach_camera(viewport_rid1, Camera_rid1)
-	Global.World.get_parent().remove_child(Global.World)
-	Global.hud.map.get_child(0).add_child(Global.World)	
-	#this sucks: to display world in the map-viewport it has to be its child; anotherway would be to grab the viewport-texture and assigne it to textureRect, but then there is no input possible (f.e hover on room)
-
+	Global.hud.inv.set_character(Global.pc)
+	Global.hud.outfit.outfit=true
+	Global.hud.outfit.set_character(Global.pc)
+	Global.hud.map.assignWorld()
+	Global.pc.outfit.addItem(GR.createItem("shirt_plain"))
+	Global.pc.outfit.addItem(GR.createItem("shorts_plain"))
 	postLoad()
 
 #region scene
 func runScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	defferedRunScene.call_deferred(ID,_args, parentSceneUniqueID )
+
 
 func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	var actual_scene:DefaultScene = getCurrentScene()
@@ -62,6 +65,8 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 		actual_scene=load("res://ui/interaction_scene.tscn").instantiate()
 		actual_scene.dialogue_gdscript=_args[0]
 		actual_scene.back_image=_args[1]
+		actual_scene.args=_args.slice(2)
+		actual_scene.setupScene()
 	elif(ID=="combat_scene"):
 		actual_scene=load("res://ui/combat_scene.tscn").instantiate()
 		actual_scene.setupScene(_args[0])
@@ -137,8 +142,18 @@ func playerSpecialScene()->bool:
 #endregion
 
 #region Time
+
+## time since start in seconds
 func getTime()->int:
+	return timeOfDay+currentDay*24*60*60
+
+## in seconds
+func getDayTime()->int:
 	return timeOfDay
+
+## returns days in game
+func getDays()->int:
+	return currentDay
 
 func getDayTimeEnd()->int:
 	return 23 * 60 * 60
@@ -149,52 +164,33 @@ func getDayTimeStart()->int:
 func isVeryLate()->bool:
 	return timeOfDay >= getDayTimeEnd()
 
-## returns days in game
-func getDays()->int:
-	return currentDay
+
 
 func doTimeProcess(_seconds:int):
-	# This splits long sleeping times into 1 hour chunks	
-	var copySeconds = _seconds
+	# This splits long timespans into chunks	
+	var copySeconds:= _seconds
+	var copyDaytime:int=timeOfDay
+	var dayTmp:int
 	while(copySeconds > 0):
-		var clippedSeconds = min(60*60, copySeconds)
+		var clippedSeconds = min(TIME_STEP, copySeconds)
+		copyDaytime+=clippedSeconds
+		dayTmp = copyDaytime-(24*60*60)
+		if(dayTmp>0):	#new day
+			currentDay += 1
+			copyDaytime=dayTmp
+			timeOfDay=dayTmp
+		else:
+			timeOfDay+=clippedSeconds
 		Global.pc.processTime(clippedSeconds)
 		
 		#for characterID in charactersToUpdate:
 		#	var character = getCharacter(characterID)
 		#	if(character != null):
 		#		character.processTime(clippedSeconds)
-		
-		
+		time_passed.emit(clippedSeconds)
 		copySeconds -= clippedSeconds
-	
-	@warning_ignore("integer_division")
-	var oldHours = floor((timeOfDay - _seconds) / 3600)
-	@warning_ignore("integer_division")
-	var newHours = floor(timeOfDay / 3600)
-	var hoursPassed = newHours - oldHours
-
-	if(hoursPassed > 0):
-		#hoursPassed(hoursPassed)
-		pass
-	copySeconds=timeOfDay+_seconds
-	while floor(copySeconds/(24*60*60))>0:
-		currentDay += 1
-		copySeconds-= 24*60*60
 		
-	timeOfDay = copySeconds
-	emit_signal("time_passed", _seconds)
 	Global.main.checkForGameOver()	#TODO here?
-
-func processTimeUntil(newseconds):
-	if(timeOfDay >= newseconds):			#todo wrap around?
-		return
-	
-	var timeDiff = newseconds - timeOfDay
-	
-	timeOfDay = newseconds
-	doTimeProcess(timeDiff)
-	return timeDiff
 
 func startNewDay():
 	#IS.beforeNewDay()
@@ -283,7 +279,7 @@ func saveData()->Variant:
 		_scenes[_scene.sceneID]=_scene.saveData()
 		
 	var data ={
-		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getTime()),
+		"info": Global.pc.location+" ,day "+str(getDays()) + " "+ Util.getTimeStringHHMM(getDayTime()),
 		"day":currentDay,
 		"time": timeOfDay,
 		"scenes": _scenes,
@@ -307,11 +303,17 @@ func postLoad():
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	Global.pc.inventory.item_added.connect(func(itemID): Global.toolTip.showNotification("Item added",itemID))
 	Global.pc.inventory.item_removed.connect(func(itemID): Global.toolTip.showNotification("Item removed",itemID))
-
-	#TODO force update HUD, also restore the running event ?
+	
+	Global.World.setupMaps()
+		#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
 	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()
 	addDebugCmds() # add debug-commands TODO is this correct place?
+
+	var roomID=Global.pc.location #map_mansion@room 3
+	if(roomID.rsplit("@").size()>1):
+		Global.pc.location=""	#hack: onEnter triggers only if char is NOT already there
+		Global.World.getRoomByID(roomID)._onEnter()
 
 func addDebugCmds():
 	DbgConsole.addCommand("getversion",GR,"getGameVersionString",[],["version"],"")

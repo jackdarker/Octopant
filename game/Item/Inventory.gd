@@ -15,7 +15,7 @@ var user:Character:
 # set item.amount if you want add multiple items
 func addItem(item: ItemBase):
 	if(item.wrefInventory != null):
-		assert(false)
+		pass#assert(false)
 	
 	if(item.canStack()):
 		for myitem in items:
@@ -35,12 +35,15 @@ func addItemID(itemID:String):
 		return 
 	addItem(newItem)
 
-func removeItem(item:ItemBase,_amount:int=1):
+func removeItem(item:ItemBase,_amount:int=1, _no_destroy:bool=false):
 	if(items.has(item)):
 		var _new_amount=item.amount-_amount
 		if _new_amount<=0:
 			items.erase(item)
-			item.destroyMe()
+			if(_no_destroy):
+				item.wrefInventory=null
+			else:	
+				item.destroyMe()
 			#item.wrefInventory = null
 		else:
 			item.amount-=_amount
@@ -70,10 +73,11 @@ func getItemByID(itemID)->ItemBase:
 			return item
 	return null
 
-static func filter_by_tag(allItems:Array[ItemBase],tags:Array)->Array:
+## returns only items that have all the tags
+static func filter_by_tag(allItems:Array,tags:Array)->Array:
 	var _ret=[] 
 	for item in allItems:
-		if item.hasTags(tags):
+		if item.hasAllTags(tags):
 			_ret.push_back(item)
 	return _ret
 

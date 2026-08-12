@@ -46,6 +46,6 @@ func resetFlagsOnNewDay():
 
 func initGame():
 	#setup triggers for events
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventMeetSquishlBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventMeetLutesBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.EnterRoom,GR.getEvent("EventDelveBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventMeetSquishlBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventMeetLutesBeach"),"nav_beach_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventDelveBeach"),"nav_beach_explore",[])

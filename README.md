@@ -1,13 +1,13 @@
 # Octopant
 made in Godot. This is a test where I try to convert my Twine/snowman framework to Godot.
 Kind of Visual Novel Framework. 
-! Because of the modding approach it runs only in Editor right now !
+! Because of the modding approach it will not work as web-app!
 
-## Features-in progress  
+## actual Features (but still not completed)
 - Navigation between locations
 - Inventory and outfit -system
-- crafting & recipes
 - Stats and Effects -System   
+- crafting & recipes
 - Event-System (select and run a randomized scene from a pool of events)  
 - Quest-system (add Quest with -milestones and display in Log)
 - NPC-dialogs (implement as a statemachine in gdscript)

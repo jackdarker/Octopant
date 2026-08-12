@@ -11,7 +11,7 @@ class_name CombatScene extends DefaultScene
 
 signal fight_next
 
-var scene_charWidget = preload("res://ui/character_hud.tscn")
+var scene_charWidget = preload("res://ui/fragments/character_hud.tscn")
 var scene_hudCombat = preload("res://ui/fragments/hud_center_combat.tscn")
 
 var combatSetup:CombatSetup
@@ -74,6 +74,7 @@ func setupScene(_combatSetup:CombatSetup):
 	set_state.call_deferred(STATE.battleInit)
 
 func battleInit():
+	_destroyEnemyWidgets()
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
 	var _allChars=playerParty+enemyParty
@@ -90,7 +91,8 @@ func battleEnd():
 		var _effs = _char.effects.getItems()
 		for _eff in _effs:
 			_eff.onFightEnd()
-	Global.hud.hudMode=Hud.HUDMODE.Explore		
+	Global.hud.hudMode=Hud.HUDMODE.Explore
+	_destroyEnemyWidgets()
 	if(playerFleeing==true): 
 		combatSetup.onFlee.call(self)
 	elif(playerSubmitting==true): 
@@ -200,6 +202,9 @@ func _postTargetSelect(_target):
 
 func _calcTurnOrder():
 	turnStack=playerParty+enemyParty
+
+func _destroyEnemyWidgets():
+	Util.delete_children(Global.hud.hudCenter.enemyList)
 
 func _createEnemyWidgets():
 	#this creates/removes widgets depending on the parts-lists

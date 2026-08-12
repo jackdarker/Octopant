@@ -1,6 +1,6 @@
 class_name ItemTagEnum extends Object
 
-const Quest= 3
+const QuestItem= 3
 const Weapon_Melee=103
 const Weapon_Ranged=104
 const Weapon_Throw=105
@@ -11,4 +11,5 @@ const Consumable = 300
 const Ingredient = 400
 const Ingredient_Craft = 401
 const Ingredient_Cook = 402
-const Body=501 
+const Body=501 #Bodypart
+const Wear=600 #clothing

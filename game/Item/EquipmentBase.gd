@@ -38,31 +38,34 @@ func doAction(action:String,target):
 func isEquipped()->bool:
 	return equipped
 
-func canEquip(_target:Character)->Result:
+func canEquip(_target:Character)->Result:	
 	return Result.create(true,"")
 
 func canUnequip()->Result:
-	return Result.create(true,"")
-
-# use outfit.addItem instead !
-func equip(target:Character)->Result:
-	var _res=Result.create(true,"")
-	wrefCharacter = weakref(target)
-	equipped=true
-	return _res
-	
-	#or (n of this.bonus){
-	#        n.onEquip();
-	#   }
-	 # if(this.equipText) res.msg=this.equipText(context);
-
+	var res:=Result.create(true,"")
+	for n in bonus:
+		res=n.canUnequip();
+		if(res.OK==false):
+			return(res)
+	return res
 
 # use outfit.removeItem instead !
 func unequip()->Result:
 	wrefCharacter=null
 	equipped=false
-	return Result.create(true,"")
+	for n in bonus:
+		n.onUnequip()
+	return(Result.create(true,""))
 
+## use outfit.addItem instead !
+func equip(target:Character)->Result:
+	var _res=Result.create(true,"")
+	wrefCharacter = weakref(target)
+	equipped=true
+	for n in bonus:
+		n.onEquip()	# if(this.equipText) res.msg=this.equipText(context);
+	return _res
+	
 #in %
 func getDurability()->float:
 	return durability

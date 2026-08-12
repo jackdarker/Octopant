@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://deyv2v8gvtbsu"]
+[gd_scene load_steps=16 format=3 uid="uid://deyv2v8gvtbsu"]
 
 [ext_resource type="Script" uid="uid://cswadx3st3b6b" path="res://ui/hud.gd" id="1_276te"]
-[ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/character_hud.tscn" id="2_276te"]
+[ext_resource type="PackedScene" uid="uid://sfxsabvmelqu" path="res://ui/fragments/character_hud.tscn" id="2_276te"]
+[ext_resource type="PackedScene" uid="uid://b5ige5efic3t1" path="res://ui/fragments/mini_map.tscn" id="4_1v5rv"]
 [ext_resource type="PackedScene" uid="uid://c161u4nwshfs4" path="res://ui/fragments/hud_center_default.tscn" id="4_7ihmi"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="4_en2x2"]
+[ext_resource type="PackedScene" uid="uid://dahy3g20d54bh" path="res://ui/fragments/hud_inventory.tscn" id="5_1v5rv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1v5rv"]
 
@@ -153,21 +155,34 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Daylight"
 
-[node name="PlayerStatus" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2" instance=ExtResource("2_276te")]
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 3
+current_tab = 0
+tabs_visible = false
 
-[node name="Map" type="SubViewportContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2"]
-custom_minimum_size = Vector2(200, 200)
+[node name="Stats" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer" instance=ExtResource("2_276te")]
 layout_mode = 2
+metadata/_tab_index = 0
 
-[node name="SubViewport" type="SubViewport" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/Map"]
-handle_input_locally = false
-size = Vector2i(200, 200)
-render_target_update_mode = 4
+[node name="Map" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer" instance=ExtResource("4_1v5rv")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Inv" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer" instance=ExtResource("5_1v5rv")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Outfit" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/TabContainer" instance=ExtResource("5_1v5rv")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2"]
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/LeftPanel/MarginContainer/VBoxContainer2/VBoxContainer3"]
 layout_mode = 2

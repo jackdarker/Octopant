@@ -1,4 +1,4 @@
-extends Character
+class_name MobLizardman extends Character
 
 
 func _init():
@@ -10,3 +10,4 @@ func _init():
 
 func getBustImage()->Texture2D:
 	return load("res://assets/images/chars/lizardman.png")
+

@@ -29,5 +29,6 @@ func on_enterScene():
 func get_buttons(_menuid:String,buttons:Array)->Array:
 	return(buttons)
 
+## helper functionto create callback of request menu
 func cb_menu(menuID:String,no_back:bool=false)->Callable:
 	return parent_scene.menu.bind(menuID,no_back)

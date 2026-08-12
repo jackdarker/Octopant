@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-var save_element = preload("res://ui/save_element.tscn")
+var save_element = preload("res://ui/fragments/save_element.tscn")
 
 func _ready() -> void:
 	visible = false

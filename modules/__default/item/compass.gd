@@ -3,7 +3,7 @@ extends EquipmentBase
 func _init():
 	super()
 	ID="compass"
-	tags=[ItemTagEnum.Tool,ItemTagEnum.Quest]
+	tags=[ItemTagEnum.Tool,ItemTagEnum.QuestItem]
 
 func getName()->String:
 	return "cheap compass"

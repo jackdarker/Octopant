@@ -14,6 +14,7 @@ var characters = []
 var recipes = []
 var tutorials = []
 var quests = []
+var loottables = []
 
 var flagsCache = null
 
@@ -56,6 +57,9 @@ func register():
 	
 	for character in characters:
 		GR.registerCharacter(ID,GR.module_basepath(character))
+	
+	for loottable in loottables:
+		GR.registerLoottable(ID,GR.module_basepath(loottable))
 	
 	for tutorial in tutorials:
 		GR.registerTutorial(ID,GR.module_basepath(tutorial))
