@@ -8,6 +8,7 @@ func on_enterScene():
 		Global.hud.say("You found yourself at a beach. If you would have any memory how you got here, you would be abel to appreciate it.")
 		Global.hud.say("There seems to be no one around and none of the typical signs of civilsation - rubbish and prohibition signs - are visible.")
 		Global.hud.say("Maybe you should check what is next to this sandy coast.")
+		Global.QS.start_quest(GR.getQuest("main_chapter1"))
 		Global.QS.start_quest(GR.getQuest("find_locations1"))
 		GR.setModuleFlag("Default","Found_Beach",1)
 	else:

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1ts4li6utcli"]
+[gd_scene load_steps=5 format=3 uid="uid://c1ts4li6utcli"]
 
 [ext_resource type="Script" uid="uid://dwndusujqetf3" path="res://ui/wnd_quest.gd" id="1_87igp"]
 [ext_resource type="Theme" uid="uid://tpolvb2u4itl" path="res://theme.tres" id="2_ythc5"]
 [ext_resource type="StyleBox" uid="uid://0ew1no12qf1l" path="res://ui/parchement.tres" id="3_jq7qf"]
+[ext_resource type="PackedScene" uid="uid://bn286f82evtp8" path="res://ui/fragments/check_text.tscn" id="4_jq7qf"]
 
 [node name="WndQuest" type="CanvasLayer"]
 layer = 100
@@ -135,14 +136,38 @@ text = "quest  dfgdg  "
 layout_mode = 2
 text = "quest  dfgdg  "
 
-[node name="lbl_questdesc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="queststeps" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="CheckText" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2/ScrollContainer/queststeps" instance=ExtResource("4_jq7qf")]
+layout_mode = 2
+
+[node name="CheckText2" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2/ScrollContainer/queststeps" instance=ExtResource("4_jq7qf")]
+layout_mode = 2
+
+[node name="lbl_questdesc" type="RichTextLabel" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
 bbcode_enabled = true
 text = "Hello
-world"
+world
+fcfxgh
+fchbyxfdh
+xdfg"
+fit_content = true
 
 [node name="Tutorials" type="MarginContainer" parent="PanelContainer/VBoxContainer/MarginContainer/TabContainer"]
 visible = false
@@ -209,4 +234,6 @@ size_flags_vertical = 8
 text = "Back"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="focus_entered" from="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2/ScrollContainer/queststeps/CheckText" to="." method="_on_check_text_focus_entered"]
+[connection signal="gui_input" from="PanelContainer/VBoxContainer/MarginContainer/TabContainer/Quest-Log/Hsplit/VBoxContainer2/ScrollContainer/queststeps/CheckText" to="." method="_on_queststep_gui_input"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer2/bt_back" to="." method="_on_bt_back_pressed"]

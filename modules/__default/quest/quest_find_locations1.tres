@@ -10,6 +10,7 @@ moduleID = "Default"
 flagID = "Found_Cliff"
 valueMin = 1
 title = "Find the cliff"
+hint = "explore the beach until you find this rocky envirement"
 hidden = 1
 metadata/_custom_type_script = "uid://27gxkaeehmlu"
 
@@ -19,6 +20,7 @@ moduleID = "Default"
 flagID = "Found_Forest"
 valueMin = 1
 title = "Find the forest"
+hint = "explore the beach until you find this area"
 hidden = 1
 metadata/_custom_type_script = "uid://27gxkaeehmlu"
 

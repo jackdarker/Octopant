@@ -31,16 +31,16 @@ func registerEvent(trigger,event:EventBase, location, _args):
 #func unregisterEvent(trigger, eventID):
 #	pass
 
-func triggerEvent(trigger,location,args)->bool:
+func triggerEvent(trigger:int,location:String,args:Array)->bool:
 	var _events:Array=getAvailableEvents(trigger,location,args)
 	if(_events.size()<=0):
 		return false
 	var _evt=Util.pickRandomFromArray(_events,_events.map(func(x): return (x.getWeight())))
 	return _evt.react(trigger,location,args)
 
-func pickEvents(trigger,location,args)->Array:
+func pickEvents(trigger:int,location:String,amount:int,args:Array)->Array:
 	var _events:Array=getAvailableEvents(trigger,location,args)
-	var _result=Util.pickMultipleRandomFromArray(3,_events,_events.map(func(x): return (x.getWeight())))
+	var _result=Util.pickMultipleRandomFromArray(amount,_events,_events.map(func(x): return (x.getWeight())))
 	return _result
 
 func getAvailableEvents(trigger,location,_args):

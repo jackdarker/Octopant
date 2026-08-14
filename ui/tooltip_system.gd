@@ -1,4 +1,4 @@
-extends CanvasLayer
+class_name TooltipSystem extends CanvasLayer
 
 # implements tooltip and notification-system
 # to make use of the tooltip you have to call showTooltip onMouseEnter and hideTooltip onMouseLeave

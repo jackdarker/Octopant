@@ -1,7 +1,7 @@
 extends Node
 
 var hud: Hud
-var toolTip:CanvasLayer
+var toolTip:TooltipSystem
 var main: MainScene
 var pc: Player
 var World: GameWorld

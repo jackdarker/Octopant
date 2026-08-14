@@ -1,4 +1,4 @@
-extends Control
+class_name Tooltip extends Control
 		
 @export var showBelow = false
 @onready var _title:Label=$Panel/VBoxContainer/lb_header
