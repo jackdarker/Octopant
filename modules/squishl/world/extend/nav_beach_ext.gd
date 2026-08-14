@@ -3,7 +3,7 @@ extends SceneExtension
 const sceneID="nav_beach"
 
 func on_enterScene():
-	if(GR.getModuleFlag("Squishl","Lutes_Met",0)>=5):
+	if(GR.getModuleFlag("Squishl","Lutes_Visitable",0)>0):
 		Global.hud.say("Lutes is also here.")
 
 func get_buttons(menuid:String,buttons:Array):

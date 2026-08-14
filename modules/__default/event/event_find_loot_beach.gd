@@ -3,10 +3,12 @@ extends EventBase
 # an event that gives the player some loot
 
 func _init():
-	super()
 	ID="EventFindLootBeach"
+	super()
+	
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	Global.hud.say("There is something sparkling between seasshells")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Dig it out","",_dig,null)
@@ -32,7 +34,7 @@ func _dig():
 		Global.hud.say("Embedded into the sand is a [b]piece of a net[/b], possibly ripped of from some fishing net.")
 		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
-	elif(i>10):
+	elif(i>0):
 		var _item=GR.createItem("seashell")
 		Global.hud.say("You found a [b]pretty seaschell[/b].")
 		Global.hud.show_picture_center(load(_item.getInventoryImage()))

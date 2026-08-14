@@ -40,6 +40,7 @@ func enterScene():
 # call this after event finishs to continue previous scene	
 func continueScene():
 	Global.hud.clearInput()
+	Global.main.checkForGameOver()
 	Global.hud.addButton("next","",enterScene)
 
 func set_bg(bg:Texture2D):

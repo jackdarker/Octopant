@@ -9,10 +9,25 @@ func _on_bt_explore_pressed():
 	Global.main.doTimeProcess(30*60)
 	Global.pc.getStat(StatEnum.Fatigue).modify(10)
 	GR.increaseModuleFlag("Default","Explored_Beach",1)
+	var explored=GR.getModuleFlag("Default","Explored_Beach",0)
+	var cards=GR.getModuleFlag("Default","ExploreCards_Beach",0)
+	if(cards<=0 && explored>5):
+		cards=1
+		GR.setModuleFlag("Default","ExploreCards_Beach",cards)
+		Global.hud.say("You are more familiar with your surroundings and may now avoid stumbling randomly into some event.")
+		
 	if(GR.getModuleFlag("Default","Beach_Shack",0)==0):
 		navigate_home()	#force finding shack
+	elif (cards>0):
+		var _evts=Global.ES.pickEvents(EventSystem.TRIGGER.Explore,"nav_beach_explore",[])
+		if(_evts.size()>0):
+			for _evt:EventBase in _evts:
+				Global.hud.addButton(_evt.EventName,"",_evt.react.bind(EventSystem.TRIGGER.Explore).bind("nav_beach_explore").bind([]))
+		else:
+			Global.hud.say("After a while you find yourself back were you came from.")
+			continueScene()
 	elif !Global.ES.triggerEvent(EventSystem.TRIGGER.Explore,"nav_beach_explore",[]):
-		Global.hud.say("Nothing was found")
+		Global.hud.say("After a while you find yourself back were you came from.")
 		continueScene()
 
 func _on_bt_crab_pressed():

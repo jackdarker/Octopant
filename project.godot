@@ -27,10 +27,6 @@ GR="*res://game/GlobalRegistry.gd"
 window/size/initial_position_type=3
 window/stretch/mode="viewport"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/graph2d_connect/plugin.cfg")
-
 [input]
 
 action_1={

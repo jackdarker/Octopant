@@ -92,6 +92,7 @@ func unregisterSignalItemsChanged(callable:Callable):
 
 
 func loadData(data):
+	items.clear()
 	for item in data["items"]:
 		var _item=GR.createEffect(item["ID"])
 		_item.loadData(item)

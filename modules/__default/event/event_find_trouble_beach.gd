@@ -3,10 +3,12 @@ extends EventBase
 # an event that triggers combat
 
 func _init():
-	super()
 	ID="EventFindTroubleBeach"
+	super()
+	
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	Global.hud.say("Some crab suddenly appears from the sand and claps with his claws.")
 	Global.hud.addButton("Engage","",_engage,null)
 	Global.hud.addButton("Run away","",_ignore,null)
@@ -14,6 +16,9 @@ func react(_triggerID,_location,_args)->bool:
 	
 func canRun(_trigger,_location,_args)->bool:
 	return true
+
+func getWeight()->float:
+	return 0.5
 
 func _ignore():
 	Global.hud.say("You got away")

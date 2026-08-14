@@ -1,8 +1,8 @@
 extends EventBase
 
 func _init():
-	super()
 	ID="EventMeetSquishlBeach"
+	super()
 
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearOutput()

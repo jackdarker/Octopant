@@ -17,16 +17,13 @@ func addItem(item: ItemBase):
 	if(item.wrefInventory != null):
 		pass#assert(false)
 	
-	if(item.canStack()):
-		for myitem in items:
-			if(myitem.ID == item.ID):
-				if(myitem.tryCombine(item)):
-					#item.queue_free()
-					return
-		
-	items.append(item)
-	item.wrefInventory = weakref(self)
-	item.user=user
+	var _item2=getItemByID(item.ID)
+	if(item.canStack() && _item2):
+		_item2.tryCombine(item)
+	else:
+		items.append(item)
+		item.wrefInventory = weakref(self)
+		item.user=user
 	item_added.emit(item.ID)
 
 func addItemID(itemID:String):
@@ -82,6 +79,7 @@ static func filter_by_tag(allItems:Array,tags:Array)->Array:
 	return _ret
 
 func loadData(data):
+	items.clear()
 	for item in data["items"]:
 		var _item=GR.createItem(item["ID"])
 		_item.loadData(item)

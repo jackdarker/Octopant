@@ -57,6 +57,7 @@ func unregisterSignalItemChanged(callable:Callable,ID:String):
 			item.changed.disconnect(callable)
 
 func loadData(data):
+	items.clear()
 	for item in data["items"]:
 		var _item=Status.new()
 		_item.loadData(item)

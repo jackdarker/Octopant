@@ -48,10 +48,15 @@ var atLL:bool:
 		pass
 	get:
 		return(value<=ll)
-		
-func modify(change:float):
-	value=min(ul,max(ll,value+change))
+
+## modifys value by change
+# args["ul"] or args["ll"] = limit change to this upper/lower limit
+func modify(change:float, _args:={}):
+	var _ul=min(ul,_args["ul"] if _args.has("ul") else ul)
+	var _ll=max(ll,_args["ll"] if _args.has("ll") else ll)
+	value=min(_ul,max(_ll,value+change))
 	changed.emit(ID,value)
+
 
 func loadData(data):
 	ID=data["ID"]

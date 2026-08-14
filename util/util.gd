@@ -69,6 +69,20 @@ static func pickRandomFromArray(items:Array,weights:Array=[])-> Variant:
 		
 	return _item
 
+## like pickRandomFromArray but returns Amount entrys. 
+## [br]Entrys will not repeat. 
+static func pickMultipleRandomFromArray(amount:int,items:Array,weights:Array=[])-> Array:
+	var _amount=min(amount,items.size())
+	var _result=[]
+	var _item
+	for i in range(_amount):
+		_item = pickRandomFromArray(items,weights)
+		weights.remove_at(items.find(_item))
+		items.erase(_item)
+		_result.push_back(_item)
+	return _result
+
+
 ## creates a silhouette-image from image
 static func createSilhouette(src_texture:Texture2D)->Texture2D:
 	var threshold = 0.5                          # 0..1 alpha threshold

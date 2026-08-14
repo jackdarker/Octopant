@@ -150,7 +150,7 @@ func removeItem(ID:String, _force:bool=false)->Result:
 func loadData(data):
 	#for slot in data["slots"]:
 	#	slots.push_back(slot)
-		
+	list.clear()	
 	for item in data["items"]:
 		var _item=GR.createItem(item["ID"])
 		_item.loadData(item)

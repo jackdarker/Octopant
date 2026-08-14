@@ -38,6 +38,11 @@ func triggerEvent(trigger,location,args)->bool:
 	var _evt=Util.pickRandomFromArray(_events,_events.map(func(x): return (x.getWeight())))
 	return _evt.react(trigger,location,args)
 
+func pickEvents(trigger,location,args)->Array:
+	var _events:Array=getAvailableEvents(trigger,location,args)
+	var _result=Util.pickMultipleRandomFromArray(3,_events,_events.map(func(x): return (x.getWeight())))
+	return _result
+
 func getAvailableEvents(trigger,location,_args):
 	var _events=[]
 	if(location==null):

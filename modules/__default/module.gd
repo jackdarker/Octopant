@@ -60,12 +60,14 @@ func getFlags():
 		"Cliff_Ropes": flag(FlagType.Number),	# how many ropes are installed from bottom to up
 		"FaintMessage": flag(FlagType.Text),	#text why player fainted
 		"FatigueHigh":	flag(FlagType.Number),
+		"ExploreCards_Beach": flag(FlagType.Number),
+		"ExploreCards_Forest": flag(FlagType.Number),
 		}
 
 func initGame():
 	#setup triggers for events
 	Global.ES.registerEvent(EventSystem.TRIGGER.InRoom,GR.getEvent("EventVisStat"),"",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventNothing"),"nav_beach_explore",[])
+	#Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventNothing"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootBasicCloths"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])

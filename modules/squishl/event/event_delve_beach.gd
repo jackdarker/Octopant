@@ -3,10 +3,11 @@ extends EventBase
 # player has to go through number of events before returning to beach
 
 func _init():
-	super()
 	ID="EventDelveBeach"
+	super()
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	Global.hud.say("There is something shiny over there. But you would have to walk through the water and something might lurk below.")
 	Global.hud.addButton("Ignore it","",_ignore,null)
 	Global.hud.addButton("Walk into the water","",_moveOn,null)
