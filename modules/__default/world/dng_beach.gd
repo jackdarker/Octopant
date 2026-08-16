@@ -34,14 +34,15 @@ func enterScene():
 
 func _on_bt_fight_pressed():
 	var _setup=CombatSetup.new()
-	var _x=Global.pc.effects.getItems()
+	var room=GR.getModuleFlag("Squishl","Delve_State",0)
 	_setup.onVictory= _postVictory
 	_setup.onDefeat= _postDefeat
 	_setup.onFlee= _postDefeat
 	_setup.onSubmit= _postDefeat
 	_setup.playerParty.push_back(Global.pc)
-	var _mob=Util.pickRandomFromArray(["Crab","JellyFish"])
-	_setup.enemyParty.push_back(GR.createCharacter(_mob))
+	for i in range(room+1):
+		var _mob=Util.pickRandomFromArray(["Crab","JellyFish"])
+		_setup.enemyParty.push_back(GR.createCharacter(_mob))
 	Global.main.runScene("combat_scene",
 		[_setup],self.uniqueSceneID)
 

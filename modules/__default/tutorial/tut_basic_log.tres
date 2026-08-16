@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://blbphx2hvrjnp"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_xwy7u"]
+
+[resource]
+script = ExtResource("1_xwy7u")
+ID = "basic_log"
+title = "Your logbook"
+text = "The logbook is your point to check for ongoing and completed tasks.  [br] Click on a quest-step to display a hint - only if you need some. [br]  [br] You can also read tutorials again."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

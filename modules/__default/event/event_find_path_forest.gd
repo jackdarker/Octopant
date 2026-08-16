@@ -3,10 +3,11 @@ extends EventBase
 # an event that gives the player a path to location
 
 func _init():
-	super()
 	ID="EventFindPathForest"
+	super()
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	Global.hud.say("As you might not be able to sustain forever just by rooming the beach, you convince yourself to set foot in the forest.\n")
 	Global.hud.addButton("next","",Global.main.runScene.bind("nav_forest"))
 	return true

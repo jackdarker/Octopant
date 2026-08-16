@@ -1,7 +1,8 @@
 class_name CombatSkill extends Skill
 
-# a skill that is used to deal damage in combat
-# Note: None-Attack skills might derive from Skill with canBeUsedInCombat=true
+# a skill that is used to deal damage in combat. It integrates dodge/block-check for target
+# Note: None-Attack skills might derive from Skill with canUseInCombat=true
+
 
 func canUseInCombat()->bool:
 	return true

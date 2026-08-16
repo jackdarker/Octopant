@@ -70,6 +70,7 @@ func defferedRunScene(ID:String, _args = [], parentSceneUniqueID = -1):
 	elif(ID=="combat_scene"):
 		actual_scene=load("res://ui/combat_scene.tscn").instantiate()
 		actual_scene.setupScene(_args[0])
+		
 	else:
 		Global.hud.hudMode=Hud.HUDMODE.Explore
 		actual_scene = GR.createScene(ID)
@@ -226,7 +227,8 @@ func gotoSleep():
 
 func defaultDefeat(_scene):
 	Global.main.clearSceneStack()	
-	Global.pc.getStat(StatEnum.Pain).modify(-9) # lower pain or it triggers defeat again
+	Global.pc.getStat(StatEnum.Pain).modify(-60,{"ll":0}) # lower pain or it triggers defeat again
+	Global.pc.getStat(StatEnum.Lust).modify(-60,{"ll":0})
 	Global.main.runScene("nav_home")
 			
 func defaultGameOver(_scene):

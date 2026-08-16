@@ -23,10 +23,10 @@ var turnCount:int=0
 var playerFleeing:bool
 var playerSubmitting:bool
 var actor:Character
-var target:Array
+var target:Array	# ...of Character
 var skill:Skill
 
-enum STATE {undef,battleInit,checkDefeat,preTurn,selectActor,selectSkill,selectItem,selectTarget,execSkill,battleEnd}
+enum STATE {undef,battleInit,checkDefeat,preTurn,selectActor,selectSkill,selectItem,selectTarget,execSkill,battleEnd,postBattle}
 var next_state:STATE=STATE.undef:
 	set(value):
 		next_state=value
@@ -34,8 +34,19 @@ var next_state:STATE=STATE.undef:
 
 func _init():
 	sceneID = "FightScene"
+	self.uniqueSceneID=GR.generateUniqueID()
+	next_state=STATE.undef
 	fight_next.connect(next)
-	
+
+func enterScene():
+	Global.hud.hudMode = Hud.HUDMODE.Combat
+	Global.hud.configureHudCenter(scene_hudCombat.instantiate())
+	Global.hud.visible=true
+	if(next_state==STATE.undef): # setup new combat
+		set_state.call_deferred(STATE.battleInit)
+	elif(next_state==STATE.battleEnd): #returned from postBattleScene
+		set_state.call_deferred(STATE.postBattle)
+
 func canSave()->bool:
 	return false	#no save in combat
 	
@@ -56,6 +67,8 @@ func next():
 		execSkill()
 	elif(next_state==STATE.battleEnd):
 		battleEnd()
+	elif(next_state==STATE.postBattle):
+		postBattle()
 	else:
 		assert(false,str(next_state))
 
@@ -69,20 +82,12 @@ func setupScene(_combatSetup:CombatSetup):
 	playerSubmitting=false
 	playerParty=combatSetup.playerParty.duplicate()
 	enemyParty=combatSetup.enemyParty.duplicate()
-	Global.hud.hudMode = Hud.HUDMODE.Combat
-	Global.hud.configureHudCenter(scene_hudCombat.instantiate())
-	set_state.call_deferred(STATE.battleInit)
+	enterScene()
 
 func battleInit():
 	_destroyEnemyWidgets()
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
-	var _allChars=playerParty+enemyParty
-	#trigger Effect.onFightStart
-	for _char:Character in _allChars:
-		var _effs = _char.effects.getItems()
-		for _eff in _effs:
-			_eff.onFightStart()
 	next_state=STATE.preTurn
 
 func battleEnd():
@@ -96,13 +101,19 @@ func battleEnd():
 	if(playerFleeing==true): 
 		combatSetup.onFlee.call(self)
 	elif(playerSubmitting==true): 
-		combatSetup.onSubmit.call(self);
+		combatSetup.onSubmit.call(self)
 	elif(isPartyDefeated(enemyParty)):
 		for item in enemyParty:
 			Global.npc_defeated.emit(item)
 		combatSetup.onVictory.call(self);
 	elif(isPartyDefeated(playerParty)):
-		combatSetup.onDefeat.call(self)
+		if(Global.pc.getStat(StatEnum.Lust).atUL):
+			combatSetup.onSubmit.call(self)
+		else:
+			combatSetup.onDefeat.call(self)
+
+func postBattle():
+	Global.main.removeScene(self)
 
 func preTurn():
 	turnCount+=1
@@ -112,10 +123,13 @@ func preTurn():
 	for _char:Character in _allChars:		#trigger Effect.processCombatTurn
 		var _effs = _char.effects.getItems()
 		for _eff in _effs:
+			if(turnCount==1):	# trigger Effect.onFightStart
+				_eff.onFightStart()
 			_eff.processCombatTurn()
 			
 	_calcTurnOrder()
 	_createEnemyWidgets()
+
 	next_state=STATE.checkDefeat
 
 
@@ -198,10 +212,11 @@ func _postSkillSelect(_skill):
 
 func _postTargetSelect(_target):
 	target=_target
+	Global.hud.show_picture_right(target[0].getBustImage())
 	next_state=STATE.execSkill
 
 func _calcTurnOrder():
-	turnStack=playerParty+enemyParty
+	turnStack=playerParty+enemyParty	#TODO order depends on ?
 
 func _destroyEnemyWidgets():
 	Util.delete_children(Global.hud.hudCenter.enemyList)

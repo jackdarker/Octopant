@@ -12,6 +12,7 @@ var enabled_buttons : Array[Button] = []
 
 
 func setupScene():
+	self.uniqueSceneID=GR.generateUniqueID()
 	for arg in args:
 		if(arg is Character):
 			chars.push_back(arg)
@@ -22,6 +23,7 @@ func setupScene():
 
 func enterScene():
 	Global.hud.hudMode=Hud.HUDMODE.Interaction
+	Global.hud.configureHudCenter(scene_hud.instantiate())
 	Global.hud.visible=true
 	Global.hud.clearOutput()
 	Global.hud.clearInput()

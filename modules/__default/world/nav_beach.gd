@@ -10,21 +10,26 @@ func _on_bt_explore_pressed():
 	Global.pc.getStat(StatEnum.Fatigue).modify(10)
 	GR.increaseModuleFlag("Default","Explored_Beach",1)
 	var explored=GR.getModuleFlag("Default","Explored_Beach",0)
-	var cards=GR.getModuleFlag("Default","ExploreCards_Beach",0)
+	var cards=GR.getModuleFlag("Default","ExploreCards_Beach",0) as int
 	var _rnd=(randi()%(cards+1)) # only sometimes...
 	if(cards<=0 && explored>5):
 		cards=1
 		_rnd=1
 		GR.setModuleFlag("Default","ExploreCards_Beach",cards)
 		Global.hud.say("[b]You are more familiar with your surroundings and may now avoid stumbling randomly into some event.[/b]")
-		
+	elif(cards<=1 && explored>15):
+		cards=2
+		_rnd=1
+		GR.setModuleFlag("Default","ExploreCards_Beach",cards)
+		Global.hud.say("[b]You got even more familiar with your surroundings.[/b]")
 	if(GR.getModuleFlag("Default","Beach_Shack",0)==0):
 		navigate_home()	#force finding shack
 	elif (cards>0 && _rnd>0):	#Todo add to other nav_...
 		var _evts=Global.ES.pickEvents(EventSystem.TRIGGER.Explore,"nav_beach_explore",cards+1,[])
 		if(_evts.size()>0):
 			for _evt:EventBase in _evts:
-				Global.hud.addButton(_evt.EventName,"",_evt.react.bind(EventSystem.TRIGGER.Explore).bind("nav_beach_explore").bind([]))
+				Global.hud.addButton(Util.pickRandomFromArray([_evt.EventName,"???"])  ,
+					"",_evt.react.bind(EventSystem.TRIGGER.Explore).bind("nav_beach_explore").bind([]))
 		else:
 			Global.hud.say("After a while you find yourself back were you came from.")
 			continueScene()

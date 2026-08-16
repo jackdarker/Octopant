@@ -3,10 +3,11 @@ extends EventBase
 # an event that gives the player some loot
 
 func _init():
-	super()
 	ID="EventFindLootCliff"
+	super()
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	var i=randi_range(0, 100)
 	if(i>50):
 		Global.hud.say("There's a rock that looks a little unusual. It's much harder and appears to be made up of several shell-like layers.")

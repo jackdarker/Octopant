@@ -50,11 +50,14 @@ var atLL:bool:
 		return(value<=ll)
 
 ## modifys value by change
-# args["ul"] or args["ll"] = limit change to this upper/lower limit
+# args["ul"] or args["ll"] = limit change up to this upper/lower limit
 func modify(change:float, _args:={}):
 	var _ul=min(ul,_args["ul"] if _args.has("ul") else ul)
 	var _ll=max(ll,_args["ll"] if _args.has("ll") else ll)
-	value=min(_ul,max(_ll,value+change))
+	if(change>=0):
+		value=min(_ul,(value+change))
+	else:
+		value=max(_ll,value+change)
 	changed.emit(ID,value)
 
 

@@ -2,6 +2,8 @@ extends EventBase
 
 # an event that triggers combat
 
+var style:int=0
+
 func _init():
 	ID="EventFindTroubleBeach"
 	super()
@@ -9,7 +11,11 @@ func _init():
 
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearInput()
-	Global.hud.say("Some crab suddenly appears from the sand and claps with his claws.")
+	style=randi()%2
+	if(style==1):
+		Global.hud.say("Some crab suddenly appears from the sand and claps with his claws.")
+	else:
+		Global.hud.say("Some antropomorphic otter splashs from the waves")
 	Global.hud.addButton("Engage","",_engage,null)
 	Global.hud.addButton("Run away","",_ignore,null)
 	return true
@@ -26,6 +32,16 @@ func _ignore():
 
 func _engage():
 	var _setup=CombatSetup.new()
+	var _mob
 	_setup.playerParty.push_back(Global.pc)
-	_setup.enemyParty.push_back(GR.createCharacter("Crab"))
+	if(style==1):
+		_mob=GR.createCharacter("Crab")
+	else:
+		_mob=GR.createCharacter("Otter")
+		_mob.getStat(StatEnum.Lust).modify(20)
+		_setup.onSubmit= func(scene:CombatScene):
+			Global.main.runScene("interaction_scene",
+				["dlg_sbm_otter",	null],
+				Global.main.getCurrentScene().uniqueSceneID)
+	_setup.enemyParty.push_back(_mob)
 	Global.main.runScene("combat_scene",[_setup],Global.main.currentSceneUID)

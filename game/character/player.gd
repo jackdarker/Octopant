@@ -5,8 +5,10 @@ func _init():
 	self.ID="Player"
 	isPlayer=true
 	status.addItem(Status.create(StatEnum.Insanity,0,-30,30))
-	self.skills.addItem(GR.createSkill("Skill_Slash"))
-	self.skills.addItem(GR.createSkill("Skill_Cleave"))
+	#self.skills.addItem(GR.createSkill("Skill_Slash"))
+	#self.skills.addItem(GR.createSkill("Skill_Cleave"))
+	self.skills.addItem(GR.createSkill("Skill_Tease"))
+	self.skills.addItem(GR.createSkill("Skill_Submit"))
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)

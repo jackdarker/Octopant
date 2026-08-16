@@ -3,10 +3,11 @@ extends EventBase
 # triggers if explored enough and unlocks fatigue bonus for further exploring
 
 func _init():
-	super()
 	ID="EventExploreUpgrade"
+	super()
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	if(_location=="nav_beach"):
 		GR.increaseModuleFlag("Default","FatigueFactor_Beach",0.2)
 		Global.hud.say("Your past exlorations of the beach improves your navigation")

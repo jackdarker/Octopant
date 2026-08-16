@@ -1,5 +1,11 @@
 extends CanvasLayer
 
+#TODO 
+# display location-info: resources,quests, NPC
+# fasttravel
+# how to add mod-locations to map?
+ 
+
 func _ready() -> void:
 	visible = false
 

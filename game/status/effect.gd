@@ -22,7 +22,7 @@ var timeLast:int = 0	#the last time the effect was executed again
 var timeDelta:int = 0	#incremental count of seconds since timeLast
 
 var duration:int = 60*60	#after this time remove the effect; in turn for combat else in s
-
+var magnitude:float = 0		#strength of effect
 #override this !
 func _init():
 	pass

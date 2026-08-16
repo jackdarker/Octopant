@@ -3,12 +3,18 @@ extends EventBase
 # an event that gives the player some loot
 
 func _init():
-	super()
 	ID="EventFindLootForest"
+	super()
+
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	var i=randi_range(0, 100)
-	if(i>50):
+	if(i>60):
+		Global.hud.say("You find some branch that could be used as a weapon.")
+		Global.hud.addButton("Ignore it","",_ignore,null)
+		Global.hud.addButton("Cut them","",_take_branch)
+	elif(i>30):
 		Global.hud.say("Some lianes are dangling down from the branches of some trees.\nWith some tool you could cut them and use them for rope.")
 		Global.hud.addButton("Ignore it","",_ignore,null)
 		Global.hud.addButton("Cut them","",_cut_lianes,_can_cut)
@@ -50,5 +56,11 @@ func _cut_lianes():
 		_setup.playerParty.push_back(Global.pc)
 		_setup.enemyParty.push_back(GR.createCharacter("Snake	"))
 		Global.main.runScene("combat_scene",[_setup],Global.main.currentSceneUID)
-	
 	pass
+
+func _take_branch():
+	var _item=GR.createItem("staff_plain")
+	Global.hud.say("Taking the [b]stick[/b], you might need to equip it.")
+	Global.hud.show_picture_center(load(_item.getInventoryImage()))
+	Global.pc.inventory.addItem(_item)
+	Global.main.getCurrentScene().continueScene()

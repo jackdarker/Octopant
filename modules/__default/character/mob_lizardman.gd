@@ -10,4 +10,3 @@ func _init():
 
 func getBustImage()->Texture2D:
 	return load("res://assets/images/chars/lizardman.png")
-

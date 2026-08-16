@@ -5,6 +5,7 @@ func _init():
 	super()
 
 func react(_triggerID,_location,_args)->bool:
+	Global.hud.clearInput()
 	Global.main.runScene("interaction_scene",
 		["dlg_pc_lewdsand",
 		Global.main.getCurrentScene().get_bg()],

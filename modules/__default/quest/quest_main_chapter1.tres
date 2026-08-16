@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=6 format=3 uid="uid://l8gjpghst5i1"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_e4pok"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_70s8j"]
+[ext_resource type="Script" uid="uid://27gxkaeehmlu" path="res://game/quest/step/has_flag.gd" id="3_qigqq"]
+
+[sub_resource type="Resource" id="Resource_e4pok"]
+script = ExtResource("3_qigqq")
+moduleID = "Default"
+flagID = "Beach_Shack"
+valueMin = 1
+valueMax = 999
+title = "Find some place to rest."
+metadata/_custom_type_script = "uid://27gxkaeehmlu"
+
+[sub_resource type="Resource" id="Resource_70s8j"]
+script = ExtResource("2_70s8j")
+hint = "explore the beach to find a path to the forest"
+hidden = 1
+metadata/_custom_type_script = "uid://csw73g6brkjr3"
+
+[resource]
+script = ExtResource("1_e4pok")
+ID = "main_chapter1"
+quest_name = "Main-chapter1"
+quest_description = "So, your are stuck here on the beach. Someone might be coming to rescue you- or not."
+quest_objective = "Maybe it would be a good idea to walk around and see what you can do.  "
+steps = Array[ExtResource("2_70s8j")]([SubResource("Resource_e4pok"), SubResource("Resource_70s8j")])
+metadata/_custom_type_script = "uid://27gxkaeehmlu"

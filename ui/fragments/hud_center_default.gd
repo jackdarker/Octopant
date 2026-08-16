@@ -36,7 +36,7 @@ func say(text,who:Dictionary={}):
 
 func show_picture_center(_texture:Texture):
 	__fix_image_size(_texture,%pictureC)
-	%pictureC.get_parent().visible=(_texture!=null)
+	%pictureC.get_parent().visible=(!!%pictureC.texture)
 
 func show_picture_left(_texture:Texture):
 	__fix_image_size(_texture,%pictureL)
