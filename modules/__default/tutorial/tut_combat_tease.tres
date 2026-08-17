@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://b3uhvfccqmir4"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_0ctlh"]
+
+[resource]
+script = ExtResource("1_0ctlh")
+ID = "combat_tease"
+title = "Lust damage"
+text = "If your opponent is to though to wrestle them down, you could try and tease them to make them lust for you until they subdue. However, not all  foes are susceptable to your  attempts. [br] Of course this works the other way around too..."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

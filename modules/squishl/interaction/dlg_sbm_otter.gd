@@ -1,6 +1,7 @@
 extends SceneExtension
 
 ## submision to otter
+# furr rub / sheath fondling / hand job/ frottage 
 
 const sceneID="dlg_sbm_otter"
 var avatar_player

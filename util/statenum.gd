@@ -14,3 +14,7 @@ const Strength="strength"
 const Agility="agility"
 const Willpower="willpower"
 const Intellect="intellect"
+
+# resistance in %;incoming damage multiplied; negative means damage amplification
+const rst_tease="rst_tease"
+const rst_physical="rst_physical"

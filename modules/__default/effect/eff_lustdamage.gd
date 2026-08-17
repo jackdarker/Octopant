@@ -1,9 +1,12 @@
 class_name effLustDamage extends Effect
 
+var type:String
+
 func _init():
 	ID="eff_lustdamage"
 	duration=0
 	magnitude=5
+	type="tease"
 
 func getName()->String:
 	return("lustdamage")

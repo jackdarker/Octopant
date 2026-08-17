@@ -1,9 +1,12 @@
 class_name effDamage extends Effect
 
+var type:=""
+
 func _init():
 	ID="eff_damage"
 	duration=0
-	magnitude=5
+	magnitude=10
+	type="physical"
 
 func getName()->String:
 	return("damage")

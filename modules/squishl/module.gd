@@ -39,6 +39,7 @@ func getFlags():
 		"Lutes_Met":flag(FlagType.Number),
 		"Lutes_Love":flag(FlagType.Number),
 		"Lutes_Visitable":flag(FlagType.Number),
+		"Otter_sbm_state":flag(FlagType.Number),
 	}
 
 func resetFlagsOnNewDay():

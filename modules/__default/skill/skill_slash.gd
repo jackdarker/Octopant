@@ -11,9 +11,8 @@ func getName()->String:
 func getDescription()->String:
 	return "Cut them with your weapon."
 
-func applyAction(_action:String,_target:Character):
-	var _res=Result.create(true,"")
-	_target.getStat(StatEnum.Pain).modify(15)
-	GR.createEffect("eff_bleed").applyTo(_target)
-	_res.Msg=user.getName() +" hits " + _target.getName()+" cause some bleeding." 
-	Global.hud.say(_res.Msg)
+func getAttackForTarget(target:Character)->AttackData:
+	var attack:=AttackData.create()
+	attack.onHit=[{"target":target,"eff":[GR.createEffect("eff_damage"),GR.createEffect("eff_bleed")]}]
+	attack.onHitMsg=func():return(target.getName()+" got hit and bleeds.")
+	return attack
