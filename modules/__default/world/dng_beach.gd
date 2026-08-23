@@ -48,7 +48,8 @@ func _on_bt_fight_pressed():
 
 func _postVictory(combatScene):
 	GR.increaseModuleFlag("Squishl","Delve_State",1)
-	Global.hud.say("You have won this fight")	#todo fetchloot
+	var msg="You have won this fight. " + combatScene.fetchLoot()
+	Global.hud.say(msg)	#todo fetchloot
 	Global.hud.addButton("Next","",func():Global.main.removeScene(combatScene))
 
 func _postDefeat(combatScene):

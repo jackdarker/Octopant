@@ -8,7 +8,11 @@ var ID:String = "Unknown":		# just crab
 		if(ID!=value && value!=""):
 			uniqueID=value
 			ID=value
-var isPlayer:=false		
+var isPlayer:=false
+var loot:=[]	# [{id:'healthpotion',chance:5, amount:1}]
+var level:int=0
+var XP:int=0
+
 var status:StatusList
 var effects:EffectsList
 var inventory:Inventory
@@ -23,11 +27,15 @@ func _init():
 	outfit=Outfit.new()
 	outfit.user=(self)
 	status=StatusList.new()
-	status.addItem(Status.create(StatEnum.Pain,0,0,60))
+	status.addItem(Status.create(StatEnum.Pain,0,0,99999))
 	status.addItem(Status.create(StatEnum.Fatigue,0,0,100))
 	status.addItem(Status.create(StatEnum.Lust,0,0,60))
 	status.addItem(Status.create(StatEnum.rst_physical,0,-100,100))
 	status.addItem(Status.create(StatEnum.rst_tease,0,-100,100))
+	var stat=StatusDefault.StatStrength.new()
+	stat.base=20
+	
+	status.addItem(stat)
 	effects=EffectsList.new()
 	effects.user=(self)
 	skills= Inventory.new()
@@ -40,7 +48,6 @@ func getName()->String:
 #override this !
 func getBustImage()->Texture2D:
 	return load("res://assets/images/icons/ic_unknown.svg")
-
 
 func getStat(key)->Status:
 	return status.getItemByID(key)
@@ -63,7 +70,8 @@ func processTime(_delta:int):
 func think():
 	pass
 
-# region load/save
+
+#region load/save
 func loadData(data):
 	location=data["location"]
 	ID=data["id"]

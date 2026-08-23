@@ -256,9 +256,35 @@ func _createEnemyWidgets():
 		Global.hud.hudCenter.enemyList.add_child(widget)
 		widget.on_stat_update.call_deferred(_char)
 
-
 func isPartyDefeated(party:Array[Character]):
 	for _char:Character in party:
 		if(!_char.isKnockedOut()):
 			return(false)
 	return(true)
+
+## call this onVictory to grab loot & XP from Mobs
+func fetchLoot()->String: # if you are victorious: grant XP & transfer Loot to player 
+	var msg=''
+	var XP=0
+	var maxLevel = 0
+	var _rnd=randf()*100
+	for n in self.playerParty:
+		maxLevel = max(maxLevel,n.level);
+	#let _x = window.gm.player.Stats.get('luck').value;
+	#_rnd = _rnd-max(-25,min(25,_x)) # player luck capped
+	for n in self.enemyParty:
+		for i in range(n.loot.size()):
+			var _item=Util.pickRandomFromArray(n.loot,n.loot.map(func(x):return(x.chance)))
+			if(_item && _item.ID):
+				var _item2=GR.createItem(_item.ID)
+				_item2.amount=_item.amount
+				msg+= str(_item.amount)+'x '+ _item2.getName()+' '
+				Global.pc.inventory.addItem(_item2)
+
+		# XP reduced/increased if your level is bigger/smaller then foes by 25% per level
+		#XP+=Math.floor(n.baseXPReward* Math.min(3,Math.max(0,1+(n.level-maxLevel)*0.25)));
+
+	msg = 'You got some loot: '+str(XP) +'XP '+msg+'[br]'
+	for n in self.playerParty:
+		n.XP+=XP  #todo all get the same?
+	return(msg)

@@ -15,9 +15,7 @@ func getInventoryImage():
 	return "res://assets/images/items/Gel_S_Green.svg"
 
 func getPossibleActions():
-	return [ 
-		{	"name": "eat",
-			"scene": "UseItemLikeInCombatScene",
+	return [{	"name": "eat",
 			"description": "eat it",
 		}]
 		
@@ -32,4 +30,7 @@ func doAction(action:String,target):
 		if target is Character:
 			var _eff=GR.createEffect("eff_nausea")
 			_eff.applyTo(target)
-		self.destroyMe()
+		self.amount-=1
+
+func canStack()->bool:
+	return true

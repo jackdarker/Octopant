@@ -15,8 +15,7 @@ func getInventoryImage():
 	return "res://assets/images/items/Drink_S_Pink.svg"
 
 func getPossibleActions():
-	return [ 
-		{	"name": "drink",
+	return [{	"name": "drink",
 			"description": "drink it",
 		}]
 		
@@ -30,5 +29,5 @@ func doAction(action:String,target):
 	if(action=="drink"):
 		if target is Character:
 			pass
-		self.destroyMe()
+		self.amount-=1
 	

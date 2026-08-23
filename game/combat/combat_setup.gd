@@ -18,7 +18,8 @@ var onFlee:Callable = defaultFlee			#hook to display battle outro
 static func defaultVictory(scene:CombatScene):
 	#Global.hud.clearOutput()
 	Global.hud.clearInput()
-	Global.hud.say("You have won this fight")	#todo fetchloot
+	var msg="You have won this fight. " + scene.fetchLoot()
+	Global.hud.say(msg)
 	Global.hud.addButton("Next","",func():Global.main.removeScene(scene))
 
 static func defaultDefeat(scene:CombatScene):

@@ -85,7 +85,7 @@ func onRemove():
 	changed.emit(ID)
 	pass
 
-# you can call destroyMe or list.removeItem, it will passby here anyway
+# call inventory.removeItem, instead !
 var __destroyInProcess:int=0
 func destroyMe():
 	if __destroyInProcess<=0:

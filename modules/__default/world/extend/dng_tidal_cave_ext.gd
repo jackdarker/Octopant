@@ -55,6 +55,6 @@ func _postVictory(combatScene):
 
 func _postDefeat(combatScene):
 	parent_scene._defeated=true
-	Global.hud.say("After loosing that fight you find yourself washed up at the shoreline.")	#todo fetchloot
+	Global.hud.say("After loosing that fight you find yourself washed up at the shoreline.")
 	Global.hud.addButton("Next","",	func():Global.main.removeScene(combatScene))
 	

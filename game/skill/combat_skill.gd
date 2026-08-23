@@ -18,7 +18,7 @@ func doAction(_action:String,_targets):
 					_item.target.effects.addItem(eff)
 					if(attacks[i].onHitMsg):
 						Global.hud.say(attacks[i].onHitMsg.call())
-		else:
+		else: # attack missed
 			Global.hud.say(attacks[i].Msg)
 		#if(checkDogded(_target).OK):
 		#	Global.hud.say(_target.getName()+" avoided "+user.getName()+" attack.")
@@ -37,7 +37,7 @@ func getAttackForTarget(target:Character)->AttackData:
 	var attack:=AttackData.create()
 	return attack
 
-## calculates the damage of an physical attack
+## calculates the damage of an attack
 func calcAttack(attack:AttackData)->AttackData:
 	var result = AttackData.create()
 	var defender=attack.onHit[0].target
@@ -81,9 +81,22 @@ func calcEvasion(defender,attack:AttackData)->AttackData:
 			attack.Msg += 'Using agility, '+ defender.getName() +' was able to dodge the attack.</br> '
 
 	return attack
-	
+
+
+# If evasion-roll fails, their is a chance that parry is rolled:
+# - consumes some poise
+# - parry only works for weapon of similiar size: a Zweihänder is to slow to parry a saber, a dagger is to light to deflect a club
+# - requires minimum weapon-skill (f.e. projectile deflection )
+# otherwise continue chain
+# parry-result depends on agility+perception
+# - bonus for skills
+# - bonus for some weapons
+# on critical fail- full damage, poise damage
+# on fail - full damage
+# on success no damage is taken (might consume weapon-stability)
+# if a critical is rolled, 50% of the attackers damage is reflected to him
 func calcParry(defender,attack:AttackData)->AttackData:
-	return attack
+	return attack	#TODO
 	
 #if all else failed you have to absorb the hit:
 #DR = sum of armor (with individual skill-bonus) + magic armor

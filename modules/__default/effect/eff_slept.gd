@@ -21,7 +21,14 @@ func processTime(_delta:int):
 	if duration<=0:
 		destroyMe()
 		return
+
+func onApply():
+	user.status.addModifier(StatEnum.Strength,{"ID":ID,"bonus":2})
+	super()	
 	
+func onRemove():
+	user.status.removeModifier(StatEnum.Strength,{"ID":ID})
+	super()
 
 func getDescription()->String:
 	return("well rested")

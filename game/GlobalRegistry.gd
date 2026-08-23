@@ -687,3 +687,14 @@ func addCharacterAsUnique(character:Character):
 		return
 	characterInstances[character.uniqueID]=character
 #endregion
+
+#region stats
+var _StatTmpl={"Strength":StatusDefault.StatStrength}
+func createStat(ID: String)->Status:
+	if(!_StatTmpl.has(ID)):
+		#Log.error("ERROR: Stat with the ID "+ID+" wasn't found")
+		#return null
+		return Status.new()	#TODO
+	var newItem = _StatTmpl[ID].new()
+	return newItem
+#endregion

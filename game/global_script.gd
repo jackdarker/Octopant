@@ -87,7 +87,7 @@ func getAllSaves()->Array:
 func deleteSaveFile(slot):
 	DirAccess.remove_absolute(SAVE_DIR.path_join(slot))
 
-var compress_save:=true
+var compress_save:=false
 func saveToFileRaw(path,saveData):
 	if(compress_save):
 		var writer = ZIPPacker.new()

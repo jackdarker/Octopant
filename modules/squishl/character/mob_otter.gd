@@ -8,6 +8,7 @@ func _init():
 	self.ID="Otter"
 	self.combatAI=CombatAIBase.new()
 	self.combatAI.char=self
+	self.loot=[{"ID":'fur_otter',"chance":50, "amount":1}]
 	skills.addItem(GR.createSkill("Skill_Heal"))
 	skills.addItem(GR.createSkill("Skill_Tease"))
 

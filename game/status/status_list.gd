@@ -6,8 +6,10 @@ class_name StatusList extends Node
 
 var items:Dictionary={}	# using dictionary, might be faster then array
 
-func addItem(item: Status):	
+func addItem(item: Status):
+	item.parent=self
 	items[item.ID]=item
+	item.calc()
 
 func addItemID(itemID:String):
 	var newItem = GR.createStat(itemID)
@@ -43,6 +45,36 @@ func getItemByID(itemID)->Status:
 			return items[item]
 	return null
 
+## modifiers can be added to change value or limit of a stat; f.e caused by Effect
+## see also Status.updateModifier
+## addModifier("Strength",{ID:"SuperPotion" bonus:5.0 lmin:0 lmax:20}) 
+## use removeModifier to remove the modifier
+func addModifier(toId:String,modData:Dictionary):
+	var _stat = getItemByID(toId)
+	var _oldMods:Array = _stat.modifier
+	var _x:int=-1
+	for i in range(_oldMods.size()):
+		if(_oldMods[i].ID==modData.ID):
+			_x=i
+	if(_x>=0):
+		_oldMods.remove_at(_x)
+	_oldMods.push_back(modData);
+	#window.gm.pushLog(
+	_stat.calc()
+
+func removeModifier(toId,modData):
+	var _stat = getItemByID(toId);
+	var _oldMods:Array = _stat.modifier;
+	var _x:int=-1;
+	for i in range(_oldMods.size()):
+		if(_oldMods[i].ID==modData.ID):
+			_x=i
+
+	if(_x>=0):
+		_oldMods.remove_at(_x)
+	#window.gm.pushLog(
+	_stat.calc()
+
 # register callback when stat is modified
 func registerSignalItemChanged(callable:Callable,ID:String):
 	var item=getItemByID(ID)
@@ -59,10 +91,11 @@ func unregisterSignalItemChanged(callable:Callable,ID:String):
 func loadData(data):
 	items.clear()
 	for item in data["items"]:
-		var _item=Status.new()
+		var _item=GR.createStat(item.ID)
 		_item.loadData(item)
 		addItem(_item)
-	pass
+	for item in items.values():
+		item.calc()
 			
 			
 func saveData()->Variant:

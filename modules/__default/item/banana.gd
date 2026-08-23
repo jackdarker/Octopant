@@ -30,5 +30,5 @@ func doAction(action:String,target):
 	if(action=="eat"):
 		if target is Character:
 			pass
-		self.destroyMe()
+		self.amount-=1
 	
