@@ -2,6 +2,11 @@ class_name effDamage extends Effect
 
 var type:=""
 
+static func create(_magnitude)->effDamage:
+	var _eff=effDamage.new()
+	_eff.magnitude=_magnitude
+	return _eff
+
 func _init():
 	ID="eff_damage"
 	duration=0

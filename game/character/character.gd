@@ -32,10 +32,7 @@ func _init():
 	status.addItem(Status.create(StatEnum.Lust,0,0,60))
 	status.addItem(Status.create(StatEnum.rst_physical,0,-100,100))
 	status.addItem(Status.create(StatEnum.rst_tease,0,-100,100))
-	var stat=StatusDefault.StatStrength.new()
-	stat.base=20
-	
-	status.addItem(stat)
+
 	effects=EffectsList.new()
 	effects.user=(self)
 	skills= Inventory.new()

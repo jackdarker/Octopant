@@ -30,6 +30,7 @@ var loottables: Dictionary = {}
 var maps: Dictionary = {}
 
 var recipes: Dictionary = {}
+var recipesUnlocked: Dictionary = {}	#{"staff_plain":1}
 var recipesByTag: Dictionary = {}
 
 var quests: Dictionary = {}
@@ -68,10 +69,12 @@ func registerEverything():
 	loadingFinished.emit()
 
 #region save/load
-func loadData(data):
+func loadData(data:Dictionary):
 	currentUniqueID=data["uid"]
+	recipesUnlocked=data["recipesUnlocked"] if data.has("recipesUnlocked") else {}
 	#cleanout all present flags
 	var _moduleFlags={}
+	
 	#for each loaded module restore saved flags
 	#be aware that updated exe might have modules new/missing or have changed structures	
 	for moduleid in modules:
@@ -91,6 +94,7 @@ func saveData()->Variant:
 	var data:Dictionary ={
 		"uid":currentUniqueID,
 		"uniqueChars":{},
+		"recipesUnlocked": recipesUnlocked
 	}
 	for flagid in flags.keys():	#Todo there could be colliding moduleid with flagid
 		data[flagid]=flags[flagid]
@@ -521,8 +525,14 @@ func getRecipesByTag(tags:Array)->Array:
 		if(recipesByTag.has(tag)):
 			_items=recipesByTag[tag]		#TODO filter items that have all tags (AND)
 	for item in _items:
-		itemsInstances.append(getRecipe(item))
+		if(recipesUnlocked.has(item) && recipesUnlocked[item]>0):
+			itemsInstances.append(getRecipe(item))
 	return itemsInstances
+
+func unlockRecipe(itemID:String,state:int=1):
+	if(state>0 && (!recipesUnlocked.has(itemID) || recipesUnlocked[itemID]<1)):
+		Global.toolTip.showNotification("recipe unlocked","learned to craft "+itemID)
+		recipesUnlocked[itemID]=state
 #endregion
 
 #region Quests

@@ -11,7 +11,7 @@ var user:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 # set item.amount if you want add multiple items
 func addItem(item: ItemBase):
 	if(item.wrefInventory != null):

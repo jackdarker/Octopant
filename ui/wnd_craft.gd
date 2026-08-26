@@ -5,11 +5,15 @@ extends CanvasLayer
 
 func _ready() -> void:
 	visible=false
+	%bt_available.pressed.connect(update_list)
 
 func _on_visibility_changed() -> void:
-	if !%list:
+	if !%list || !visible:
 		return
 	$PanelContainer/VBoxContainer/Label.text="Crafting - "+craftStation
+	%lb_desc.text=""
+	%lbl_Result.text=""
+	Tutorials.tutorial_trigger.emit("basic_crafting")
 	update_list()
 
 func update_list():
@@ -24,10 +28,12 @@ func update_list():
 		
 	if visible:
 		var _list=GR.getRecipesByTag([craftStation])		#TODO filter unknown recipes
-		for item in _list:
-			var _item=ListItem.create_item(item)
-			_item.selected.connect(_item_selected)
-			list.add_child(_item)	
+		for item:Recipe in _list:
+			var _res:Result=CondCheck.create(item.getCheck()).check(character)
+			if(_res.OK || !%bt_available.button_pressed):
+				var _item=ListItem.create_item(item)
+				_item.selected.connect(_item_selected)
+				list.add_child(_item)	
 
 func _item_selected(ID):
 	var _item=GR.getRecipe(ID)

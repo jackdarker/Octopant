@@ -56,7 +56,6 @@ func getTooltipParent():
 #endregion
 
 #region notification
-
 func showNotification(title: String, message: String, _icon: Texture2D = null):
 	var panel:NotificationDisplay = NotificationScene.instantiate()
 	panel.set_size(Vector2(10,10))

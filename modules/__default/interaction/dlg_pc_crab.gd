@@ -31,7 +31,11 @@ func get_buttons(menuid:String,buttons:Array):
 		__hasSeashell(true)
 		Global.main.item_trade.emit(Global.pc.uniqueID,"Crab","seashell",1)
 		Global.pc.inventory.addItemID("gel_green")
-		buttons.push_back(Button_Config.new("Thats nasty","",cb_menu("leave",true)))
+		buttons.push_back(Button_Config.new("Thats nasty","",cb_menu("recipe1",true)))
+	if(menuid=="recipe1"):
+		GR.unlockRecipe("knife_seashell")
+		Global.hud.say("But maybe its useful to glue something together..")
+		buttons.push_back(Button_Config.new("Leave","",Global.main.removeScene.bind(parent_scene)))
 	if(menuid=="nohelp1"):
 		Global.hud.say("I can't help you right now.")
 		Global.hud.say("But I need seashell!",NPC_Format)

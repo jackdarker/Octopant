@@ -73,7 +73,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass #map.texture=Global.World.mapview.get_texture()
-	
+
+func postLoadSync():
+	on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()
+	playerHud.on_effect_update_all.call_deferred(Global.pc)
 	
 func configureHudCenter(hudNew:Control):
 	#if the actual control matches the type of new control, dont change

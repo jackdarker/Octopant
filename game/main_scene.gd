@@ -28,7 +28,7 @@ func _ready() -> void:
 	Global.ES.registerEventTriggers()
 	# connect events from UI & logic
 	Global.QS.quest_accepted.connect(func(quest): Global.toolTip.showNotification("Quest started",quest.quest_name))
-	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name,load("res://assets/images/icons/ic_unknown.svg")))
+	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name,load("res://assets/images/icons/ic_checked.svg")))
 	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	time_passed.connect(Global.hud.processTime)
 	time_passed.connect(Global.World.processTime)
@@ -309,7 +309,7 @@ func postLoad():
 	Global.World.setupMaps()
 		#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
-	Global.hud.on_pc_stat_update.call_deferred("pain",0)	#todo Global.pc.effects.forceUpdate()
+	Global.hud.postLoadSync()
 	addDebugCmds() # add debug-commands TODO is this correct place?
 
 	var roomID=Global.pc.location #map_mansion@room 3

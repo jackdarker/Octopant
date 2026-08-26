@@ -37,6 +37,9 @@ func getCraftDescription(character:Character)->String:
 
 #override this
 func getInventoryImage():
+	var _item=GR.createItem(getItemID())
+	if(_item):
+		return _item.getInventoryImage()
 	return "res://assets/images/icons/ic_unknown.svg"
 
 #override this

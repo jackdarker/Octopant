@@ -22,6 +22,9 @@ func processTime(_delta:int):
 		destroyMe()
 		return
 
+func getIcon()->StringName:
+	return "res://assets/images/icons/ic_face_happy.svg"
+
 func onApply():
 	user.status.addModifier(StatEnum.Strength,{"ID":ID,"bonus":2})
 	super()	

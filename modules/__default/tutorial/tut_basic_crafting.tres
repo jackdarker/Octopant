@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://x4lxo6y1q005"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_n04y5"]
+
+[resource]
+script = ExtResource("1_n04y5")
+ID = "basic_crafting"
+title = "Crafting"
+text = "In your shack (and some other locations) you can craft items with collected ingredients.[br] Crafted items will go into your inventory. [br] Crafting recipes can be unlocked by talking to NPC and exploring the world.  [br] Click on a list-item to check if you have the required components, then click the craft-button. "
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

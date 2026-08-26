@@ -15,7 +15,7 @@ var char:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 
 ## override this; default will just choose a random target and try to find a random Attack-Skill to use
 func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->CombatSkillResult:

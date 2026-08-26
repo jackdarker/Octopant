@@ -15,7 +15,7 @@ var user:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 var hidden:int=0
 var timeStart:int		#when the effect was first applied
 var timeLast:int = 0	#the last time the effect was executed again

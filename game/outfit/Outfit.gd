@@ -17,7 +17,7 @@ var user:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 		
 func getAllIds()->Array:
 	return(list.map(func(x):return(x.item.ID)))

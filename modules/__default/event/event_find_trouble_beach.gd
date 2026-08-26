@@ -11,10 +11,12 @@ func _init():
 
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearInput()
-	style=randi()%2
-	if(style==1):
+	var _rnd=randi()%100
+	if(_rnd<=50):
+		style=1
 		Global.hud.say("Some crab suddenly appears from the sand and claps with his claws.")
 	else:
+		style=2
 		Global.hud.say("Some antropomorphic otter splashs from the waves")
 	Global.hud.addButton("Engage","",_engage,null)
 	Global.hud.addButton("Run away","",_ignore,null)

@@ -27,18 +27,47 @@ theme_type_variation = &"LabelHeader"
 text = "Character-Info"
 horizontal_alignment = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer"]
+[node name="TabContainer" type="TabContainer" parent="Panel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+current_tab = 1
+
+[node name="Status" type="MarginContainer" parent="Panel/VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer/MarginContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer/TabContainer/Status"]
 layout_mode = 2
 
-[node name="tbl" type="Control" parent="Panel/VBoxContainer/MarginContainer2/ScrollContainer"]
+[node name="tbl_status" type="Control" parent="Panel/VBoxContainer/TabContainer/Status/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+script = ExtResource("4_fk6vg")
+metadata/_custom_type_script = "uid://by7ubl72da02t"
+
+[node name="Skills" type="MarginContainer" parent="Panel/VBoxContainer/TabContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/VBoxContainer/TabContainer/Skills"]
+layout_mode = 2
+
+[node name="tbl_skills" type="Control" parent="Panel/VBoxContainer/TabContainer/Skills/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -66,4 +95,5 @@ size_flags_vertical = 0
 text = "Back"
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="tab_changed" from="Panel/VBoxContainer/TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/MarginContainer/HBoxContainer/bt_back" to="." method="_on_bt_back_pressed"]

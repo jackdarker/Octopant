@@ -13,7 +13,7 @@ func react(_triggerID,_location,_args)->bool:
 	if(i>60):
 		Global.hud.say("You find some branch that could be used as a weapon.")
 		Global.hud.addButton("Ignore it","",_ignore,null)
-		Global.hud.addButton("Cut them","",_take_branch)
+		Global.hud.addButton("Take it","",_take_branch)
 	elif(i>30):
 		Global.hud.say("Some lianes are dangling down from the branches of some trees.\nWith some tool you could cut them and use them for rope.")
 		Global.hud.addButton("Ignore it","",_ignore,null)
@@ -54,12 +54,12 @@ func _cut_lianes():
 		Global.hud.say("Damit, its not a liane but a snake !")
 		var _setup=CombatSetup.new()
 		_setup.playerParty.push_back(Global.pc)
-		_setup.enemyParty.push_back(GR.createCharacter("Snake	"))
+		_setup.enemyParty.push_back(GR.createCharacter("Snake"))
 		Global.main.runScene("combat_scene",[_setup],Global.main.currentSceneUID)
 	pass
 
 func _take_branch():
-	var _item=GR.createItem("staff_plain")
+	var _item=GR.createItem("twig")
 	Global.hud.say("Taking the [b]stick[/b], you might need to equip it.")
 	Global.hud.show_picture_center(load(_item.getInventoryImage()))
 	Global.pc.inventory.addItem(_item)

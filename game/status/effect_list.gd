@@ -12,7 +12,7 @@ var user:Character:
 	set(value):
 		wrefCharacter=weakref(value)
 	get:
-		return(wrefCharacter.get_ref())
+		return(wrefCharacter.get_ref() if wrefCharacter else null)
 # use effect.applyTo(target) instead !
 func addItem(item: Effect):
 	var _item=getItemByID(item.ID)
