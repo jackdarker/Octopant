@@ -38,6 +38,10 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("Beach","",Global.main.runScene.bind("nav_beach")))
 	if(menuid=="climb"):
 		Global.hud.say("You have climbed "+str(_h)+"m.")
+		if(GR.hasRecipe("rope_liane")<=0):
+			Global.hud.say("Climbing would be much easier if I could place some rope here.")
+			Global.hud.say("[b]You got an idea to use lianes for rope.[/b]")
+			GR.unlockRecipe("rope_liane")
 		buttons.push_back(Button_Config.new("Return to ground","",_on_climb_down))
 		buttons.push_back(Button_Config.new("Climb further up","",_on_climb,_can_climb))
 		if((_h>=10 && _r<=0)||(_h>=20 && _r<=1)||(_h>=30 && _r<=2) ):

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://br0vl8rcvfy87"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_h8rli"]
+
+[resource]
+script = ExtResource("1_h8rli")
+ID = "basic_hungry"
+title = "hungry (for food)"
+text = "Your hunger will go up over time (check the list of effects applied to you). Eating something while you are hungry might give you some beneficial effect."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

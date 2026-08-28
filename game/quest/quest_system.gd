@@ -25,8 +25,10 @@ func start_quest(quest: Quest, args: Dictionary = {}) -> Quest:
 	active.add_quest(quest)
 	quest_accepted.emit(quest)
 	quest.start(args)
-	quest.completed.connect(quest_finished.bind(quest))
-	quest.updated.connect(quest_updated.emit.bind(quest))
+	if(!quest.completed.is_connected(quest_finished)):
+		quest.completed.connect(quest_finished.bind(quest))
+	if(!quest.updated.is_connected(quest_updated.emit)):
+		quest.updated.connect(quest_updated.emit.bind(quest))
 	return quest
 
 ## Complete a given quest, and add it to the completed pool.[br]

@@ -3,8 +3,6 @@ extends Recipe
 func getCheck()->Array[CondCheck.Cond_Base]:
 	return [CondCheck.Cond_Resource.create("net_broken",1)]
 
-func getID()->String:
-	return "thread_rough"
 
 #override this
 func getItemID()->String:

@@ -10,7 +10,7 @@ class StatStrength extends Status:
 	func updateModifier():
 		if(!modifys.has(StatEnum.Pain)):
 			modifys.push_back(StatEnum.Pain)
-		parent.addModifier(StatEnum.Pain,{"ID":ID, "lmax": parent.getItemByID(ID).value*1.5});
+		parent.addModifier(StatEnum.Pain,{"ID":ID, "lmax": 30+value*1.5});
 		
 class StatAgility extends Status:
 	func _init():
@@ -20,7 +20,7 @@ class StatAgility extends Status:
 		if(!modifys.has(StatEnum.Fatigue)):
 			modifys.push_back(StatEnum.Fatigue)
 		parent.addModifier(StatEnum.Fatigue,{"ID":ID, 
-		"lmax": parent.getItemByID(ID).value*1.5});
+		"lmax": 30+value*1.5});
 		
 class StatIntellect extends Status:
 	func _init():

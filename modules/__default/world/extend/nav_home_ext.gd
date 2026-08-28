@@ -14,6 +14,7 @@ func get_buttons(menuid:String,buttons:Array):
 	if(menuid==""):
 		buttons.push_back(Button_Config.new("go somewhere else...","",parent_scene.menu.bind("walk")))
 		buttons.push_back(Button_Config.new("craft...","",parent_scene._on_bt_craft_pressed))
+		buttons.push_back(Button_Config.new("grab some berries","",_take_fruit))
 		buttons.push_back(Button_Config.new("sleep until morning","",parent_scene._on_bt_sleep_pressed))
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")
@@ -22,3 +23,10 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("debug","",Global.main.runScene.bind("nav_debug")))
 			
 	return(buttons)
+
+func _take_fruit():
+	var _item=GR.createItem("banana")
+	Global.hud.say("You pickup the [b]banana[/b].")
+	Global.hud.show_picture_center(load(_item.getInventoryImage()))
+	Global.pc.inventory.addItem(_item)
+	Global.main.getCurrentScene().continueScene()

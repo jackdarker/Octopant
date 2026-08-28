@@ -6,8 +6,6 @@ func getCheck()->Array[CondCheck.Cond_Base]:
 	return [CondCheck.Cond_Resource.create("twig",1),
 	CondCheck.Cond_Resource.create("thread_rough",2)]
 
-func getID()->String:
-	return "staff_plain"
 
 #override this
 func getItemID()->String:

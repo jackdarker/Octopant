@@ -27,7 +27,8 @@ func saveData() -> Dictionary:
 func postLoad()->void:
 	if self.stopped:
 		return
-	Global.main.item_trade.connect(_on_item_trade)
+	if(!Global.main.item_trade.is_connected(_on_item_trade)):
+		Global.main.item_trade.connect(_on_item_trade)
 	meets_condition()
 
 func meets_condition() -> bool:

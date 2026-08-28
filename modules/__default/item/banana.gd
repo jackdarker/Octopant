@@ -29,6 +29,16 @@ func canDo(action,_target)->Result:
 func doAction(action:String,target):
 	if(action=="eat"):
 		if target is Character:
+			var eff=target.effects.getItemByID("eff_hungry")
+			if(eff && eff.magnitude>10):
+				user.status.getItemByID(StatEnum.Pain).modify(-10)
+				user.status.getItemByID(StatEnum.Fatigue).modify(-10)
+			eff=GR.createEffect("eff_hungry")
+			eff.magnitude-=20
+			target.effects.addItem(eff)
+
 			pass
 		self.amount-=1
 	
+func canStack()->bool:
+	return true

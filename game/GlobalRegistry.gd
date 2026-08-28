@@ -533,6 +533,12 @@ func unlockRecipe(itemID:String,state:int=1):
 	if(state>0 && (!recipesUnlocked.has(itemID) || recipesUnlocked[itemID]<1)):
 		Global.toolTip.showNotification("recipe unlocked","learned to craft "+itemID)
 		recipesUnlocked[itemID]=state
+
+func hasRecipe(itemID:String)->int:
+	if recipesUnlocked.has(itemID):
+		return(0)
+	return (recipesUnlocked[itemID])
+
 #endregion
 
 #region Quests

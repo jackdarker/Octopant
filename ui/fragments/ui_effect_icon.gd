@@ -11,9 +11,10 @@ func setItem(item:Effect):
 	setTexture(item.getIcon())
 	setColor(item.getIconColor())
 	
-
+## modulate background
 func setColor(newcolor):
-	self_modulate = newcolor
+	$ColorRect.visible=true
+	$ColorRect.self_modulate = newcolor
 
 func setTexture(texture: String):
 	$TextureRect.texture = load(texture)

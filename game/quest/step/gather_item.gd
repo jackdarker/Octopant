@@ -21,8 +21,10 @@ func stop()->void:
 func postLoad()->void:
 	if self.stopped:
 		return
-	Global.pc.inventory.item_added.connect(_on_item_added)
-	Global.pc.inventory.item_removed.connect(_on_item_removed)
+	if(Global.pc.inventory.item_added.is_connected(_on_item_added)):
+		Global.pc.inventory.item_added.connect(_on_item_added)
+	if(Global.pc.inventory.item_removed.is_connected(_on_item_removed)):
+		Global.pc.inventory.item_removed.connect(_on_item_removed)
 	meets_condition()
 
 func meets_condition() -> bool:

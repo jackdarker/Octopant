@@ -34,6 +34,10 @@ func _dig():
 		Global.hud.say("Embedded into the sand is a [b]piece of a net[/b], possibly ripped of from some fishing net.")
 		Global.hud.show_picture_center(load(_item.getInventoryImage()))
 		Global.pc.inventory.addItem(_item)
+		if(GR.hasRecipe("thread_rough")<=0):
+			Global.hud.say("I could break this apart to get some thorough threads for tying things together.")
+			Global.hud.say("[b]Recipe for thorough threads discovered.[/b]")
+			GR.unlockRecipe("thread_rough")
 	elif(i>0):
 		var _item=GR.createItem("seashell")
 		Global.hud.say("You found a [b]pretty seaschell[/b].")

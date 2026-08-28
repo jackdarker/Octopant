@@ -1,20 +1,30 @@
 [gd_scene load_steps=3 format=3 uid="uid://b80fbqrojg2l0"]
 
 [ext_resource type="Script" uid="uid://d2vlmgtq4ob5a" path="res://ui/fragments/ui_effect_icon.gd" id="1_1arn8"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_4ji2b"]
+[ext_resource type="Texture2D" uid="uid://56xtevv0paf" path="res://assets/images/icons/ic_meal.svg" id="2_wiahx"]
 
 [node name="StatusIcon" type="Control"]
+modulate = Color(0.7287905, 0.74400336, 0.27899972, 1)
+self_modulate = Color(0.66135424, 0.25660938, 0.77232385, 1)
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_1arn8")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = SubResource("PlaceholderTexture2D_4ji2b")
+texture = ExtResource("2_wiahx")
 expand_mode = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

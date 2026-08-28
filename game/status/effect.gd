@@ -20,7 +20,6 @@ var hidden:int=0
 var timeStart:int		#when the effect was first applied
 var timeLast:int = 0	#the last time the effect was executed again
 var timeDelta:int = 0	#incremental count of seconds since timeLast
-
 var duration:int = 60*60	#after this time remove the effect; in turn for combat else in s
 var magnitude:float = 0		#strength of effect
 #override this !
@@ -46,7 +45,7 @@ func getIcon()->StringName:
 	return "res://assets/images/icons/ic_unknown.svg"
 
 func getIconColor()->Color:
-	return Color.GRAY
+	return Color.TRANSPARENT
 
 # combat-only effects are removed post-combat
 func isCombatOnly()->bool:
@@ -103,7 +102,7 @@ func loadData(data):
 	duration=data["duration"]
 	timeLast=data["timeLast"]
 	timeDelta=data["timeDelta"]
-	pass
+	magnitude=data["magnitude"]
 			
 func saveData()->Variant:
 	var data ={	
@@ -115,6 +114,7 @@ func saveData()->Variant:
 		"start":timeStart,
 		"duration":duration,
 		"timeLast":timeLast,
-		"timeDelta":timeDelta
+		"timeDelta":timeDelta,
+		"magnitude":magnitude,
 	}
 	return(data)

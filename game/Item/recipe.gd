@@ -10,11 +10,11 @@
 func getTags()->Array:
 	return []
 	
-#override this
+#override this only for alternative recipes with different id 
 func getID()->String:
-	return "unknown"
+	return getItemID()
 
-#override this
+#override this with the ID of crafted item
 func getItemID()->String:
 	return "unknown"
 

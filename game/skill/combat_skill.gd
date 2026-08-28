@@ -78,7 +78,7 @@ func calcEvasion(defender,attack:AttackData)->AttackData:
 	else:		
 		if(hitRate<rnd):
 			attack.OK = false;
-			attack.Msg += 'Using agility, '+ defender.getName() +' was able to dodge the attack.</br> '
+			attack.Msg += 'Using agility, '+ defender.getName() +' was able to dodge the attack. '
 
 	return attack
 

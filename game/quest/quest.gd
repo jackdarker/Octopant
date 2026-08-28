@@ -53,7 +53,8 @@ func start(_args: Dictionary = {}) -> void:
 	for step: QuestStep in steps:
 		step.index=i
 		step.ready()
-		step.updated.connect(_update_step.bind(step))
+		if(step.updated.is_connected(_update_step)):
+			step.updated.connect(_update_step.bind(step))
 		i+=1
 	started.emit()
 

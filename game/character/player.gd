@@ -20,6 +20,7 @@ func post_sleep():
 	getStat(StatEnum.Fatigue).modify(-99999)
 	getStat(StatEnum.Lust).modify(getStat(StatEnum.Lust).value*-0.5)
 	GR.createEffect("eff_slept").applyTo(self)
+	GR.createEffect("eff_hungry").applyTo(self)
 	
 func getBustImage()->Texture2D:
 	return load("res://assets/images/chars/bust_pc_start.png")

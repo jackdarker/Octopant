@@ -9,11 +9,15 @@ func _init():
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearInput()
 	var i=randi_range(0, 100)
-	if(i>50):
+	if(i>70):
 		Global.hud.say("There's a rock that looks a little unusual. It's much harder and appears to be made up of several shell-like layers.")
 		Global.hud.addButton("It's a rock, who cares","",_ignore,null)
-		if(false):
+		if(false):	#TODO queststate
 			Global.hud.addButton("Take it","",_take_flint,null)
+	elif(i>50):
+		Global.hud.say("Looks like some banana.")
+		Global.hud.addButton("Let it be","",_ignore,null)
+		Global.hud.addButton("Take it","",_take_fruit,null)
 	else:
 		Global.hud.say("Nothing was found")
 		Global.hud.addButton("Move on","",_ignore,null)
@@ -31,6 +35,13 @@ func _ignore():
 func _take_flint():
 	var _item=GR.createItem("stone_flint")
 	Global.hud.say("You pickup the [b]flint stone[/b].")
+	Global.hud.show_picture_center(load(_item.getInventoryImage()))
+	Global.pc.inventory.addItem(_item)
+	Global.main.getCurrentScene().continueScene()
+
+func _take_fruit():
+	var _item=GR.createItem("banana")
+	Global.hud.say("You pickup the [b]banana[/b].")
 	Global.hud.show_picture_center(load(_item.getInventoryImage()))
 	Global.pc.inventory.addItem(_item)
 	Global.main.getCurrentScene().continueScene()
