@@ -1,5 +1,7 @@
 extends EquipmentBase
 
+var _damage:=25.0
+
 func _init():
 	super()
 	ID="spear_stone"
@@ -7,12 +9,13 @@ func _init():
 	slotUse=[BodySlotEnum.RHand]
 
 func getDescription()->String:
-	return("Culmination point of stick & stone technology.")
+	return("Culmination point of stick & stone technology. \nDMG: "+str(_damage))
 
 
 func attackMod(target:Character)->AttackData:
 	var mod=AttackData.create()
-	mod.onHit=[{"target":target,"eff": [effDamage.create(25)]}]
+	mod.hitChance=80.0
+	mod.onHit=[{"target":target,"eff": [effDamage.create(_damage)]}]
 	return mod
 
 func equip(target:Character)->Result:

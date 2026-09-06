@@ -21,6 +21,7 @@ Kind of Visual Novel Framework.
 - paperdoll based on 3dmodel
 - XP and levelup
 - difficult adjustment (in general and related to player level)
+- visual damage effect (overlay on bust?) 
 - turnbased combat deckbuilderlike  
 - tilebased dungeons  (predefined or randomized)
 - NPC relation/love

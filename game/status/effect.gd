@@ -6,7 +6,8 @@ signal changed(ID:String)	#! you need to send changed to update UI
 #onApply,onRemove,onFightStart,onFightEnd also onProcessTime and onCombatProcessTurn if some value is modified
 
 enum HIDE {NONE=0, NAME=1, VALUE=2, DURATION=4, ALL=255}	#bitmask !
-
+#icon-BG color defaults
+const STATECOLOR={NONE=Color.TRANSPARENT,NEUTRAL=Color.LIGHT_GRAY ,GOOD=Color.LIGHT_GREEN,MEDIUM=Color.LIGHT_GOLDENROD,BAD=Color.LIGHT_CORAL}
 
 var ID:String="UNKNOWN"
 var uniqueID:int = -1

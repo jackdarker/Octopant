@@ -4,8 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://56xtevv0paf" path="res://assets/images/icons/ic_meal.svg" id="2_wiahx"]
 
 [node name="StatusIcon" type="Control"]
-modulate = Color(0.7287905, 0.74400336, 0.27899972, 1)
-self_modulate = Color(0.66135424, 0.25660938, 0.77232385, 1)
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 3
 anchors_preset = 0

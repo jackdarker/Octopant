@@ -1,5 +1,7 @@
 extends EquipmentBase
 
+var _damage:=15.0
+
 func _init():
 	super()
 	ID="staff_plain"
@@ -7,7 +9,7 @@ func _init():
 	slotUse=[BodySlotEnum.RHand]
 
 func getDescription()->String:
-	return("This is basically just some stick as long as your arm.")
+	return("This is basically just some stick as long as your arm. \nDMG: "+str(_damage))
 
 #override this !
 func getInventoryImage()->String:
@@ -16,7 +18,7 @@ func getInventoryImage()->String:
 
 func attackMod(target:Character)->AttackData:
 	var mod=AttackData.create()
-	mod.onHit=[{"target":target,"eff": [effDamage.create(15)]}]
+	mod.onHit=[{"target":target,"eff": [effDamage.create(_damage)]}]
 	return mod
 
 func equip(target:Character)->Result:

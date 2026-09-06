@@ -17,15 +17,20 @@ func stop()->void:
 	super()
 	Global.pc.inventory.item_added.disconnect(_on_item_added)
 	Global.pc.inventory.item_removed.disconnect(_on_item_removed)
-	
+
+func saveData() -> Dictionary:
+	var _ret=super()
+	_ret["gathered"]=gathered
+	return _ret
+
 func postLoad()->void:
 	if self.stopped:
 		return
-	if(Global.pc.inventory.item_added.is_connected(_on_item_added)):
+	if(!Global.pc.inventory.item_added.is_connected(_on_item_added)):
 		Global.pc.inventory.item_added.connect(_on_item_added)
-	if(Global.pc.inventory.item_removed.is_connected(_on_item_removed)):
+	if(!Global.pc.inventory.item_removed.is_connected(_on_item_removed)):
 		Global.pc.inventory.item_removed.connect(_on_item_removed)
-	meets_condition()
+	meets_condition()	#todo should we check player inventory here?
 
 func meets_condition() -> bool:
 	var _completed = (gathered >= quantity)

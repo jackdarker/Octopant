@@ -14,6 +14,7 @@ func get_buttons(menuid:String,buttons:Array):
 		buttons.push_back(Button_Config.new("explore","",parent_scene._on_bt_explore_pressed,parent_scene._requiresFatigue))
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")
+		buttons.push_back(Button_Config.new("shack","",parent_scene.navigate_home))
 		buttons.push_back(Button_Config.new("Beach","",Global.main.runScene.bind("nav_beach")))
 
 	return(buttons)

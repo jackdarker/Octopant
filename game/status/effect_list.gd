@@ -15,16 +15,23 @@ var user:Character:
 		return(wrefCharacter.get_ref() if wrefCharacter else null)
 # use effect.applyTo(target) instead !
 func addItem(item: Effect):
-	var _item=getItemByID(item.ID)
-	if _item:
-		for cb in changedCB:
-			unregisterSignalItemChanged(cb,item.ID)	#combine might create new item
-		items[item.ID]=_item.combine(item)
+	var _olditem=getItemByID(item.ID)
+	var _newitem=_olditem
+	if _olditem:
+		_newitem =_olditem.combine(item) #combine might create new item, so disconnect old
+		if(_newitem.get_instance_id()!=_olditem.get_instance_id()):
+			for cb in changedCB:
+				unregisterSignalItemChanged(cb,item.ID)	
+		else:
+			_newitem=null	#change done in combine
 	else:
-		items[item.ID]=item
-	items[item.ID].user=user
-	for cb in changedCB:
-		registerSignalItemChanged(cb,item.ID)
+		_newitem=item
+		
+	if(_newitem):
+		items[item.ID]=_newitem
+		items[item.ID].user=user
+		for cb in changedCB:
+			registerSignalItemChanged(cb,item.ID)
 
 func addItemID(itemID:String):
 	var newItem = GR.createEffect(itemID)

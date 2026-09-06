@@ -29,9 +29,9 @@ layer = -2
 layer = 2
 
 [node name="WndPause" parent="." instance=ExtResource("3_w8ko4")]
+visible = false
 
 [node name="WndInventory" parent="." instance=ExtResource("4_qinjo")]
-visible = false
 
 [node name="WndCraft" parent="." instance=ExtResource("6_wqhqq")]
 visible = false

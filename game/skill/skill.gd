@@ -28,9 +28,13 @@ func previewAction(_action:String,_target:Character)->Result:
 	var _res=Result.create(true,user.name +" will use "+ name +" on " + _target.name)
 	return(_res)
 
-func doAction(_action:String,_target):
+func doAction(_action:String,_targets):
 	getCost().pay(user)
-	applyAction(_action,_target)
+	if(_targets is Array):
+		for _target in _targets:
+			applyAction(_action,_target)
+	else:
+		applyAction(_action,_targets)
 	coolDown=defCoolDown
 
 # override this !

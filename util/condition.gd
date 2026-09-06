@@ -90,13 +90,13 @@ class Cond_StatChange extends Cond_Base:
 		target.status.getItemByID(statID).modify(change)
 
 #endregion
-################################################################################
+
 ## factory method
 static func create(theConds:Array[Cond_Base])->CondCheck:
 	var me=CondCheck.new()
 	me.addCond(theConds)
 	return me
-################################################################################
+
 var conds:Array=[]
 
 func _init():

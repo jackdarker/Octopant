@@ -535,7 +535,7 @@ func unlockRecipe(itemID:String,state:int=1):
 		recipesUnlocked[itemID]=state
 
 func hasRecipe(itemID:String)->int:
-	if recipesUnlocked.has(itemID):
+	if !recipesUnlocked.has(itemID):
 		return(0)
 	return (recipesUnlocked[itemID])
 

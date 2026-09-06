@@ -50,10 +50,13 @@ enum HUDPANEL {Menu=0, Left=1, Center=2, Choice=3}
 		show_picture_center(null)
 		show_picture_left(null)
 		show_picture_right(null)
+		%btInventary.disabled=false
+		%btMap.disabled=false
 		if(value==HUDMODE.Interaction):
 			$HBoxContainer/LeftPanel.visible=false
 		elif(value==HUDMODE.Combat):
-			pass
+			%btInventary.disabled=true
+			%btMap.disabled=true
 		else:
 			$HBoxContainer/LeftPanel.visible=true
 		hudMode=value
@@ -149,10 +152,8 @@ func _on_bt_status_pressed() -> void:
 func _on_bt_menu_pressed() -> void:
 	menu_requested.emit()
 
-
 func _on_bt_hud_off_pressed() -> void:
 	toggleHud(bt_hud_off.visible)
-
 
 func _on_bt_map_pressed() -> void:
 	map_requested.emit()

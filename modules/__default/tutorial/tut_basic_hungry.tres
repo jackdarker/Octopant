@@ -6,5 +6,6 @@
 script = ExtResource("1_h8rli")
 ID = "basic_hungry"
 title = "hungry (for food)"
-text = "Your hunger will go up over time (check the list of effects applied to you). Eating something while you are hungry might give you some beneficial effect."
+text = "Your hunger will go up over time (check the list of effects applied to you). Eating something while you are hungry might give you some beneficial effect.
+But not if you are already sated."
 metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

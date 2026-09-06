@@ -13,6 +13,7 @@ func getDescription()->String:
 
 func getAttackForTarget(target:Character)->AttackData:
 	var attack:=AttackData.create()
+	attack.hitChance=80.0
 	var rHand=self.user.outfit.getItemForSlot(BodySlotEnum.RHand)
 	if(rHand && rHand.has_method("attackMod")):
 		attack=rHand.attackMod(target)

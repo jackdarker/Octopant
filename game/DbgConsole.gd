@@ -27,8 +27,8 @@ func _ready():
 
 	self.process_mode=PROCESS_MODE_ALWAYS
 
-	printLine("This is a development console")
-	addCommand("quit", self, "quit")
+	printLine("This is a development console. Type \"help\" for info.")
+	addCommand("quit", self, "quit",[],[],"terminates game")
 	addCommand("help", self, "help")
 
 func quit():
@@ -120,7 +120,7 @@ func printLine(text: String):
 	onConsoleOutput.emit(text)
 
 func getCommandsHelp():
-	var result = ""
+	var result = "list of functions:\n arguments need to be added separated by space and without \"\n"
 	for command_name in commands:
 		var command = commands[command_name]
 		result += command_name + " - args=" + str(command["params"])+ " - returns=" + str(command["returns"])+" - " + str(command["description"])+"\n"

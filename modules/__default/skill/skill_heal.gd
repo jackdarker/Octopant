@@ -17,8 +17,9 @@ func getDescription()->String:
 
 func applyAction(_action:String,_target:Character):
 	var _res=Result.create(true,"")
-	_target.getStat(StatEnum.Pain).modify(-25)
-	_res.Msg=user.getName() +" heals " + _target.getName()
+	var _stat=_target.getStat(StatEnum.Pain)
+	_stat.modify(_stat.ul*-0.5)
+	_res.Msg=user.getName() +" heals " + (_target.getName() if user!=_target else "")
 	Global.hud.say(_res.Msg)
 
 func targetFilter(enemys:Array[Character],_own:Array[Character]):

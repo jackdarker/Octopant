@@ -18,7 +18,7 @@ func on_enterScene():
 	
 	var _h=GR.getModuleFlag("Default","Cliff_Height",0)
 	if(_h>0):
-		Global.hud.say("You have climbed "+str(_h)+"m.")
+		Global.hud.say("You have climbed "+str(_h)+" m.")
 	
 	
 func get_buttons(menuid:String,buttons:Array):
@@ -35,6 +35,7 @@ func get_buttons(menuid:String,buttons:Array):
 			buttons.push_back(Button_Config.new("climb up","",_on_climb,_can_climb))
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")
+		buttons.push_back(Button_Config.new("shack","",parent_scene.navigate_home))
 		buttons.push_back(Button_Config.new("Beach","",Global.main.runScene.bind("nav_beach")))
 	if(menuid=="climb"):
 		Global.hud.say("You have climbed "+str(_h)+"m.")
@@ -77,14 +78,16 @@ func _can_climb(apply:bool=false):
 	var _h=GR.getModuleFlag("Default","Cliff_Height",0)
 	var _r=GR.getModuleFlag("Default","Cliff_Ropes",0)
 	if (_r >=(floor(_h/10.0)+0.1) ):
-		return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,20)]).check(Global.pc,apply)
-	return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,50)]).check(Global.pc,apply)
+		var _res=CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,10)]).check(Global.pc,apply)
+		_res.Msg="use the installed rope \n"+_res.Msg
+		return _res
+	return CondCheck.create([CondCheck.Cond_StatChange.create(StatEnum.Fatigue,40)]).check(Global.pc,apply)
 
 func _on_rope():
 	_can_rope(true)
 	GR.increaseModuleFlag("Default","Cliff_Ropes",1)
 	Global.hud.say("Tying a rope to a root of a tree that has sprouted from a fracture between the rocks.")
-	parent_scene.menu("climb")
+	parent_scene.menu("climb",true)
 	
 func _can_rope(apply:bool=false):
 	return CondCheck.create([CondCheck.Cond_Resource.create("rope_liane",1)]).check(Global.pc,apply)

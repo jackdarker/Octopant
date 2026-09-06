@@ -25,6 +25,9 @@ func processTime(_delta:int):
 func getIcon()->StringName:
 	return "res://assets/images/icons/ic_face_happy.svg"
 
+func getIconColor()->Color:
+	return(Effect.STATECOLOR.NEUTRAL)
+
 func onApply():
 	user.status.addModifier(StatEnum.Strength,{"ID":ID,"bonus":2})
 	super()	

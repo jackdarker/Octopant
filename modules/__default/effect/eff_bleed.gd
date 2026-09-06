@@ -11,6 +11,12 @@ func getName()->String:
 func isCombatOnly()->bool:
 	return true
 
+func getIcon()->StringName:
+	return "res://assets/images/icons/ic_wound.svg"
+
+func getIconColor()->Color:
+	return(Effect.STATECOLOR.BAD)
+
 func processCombatTurn(_contex = {}):
 	@warning_ignore("integer_division")
 	user.status.getItemByID(StatEnum.Pain).modify(5)
