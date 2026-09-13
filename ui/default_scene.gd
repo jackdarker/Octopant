@@ -8,6 +8,9 @@ var parentSceneUniqueID: int = -1
 func react_scene_end(_savedTag, _args):
 	pass
 
+func invalidate():
+	pass
+
 ## override this with false if player should not be able to save 
 func canSave()->bool:
 	return true

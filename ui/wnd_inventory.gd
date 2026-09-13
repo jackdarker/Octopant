@@ -60,6 +60,7 @@ func doAction(_item,_name):
 func _on_bt_back_pressed() -> void:
 	visible = false
 	get_tree().paused = false
+	Global.main.getCurrentScene().invalidate()
 
 
 func _on_tab_bar_tab_selected(_tab: int) -> void:

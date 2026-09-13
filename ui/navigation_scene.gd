@@ -9,6 +9,8 @@ var scene_hud = preload("res://ui/fragments/hud_center_default.tscn")
 
 var menustack:Array[String]=[]	#sub-menu path
 var force_exit:=false	## extension might call this to force return to previous scene
+var buttons:Array[SceneExtension.Button_Config]=[]
+
 
 func _ready() -> void:
 	enterScene()
@@ -54,7 +56,7 @@ func menu(menuid:String,no_back:=false):
 	if (force_exit==true):
 		Global.main.removeScene.call(self)	# leave if the bit was set in extension
 		return
-	var buttons:Array[SceneExtension.Button_Config]=[]
+	buttons=[]
 	Global.hud.clearInput()
 	if menuid!="" && !no_back:
 		menustack.push_back(menuid)
@@ -65,13 +67,19 @@ func menu(menuid:String,no_back:=false):
 	for ext in scene_ext:
 		buttons=ext.get_buttons(menuid,buttons)
 	
-	if(menuid=="" && buttons.size()==0):	#fallback if no extension
-		Log.verbose("Warning: no buttons in scene="+sceneID+" menuid="+menuid)
+	update_buttons()
+
+
+func update_buttons():
+	Global.hud.clearInput()
+	if(menustack[-1]=="" && buttons.size()==0):	#fallback if no extension
+		Log.verbose("Warning: no buttons in scene="+sceneID+" menuid="+menustack[-1])
 		Global.hud.addButton("Next","",Global.main.removeScene.bind(self))
-	
 	for bt in buttons:		#TODO if to many buttons make subpages
 		Global.hud.addButton(bt.text,bt.tooltip,bt.cb,bt.enabled)	
-	
+
+func invalidate():
+	update_buttons()
 
 func menu_back():
 	menustack.pop_back()

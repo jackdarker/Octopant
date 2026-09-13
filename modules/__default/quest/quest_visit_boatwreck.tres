@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="Quest" load_steps=9 format=3 uid="uid://bx2pje1uiw5tf"]
+
+[ext_resource type="Script" uid="uid://0jbnqgdlwjeo" path="res://game/quest/quest.gd" id="1_thwwb"]
+[ext_resource type="Script" uid="uid://csw73g6brkjr3" path="res://game/quest/quest_step.gd" id="2_qbc00"]
+[ext_resource type="Script" uid="uid://27gxkaeehmlu" path="res://game/quest/step/has_flag.gd" id="3_vkndh"]
+[ext_resource type="Script" uid="uid://c33rbc77yrsub" path="res://game/quest/step/gather_item.gd" id="4_rxx13"]
+
+[sub_resource type="Resource" id="Resource_0y6lf"]
+script = ExtResource("3_vkndh")
+moduleID = "Default"
+flagID = "Found_Cliff"
+valueMin = 3
+valueMax = 255
+title = "Explore around the cliff to find a starting point to approach the boat."
+metadata/_custom_type_script = "uid://27gxkaeehmlu"
+
+[sub_resource type="Resource" id="Resource_3i1hr"]
+script = ExtResource("2_qbc00")
+title = "Get to the boat"
+hint = "You need some swimming skills to make it to the boat."
+metadata/_custom_type_script = "uid://csw73g6brkjr3"
+
+[sub_resource type="Resource" id="Resource_11ftr"]
+script = ExtResource("4_rxx13")
+itemID = "compass"
+title = "Look around the boat. Is it seaworthy? Is there something useful?"
+metadata/_custom_type_script = "uid://c33rbc77yrsub"
+
+[sub_resource type="Resource" id="Resource_xuvkw"]
+script = ExtResource("2_qbc00")
+title = "Swim back to the coastline."
+hidden = 1
+metadata/_custom_type_script = "uid://csw73g6brkjr3"
+
+[resource]
+script = ExtResource("1_thwwb")
+ID = "visit_boatwreck"
+quest_name = "get tot the boat"
+quest_description = "There is a boat stuck on a rock somewhat out in the sea. It could help you escape this island or at least get you some supplies."
+quest_objective = "Swimming out in the open sea is risky but seems the only way."
+steps = Array[ExtResource("2_qbc00")]([SubResource("Resource_0y6lf"), SubResource("Resource_3i1hr"), SubResource("Resource_11ftr"), SubResource("Resource_xuvkw")])
+metadata/_custom_type_script = "uid://27gxkaeehmlu"

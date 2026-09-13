@@ -28,30 +28,45 @@ func get_buttons(menuid:String,buttons:Array):
 		if(_h>=max_h):
 			Global.hud.clearOutput()
 			Global.hud.say("You made it to the top of the cliff.")
-			buttons.push_back(Button_Config.new("Look around","",parent_scene.menu.bind("lookout")))
-		else:
+			buttons.push_back(Button_Config.new("Return to ground","",_on_climb_down))
+			buttons.push_back(Button_Config.new("Look toward forest","",parent_scene.menu.bind("lookout_forest")))
+			buttons.push_back(Button_Config.new("Look out toward the sea","",parent_scene.menu.bind("lookout_sea")))
+		elif(_h==0):
 			buttons.push_back(Button_Config.new("go somewhere else...","",parent_scene.menu.bind("walk")))
 			buttons.push_back(Button_Config.new("explore","",parent_scene._on_bt_explore_pressed,parent_scene._requiresFatigue))
-			buttons.push_back(Button_Config.new("climb up","",_on_climb,_can_climb))
+			buttons.push_back(Button_Config.new("Climb","",_on_climb,_can_climb))
+		else:
+			buttons.push_back(Button_Config.new("Return to ground","",_on_climb_down))
+			buttons.push_back(Button_Config.new("Climb further up","",_on_climb,_can_climb))
+
 	if(menuid=="walk"):
 		Global.hud.say("Where would you like to go?")
 		buttons.push_back(Button_Config.new("shack","",parent_scene.navigate_home))
 		buttons.push_back(Button_Config.new("Beach","",Global.main.runScene.bind("nav_beach")))
+
 	if(menuid=="climb"):
 		Global.hud.say("You have climbed "+str(_h)+"m.")
 		if(GR.hasRecipe("rope_liane")<=0):
 			Global.hud.say("Climbing would be much easier if I could place some rope here.")
 			Global.hud.say("[b]You got an idea to use lianes for rope.[/b]")
 			GR.unlockRecipe("rope_liane")
-		buttons.push_back(Button_Config.new("Return to ground","",_on_climb_down))
-		buttons.push_back(Button_Config.new("Climb further up","",_on_climb,_can_climb))
+		buttons.push_back(Button_Config.new("Next","",parent_scene.menu.bind("")))
 		if((_h>=10 && _r<=0)||(_h>=20 && _r<=1)||(_h>=30 && _r<=2) ):
 			buttons.push_back(Button_Config.new("Install a rope","makes it easier to climb up next time",_on_rope,_can_rope))
-	if(menuid=="lookout"):
+	if(menuid=="lookout_forest"):
 		Global.hud.say("You get a good overview of the already familiar beach. A vast forest stretches further inside of the landmass.")
 		Global.hud.say("Behind the forest a chain of hills and mountains block the view.")
 		Global.hud.say("Still, its impossible to tell if this is an island or just the tip of a bigger landmass.")
-		buttons.push_back(Button_Config.new("Return to ground","",parent_scene.menu.bind("")))
+		buttons.push_back(Button_Config.new("Next","",parent_scene.menu.bind("")))
+	if(menuid=="lookout_sea"):
+		Global.hud.say("You let your gaze wander across the sea in vain. There is neither a ship in sight nor the coastline of any landmass.")
+		Global.hud.say("But as you step closer to the edge of the cliff, you spot something on a rock in the see. It looks like some boat. Not some old wooden rowboat but a rather but a more modern one with a fiberglass hull and cabin structure.")
+		Global.hud.say("\"That would let me get out of here. Or at least I could find something useful.\"")
+		Global.hud.say("Maybe if you [b]explore some more around the cliff [/b], you might find a way to this boat.")
+		var q=Global.QS.active.get_quest_from_id("visit_boatwreck")
+		if(!q):
+			Global.QS.start_quest(GR.getQuest("visit_boatwreck"))
+		buttons.push_back(Button_Config.new("Next","",parent_scene.menu.bind("")))
 	return(buttons)
 
 func _on_climb_down():
@@ -68,11 +83,11 @@ func _on_climb():
 	GR.increaseModuleFlag("Default","Cliff_Height",10)
 	Global.hud.clearInput()
 	Global.hud.clearOutput()
-	var _h=GR.getModuleFlag("Default","Cliff_Height",0)
-	if _h>=max_h:
-		parent_scene.menu("")
-	else:
-		parent_scene.menu("climb",true)
+	#var _h=GR.getModuleFlag("Default","Cliff_Height",0)
+	#if _h>=max_h:
+	#	parent_scene.menu("")
+	#else:
+	parent_scene.menu("climb",true)
 	
 func _can_climb(apply:bool=false):
 	var _h=GR.getModuleFlag("Default","Cliff_Height",0)

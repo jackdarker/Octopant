@@ -3,7 +3,7 @@ class_name QuestStep extends Resource
 @export_multiline var title: String	
 @export_multiline var hint: String
 @export var completed: bool = false
-@export var hidden:=Quest.HIDE.NONE
+@export var hidden:=Quest.HIDE.PREV_STEP
 var index:int=0	# assigned when starting quest
 var stopped:bool=false
 

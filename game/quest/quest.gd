@@ -19,7 +19,12 @@ class_name Quest extends Resource
 @export var steps: Array[QuestStep]
 @export var rewards: Array
 
-enum HIDE {NONE=0, NAME=1, ALL=255}
+## this is used for display-filtering
+enum HIDE {NONE=0, ## step is totally visible
+	NAME=1,	## visible but name= ???
+	PREV_STEP=254, ## hidden until previous step is completed
+	ALL=255	## Step permanently hidden (secret)
+	}
 
 ## Emitted by default when [method start] gets called.
 signal started

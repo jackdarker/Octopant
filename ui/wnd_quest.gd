@@ -40,16 +40,20 @@ func updateQuests():
 
 func viewQuest(ID:String):
 	var quest:=Global.QS.active.get_quest_from_id(ID)
+	var prev_compl:=true
 	if !quest:
 		quest=Global.QS.completed.get_quest_from_id(ID)
 	var text=quest.quest_description + ("\n COMPLETE" if quest.objective_completed else "")
 	clearQuestSteps()
 	for step in quest.steps:
+		if(!prev_compl && step.hidden==Quest.HIDE.PREV_STEP):
+			continue
+		prev_compl=step.completed
 		var _progress=step.progressText()
 		var bullet=checkTextScene.instantiate()
 		%queststeps.add_child(bullet)
 		bullet.state.texture=load("res://assets/images/icons/ic_checked.svg") if step.completed else load("res://assets/images/icons/ic_unchecked.svg")
-		bullet.label.text=step.title if (step.hidden==Quest.HIDE.NONE || step.completed) else "???"
+		bullet.label.text=step.title if (!(step.hidden & Quest.HIDE.NAME) || step.completed) else "???"
 		bullet.label.text+=("\n\t"+_progress) if (_progress!="" && (step.hidden==Quest.HIDE.NONE || step.completed)) else ""
 		bullet.focus_entered.connect(_on_queststep_input.bind(step))
 	%lbl_questdesc.text=text

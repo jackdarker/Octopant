@@ -47,11 +47,13 @@ func _init()-> void :
 func getFlags():
 	return {
 		"Beach_Shack": flag(FlagType.Number),	#1= found shack
-		"Found_Beach": flag(FlagType.Number),	#has found region
-		"Found_Cliff": flag(FlagType.Number),
+		# bitmask of found location
+		"Found_Beach": flag(FlagType.Number),	
+		"Found_Cliff": flag(FlagType.Number),	# 2= boat-swimstart
 		"Found_Forest": flag(FlagType.Number),
 		"Found_Tunnel": flag(FlagType.Number),
-		"Explored_Beach": flag(FlagType.Number),	#times explored region
+		#times explored region
+		"Explored_Beach": flag(FlagType.Number),	
 		"Explored_Cliff": flag(FlagType.Number),
 		"Explored_Forest": flag(FlagType.Number),
 		"FatigueFactor_Beach": flag(FlagType.Number),	#fatigue-reduction bonus
