@@ -54,11 +54,13 @@ func get_buttons(menuid:String,buttons:Array):
 		if((_h>=10 && _r<=0)||(_h>=20 && _r<=1)||(_h>=30 && _r<=2) ):
 			buttons.push_back(Button_Config.new("Install a rope","makes it easier to climb up next time",_on_rope,_can_rope))
 	if(menuid=="lookout_forest"):
+		parent_scene.set_bg(load("res://assets/images/bg/nav_cliff_view_hills.png"))
 		Global.hud.say("You get a good overview of the already familiar beach. A vast forest stretches further inside of the landmass.")
 		Global.hud.say("Behind the forest a chain of hills and mountains block the view.")
 		Global.hud.say("Still, its impossible to tell if this is an island or just the tip of a bigger landmass.")
 		buttons.push_back(Button_Config.new("Next","",parent_scene.menu.bind("")))
 	if(menuid=="lookout_sea"):
+		parent_scene.set_bg(load("res://assets/images/bg/nav_cliff_view_sea.png"))
 		Global.hud.say("You let your gaze wander across the sea in vain. There is neither a ship in sight nor the coastline of any landmass.")
 		Global.hud.say("But as you step closer to the edge of the cliff, you spot something on a rock in the see. It looks like some boat. Not some old wooden rowboat but a rather but a more modern one with a fiberglass hull and cabin structure.")
 		Global.hud.say("\"That would let me get out of here. Or at least I could find something useful.\"")
