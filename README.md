@@ -1,4 +1,4 @@
-# Octopant
+# Octopant 
 made in Godot. This is a test where I try to convert my Twine/snowman framework to Godot.
 Kind of Visual Novel Framework. 
 ! Because of the modding approach it will not work as web-app!
