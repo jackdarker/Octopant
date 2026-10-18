@@ -18,3 +18,6 @@ const Intellect="intellect"
 # resistance in %;incoming damage multiplied; negative means damage amplification
 const rst_tease="rst_tease"
 const rst_physical="rst_physical"
+
+const BondageLover="bondagelover"
+const Submissive="submissive"

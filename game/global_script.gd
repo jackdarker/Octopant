@@ -54,7 +54,7 @@ func _deferred_goto_scene(path,data):
 	if(data!=null):
 		loadData(data)
 	elif(path=="res://game/main_scene.tscn"):
-		current_scene.runScene("nav_beach")	#TODO intro   
+		current_scene.runScene("nav_castle_f2")	#TODO intro   
 
 #region save/load
 var SAVE_DIR="user://save/"

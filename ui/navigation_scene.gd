@@ -60,7 +60,8 @@ func menu(menuid:String,no_back:=false):
 	Global.hud.clearInput()
 	if menuid!="" && !no_back:
 		menustack.push_back(menuid)
-		Global.hud.addButton("back","",menu_back)
+		#Global.hud.addButton("back","",menu_back)
+		buttons.push_back(SceneExtension.Button_Config.new("<-","",menu_back))
 	else:
 		menustack=[""]
 		

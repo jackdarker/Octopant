@@ -5,9 +5,10 @@ class_name EventSystem
 # others might occur anywhere
 
 const TRIGGER = {Explore=1,		# when exploring
-	InSleep=2,						# while sleeping (dream)
-	PostSleep=3,					# when waking
-	InRoom=4,						# inject vis_scene in between navigation
+	InSleep=2,					# while sleeping (dream)
+	PostSleep=3,				# when waking
+	InRoom=4,					# inject vis_scene in between navigation
+	Chores=5,					# select chores
 	}
 
 var eventLocation:Dictionary = {}
