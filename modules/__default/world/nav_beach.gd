@@ -28,7 +28,7 @@ func _on_bt_explore_pressed():
 		var _evts=Global.ES.pickEvents(EventSystem.TRIGGER.Explore,"nav_beach_explore",cards+1,[])
 		if(_evts.size()>0):
 			for _evt:EventBase in _evts:
-				Global.hud.addButton(Util.pickRandomFromArray([_evt.EventName,"???"])  ,
+				Global.hud.addButton(Util.pickRandomFromArray([_evt.getName(),"???"])  ,
 					"",_evt.react.bind(EventSystem.TRIGGER.Explore).bind("nav_beach_explore").bind([]))
 		else:
 			Global.hud.say("After a while you find yourself back were you came from.")

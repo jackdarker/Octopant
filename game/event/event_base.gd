@@ -1,11 +1,13 @@
 class_name EventBase extends Node
 
 var ID:String = "unknown"
-var EventName = "unknown"
+
 func _init():
-	if(EventName=="unknown"):
-		EventName=ID
 	pass
+
+#override
+func getName()->String:
+	return(ID)
 
 ## asks the event if it is available (additionally to location-filter)
 ## [br] args unused

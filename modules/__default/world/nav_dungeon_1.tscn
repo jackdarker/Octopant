@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ffvv8huyhwis"]
 
 [ext_resource type="PackedScene" uid="uid://b0qurwpsffl61" path="res://ui/navigation_scene.tscn" id="1_3yyn3"]
-[ext_resource type="Script" uid="uid://dkfdb3au2ivm7" path="res://modules/__default/world/nav_castle_f2.gd" id="2_3yyn3"]
+[ext_resource type="Script" uid="uid://dkfdb3au2ivm7" path="res://modules/__default/world/nav_dungeon_1.gd" id="2_3yyn3"]
 
 [node name="Scene" instance=ExtResource("1_3yyn3")]
 script = ExtResource("2_3yyn3")

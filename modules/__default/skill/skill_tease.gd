@@ -4,6 +4,7 @@ func _init():
 	super()
 	ID="Skill_Tease"
 	tags.push_back(SkillTagEnum.Tease)
+	tags.push_back(SkillTagEnum.ModeCombat)
 
 func getName()->String:
 	return "Tease"

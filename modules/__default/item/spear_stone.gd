@@ -14,7 +14,7 @@ func getDescription()->String:
 
 func attackMod(target:Character)->AttackData:
 	var mod=AttackData.create()
-	mod.hitChance=80.0
+	mod.hitChance=0.80
 	mod.onHit=[{"target":target,"eff": [effDamage.create(_damage)]}]
 	return mod
 

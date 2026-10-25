@@ -7,13 +7,15 @@ func _init():
 	isPlayer=true
 
 	status.addItem(Status.create(StatEnum.Insanity,0,-9999,9999))	#TODO those stats only for player?
+	status.addItem(Status.create(StatEnum.Poise,0,0,100))
+	status.addItem(Status.create(StatEnum.Advantage,0,0,100))
 	for item in [StatusDefault.StatStrength.new(),StatusDefault.StatAgility.new(),StatusDefault.StatIntellect.new()]:
 		item.base=20
 		status.addItem(item)
-	#self.skills.addItem(GR.createSkill("Skill_Slash"))
-	self.skills.addItem(GR.createSkill("Skill_Cleave"))
-	self.skills.addItem(GR.createSkill("Skill_Tease"))
-	self.skills.addItem(GR.createSkill("Skill_Submit"))
+	self.skills.addItem(GR.createSkill("Skill_Attack"))
+	self.skills.addItem(GR.createSkill("Skill_Block"))
+	self.skills.addItem(GR.createSkill("Skill_Seduce"))
+	#self.skills.addItem(GR.createSkill("Skill_Submit"))
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)

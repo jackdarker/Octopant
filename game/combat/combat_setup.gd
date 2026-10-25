@@ -5,6 +5,10 @@ var noAI:bool=false	# disable AI for debug
 var location:String="Unknown"
 var background:Texture=null
 
+var adv_start:=30
+var adv_gain:=8
+var poise_start:=50
+
 var playerParty:Array[Character]=[]
 var enemyParty:Array[Character]=[]
 

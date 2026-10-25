@@ -70,7 +70,7 @@ func calcEvasion(defender,attack:AttackData)->AttackData:
 	var hitRate = attack.hitChance 
 	#*(attacker.Stats.get("agility").value + attacker.Stats.get("perception").value);
 	#0+lvlDiffBonus*(target.Stats.get("agility").value + target.Stats.get("perception").value);  
-	var rnd=randf()*100
+	var rnd=randf()
 	if(attack.isTease):
 		if(hitRate<rnd):
 			attack.OK = false;

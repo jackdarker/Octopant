@@ -56,8 +56,8 @@ func getFlags():
 		"Found_Tunnel": flag(FlagType.Number),
 		"Found_Library": flag(FlagType.Number),	
 		#times explored region
-		"Explored_Castle_F2": flag(FlagType.Number),
-		"ExploreCards_Castle_F2": flag(FlagType.Number),
+		"Explored_Dungeon_1": flag(FlagType.Number),
+		"ExploreCards_Dungeon_1": flag(FlagType.Number),
 		"Explored_Beach": flag(FlagType.Number),	
 		"Explored_Cliff": flag(FlagType.Number),
 		"Explored_Forest": flag(FlagType.Number),
@@ -67,13 +67,13 @@ func getFlags():
 		"Cliff_Ropes": flag(FlagType.Number),	# how many ropes are installed from bottom to up
 		"ExploreCards_Beach": flag(FlagType.Number),
 		"ExploreCards_Forest": flag(FlagType.Number),
-		"Chores_Duty":flag(FlagType.Number), # how many chores every day
-		"Chores_Todo":flag(FlagType.Number), # chores left today
-		"Trust_Castle":flag(FlagType.Number), # 
+		"Dungeon_Depth":flag(FlagType.Number), # todays explore count
+		"Dungeon_Path1":flag(FlagType.Text), # 
+		"Dungeon_Path2":flag(FlagType.Text), # 
 		}
 		
 func resetFlagsOnNewDay():
-	GR.setModuleFlag(ID,"Chores_Todo",GR.getModuleFlag("Default","Chores_Duty"))
+	#GR.setModuleFlag(ID,"Chores_Todo",GR.getModuleFlag("Default","Chores_Duty"))
 	pass
 	
 func initGame():
@@ -84,9 +84,10 @@ func initGame():
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootBasicCloths"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindPathCliff"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventHurtBeach"),"nav_beach_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindTroubleBeach"),"nav_beach_explore",[])
+	#Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindTroubleBeach"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindPathForest"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventExploreUpgrade"),"nav_beach_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindLootForest"),"nav_forest_explore",[])
 	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventExploreUpgrade"),"nav_forest_explore",[])
-	Global.ES.registerEvent(EventSystem.TRIGGER.Chores,GR.getEvent("EventChoresHallwaySweep"),"nav_castle_f2",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindTrouble"),"nav_dungeon_1_explore",[])
+	Global.ES.registerEvent(EventSystem.TRIGGER.Explore,GR.getEvent("EventFindTrouble2"),"nav_dungeon_1_explore",[])

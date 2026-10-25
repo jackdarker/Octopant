@@ -1,7 +1,8 @@
 class_name CharacterHud extends Control
 
 @onready var pain_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barPain
-@onready var fatigue_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barFatigue
+@onready var poise_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barFatigue
+@onready var adv_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barFatigue2
 @onready var insanity_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barInsanity
 @onready var lust_bar=$VBoxContainer/HBoxContainer/VBoxContainer/barLust
 @onready var listEffects=$VBoxContainer/listEffects
@@ -14,8 +15,10 @@ var characterName:String="unknown":
 func _ready() -> void:
 	pain_bar.text="pain"
 	pain_bar.setTint(Color.LIGHT_CORAL,Color.CORAL)
-	fatigue_bar.text="fatigue"
-	fatigue_bar.setTint(Color.LIGHT_SKY_BLUE,Color.ROYAL_BLUE)
+	poise_bar.text="poise"
+	poise_bar.setTint(Color.LIGHT_SKY_BLUE,Color.ROYAL_BLUE)
+	adv_bar.text="Advantage"
+	adv_bar.setTint(Color.LIGHT_SKY_BLUE,Color.ROYAL_BLUE)
 	insanity_bar.text="insanity"
 	insanity_bar.setTint(Color.BURLYWOOD,Color.GOLDENROD)
 	lust_bar.text="lust"
@@ -41,13 +44,21 @@ func on_stat_update(who:Character):
 	on_bust_update(who)
 	var _n=who.getStat("pain")
 	pain_bar.setValue(_n.value,_n.ul)
-	_n=who.getStat("fatigue")
-	fatigue_bar.setValue(_n.value,_n.ul)
-	_n=who.getStat("insanity")
+	_n=who.getStat("poise")
 	if(!_n):
-		insanity_bar.visible=false
+		poise_bar.visible=false
 	else:
-		insanity_bar.setValue(_n.value,_n.ul)
+		poise_bar.setValue(_n.value,_n.ul)
+	_n=who.getStat("advantage")
+	if(!_n):
+		adv_bar.visible=false
+	else:
+		adv_bar.setValue(_n.value,_n.ul)
+	#_n=who.getStat("insanity")
+	#if(!_n):
+		#insanity_bar.visible=false
+	#else:
+		#insanity_bar.setValue(_n.value,_n.ul)
 	_n=who.getStat("lust")
 	lust_bar.setValue(_n.value,_n.ul)
 	_apply_heights()

@@ -6,18 +6,15 @@ func _init() -> void:
 func canSave()->bool:
 	return true
 
-func _on_bt_walk_pressed():
-	Global.hud.clearInput()
-	Global.hud.say("Where would you like to go?")
-	Global.hud.addButton("back","",enterScene)
-	Global.hud.addButton("Beach","",Global.main.runScene.bind("nav_beach"))
-	if(GR.getModuleFlag("Default","Found_Cliff",0)>0):
-		Global.hud.addButton("Cliff","",Global.main.runScene.bind("nav_cliff"))
-
-
 func _on_bt_sleep_pressed() -> void:
 	Global.main.gotoSleep()
 
+func _start_run(where:String):
+	GR.setModuleFlag("Default","Dungeon_Depth",0)
+	GR.setModuleFlag("Default","Dungeon_Path1","")
+	GR.setModuleFlag("Default","Dungeon_Path2","")
+	Global.main.runScene(where)
+
 func _on_bt_craft_pressed() -> void:
-	Global.main._on_hud_crafting_requested(Global.pc,"Backpack")
-	
+	#Global.main._on_hud_crafting_requested(Global.pc,"Backpack")
+	pass

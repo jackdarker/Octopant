@@ -13,3 +13,12 @@ func _init():
 
 func getBustImage()->Texture2D:
 	return load("res://assets/images/chars/Crab.png")
+
+func calcAttackReaction(skill:CombatSkill,data:AttackData):
+	if skill.ID=="Skill_Intimidate":
+		data.onHitMsg=func():return(self.getName()+" is shaken by your display off agression.")
+	else:
+		data.hitChance=0.05
+		data.onMissMsg=func():return(self.getName()+" is not impressed by your skill.")
+	pass
+	

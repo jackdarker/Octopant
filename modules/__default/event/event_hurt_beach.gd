@@ -2,7 +2,7 @@ extends EventBase
 
 func _init():
 	ID="EventHurtBeach"
-	EventName="Take a walk at the beach"
+	#EventName="Take a walk at the beach"
 	super()
 
 func react(_triggerID,_location,_args)->bool:

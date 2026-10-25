@@ -6,6 +6,9 @@ const Fatigue="fatigue"
 const Lust="lust"
 const Insanity="insanity"
 
+const Poise="poise"
+const Advantage="advantage"
+
 # base
 const Libido="libido"
 const Perception="perception"

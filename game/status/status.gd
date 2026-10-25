@@ -27,7 +27,12 @@ var modifys=[]	#{ID:"Health"}
 var modifier=[]	#{ID:"SuperPotion" bonus:5.0 lmax:20} 
 var limits=[]
 var base:float=0
-var value:float=0	#do not set this!
+var value:float=0:	#do not set this!
+	set(v):
+		value = v
+		changed.emit(ID,v)
+	get():
+		return value
 ## sets/gets value related to limits
 var value_percent:float:	# 50% -> 50
 	set(v):

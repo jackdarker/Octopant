@@ -1,8 +1,9 @@
 extends CombatSkill
 
 func _init():
+	if(ID=="" || ID=="unknown"):
+		ID="Skill_Strike"
 	super()
-	ID="Skill_Strike"
 	tags.push_back(SkillTagEnum.Attack)
 
 func getName()->String:
@@ -13,7 +14,7 @@ func getDescription()->String:
 
 func getAttackForTarget(target:Character)->AttackData:
 	var attack:=AttackData.create()
-	attack.hitChance=80.0
+	attack.hitChance=0.80
 	var rHand=self.user.outfit.getItemForSlot(BodySlotEnum.RHand)
 	if(rHand && rHand.has_method("attackMod")):
 		attack=rHand.attackMod(target)

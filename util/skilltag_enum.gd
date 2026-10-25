@@ -5,3 +5,6 @@ const Debuff=300
 const Heal=400
 const Attack=500
 const Tease=600
+const Special=700
+const ModeCombat=1000
+const ModeGrapple=1001

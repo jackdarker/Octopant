@@ -5,21 +5,27 @@ extends EventBase
 var style:int=0
 
 func _init():
-	ID="EventFindTroubleBeach"
+	if(ID=="" || ID=="unknown"):
+		ID="EventFindTrouble"
 	super()
-	
+
+func getName()->String:
+	match style:
+		1: return("go left")
+		2: return("go right")
+		_: return("go right")
 
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearInput()
-	var _rnd=randi()%100
+	var _rnd=0 #randi()%100
 	if(_rnd<=50):
 		style=1
-		Global.hud.say("Some crab suddenly appears from the sand and claps with his claws.")
+		Global.hud.say("Some JellyFish suddenly appears.")
 	else:
 		style=2
 		Global.hud.say("Some antropomorphic otter splashs from the waves")
 	Global.hud.addButton("Engage","",_engage,null)
-	Global.hud.addButton("Run away","",_ignore,null)
+	#Global.hud.addButton("Run away","",_ignore,null)
 	return true
 	
 func canRun(_trigger,_location,_args)->bool:
@@ -36,8 +42,9 @@ func _engage():
 	var _setup=CombatSetup.new()
 	var _mob
 	_setup.playerParty.push_back(Global.pc)
+	_setup.adv_start=50
 	if(style==1):
-		_mob=GR.createCharacter("Crab")
+		_mob=GR.createCharacter("JellyFish")
 	else:
 		_mob=GR.createCharacter("Otter")
 		_mob.getStat(StatEnum.Lust).modify(20)
