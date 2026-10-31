@@ -13,9 +13,13 @@ func _init():
 		item.base=20
 		status.addItem(item)
 	self.skills.addItem(GR.createSkill("Skill_Attack"))
+	self.skills.addItem(GR.createSkill("Skill_Posture"))
 	self.skills.addItem(GR.createSkill("Skill_Block"))
-	self.skills.addItem(GR.createSkill("Skill_Seduce"))
-	#self.skills.addItem(GR.createSkill("Skill_Submit"))
+	self.skills.addItem(GR.createSkill("Skill_Steady"))
+	self.skills.addItem(GR.createSkill("Skill_Focus"))
+	self.skills.addItem(GR.createSkill("Skill_Breakfree"))
+	self.skills.addItem(GR.createSkill("Skill_Struggle"))
+	self.skills.addItem(GR.createSkill("Skill_Submit"))
 
 func post_sleep():
 	getStat(StatEnum.Pain).modify(-99999)

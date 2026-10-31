@@ -22,7 +22,7 @@ func _ready() -> void:
 	Global.ES = EventSystem.new()
 	Global.QS =  QuestSystem.new()
 	Global.pc = Player.new()
-	Global.World = $GameWorld
+#	Global.World = $GameWorld
 	$WndInventory.character=Global.pc	#TODO what if need to modify other character?
 	
 	Global.ES.registerEventTriggers()
@@ -31,7 +31,7 @@ func _ready() -> void:
 	Global.QS.quest_completed.connect(func(quest): Global.toolTip.showNotification("Quest completed",quest.quest_name,load("res://assets/images/icons/ic_checked.svg")))
 	Global.QS.quest_updated.connect(func(quest): Global.toolTip.showNotification("Quest updated",quest.quest_name))
 	time_passed.connect(Global.hud.processTime)
-	time_passed.connect(Global.World.processTime)
+	#time_passed.connect(Global.World.processTime)
 	Global.hud.map_requested.connect(func(): $WndMap.visible=true)
 	Global.hud.setup_requested.connect(func(): $WndSettings.visible=true)
 	Global.hud.log_requested.connect(func(): $WndQuest.visible=true)
@@ -42,7 +42,7 @@ func _ready() -> void:
 	Global.hud.inv.set_character(Global.pc)
 	Global.hud.outfit.outfit=true
 	Global.hud.outfit.set_character(Global.pc)
-	Global.hud.map.assignWorld()
+	#Global.hud.map.assignWorld()
 	Global.pc.outfit.addItem(GR.createItem("shirt_plain"))
 	Global.pc.outfit.addItem(GR.createItem("shorts_plain"))
 	postLoad()
@@ -306,7 +306,7 @@ func postLoad():
 	Global.pc.inventory.item_added.connect(func(itemID): Global.toolTip.showNotification("Item added",itemID))
 	Global.pc.inventory.item_removed.connect(func(itemID): Global.toolTip.showNotification("Item removed",itemID))
 	
-	Global.World.setupMaps()
+	#Global.World.setupMaps()
 		#TODO force update HUD, also restore the running event ?
 	time_passed.emit(0)
 	Global.hud.postLoadSync()
@@ -315,7 +315,7 @@ func postLoad():
 	var roomID=Global.pc.location #map_mansion@room 3
 	if(roomID.rsplit("@").size()>1):
 		Global.pc.location=""	#hack: onEnter triggers only if char is NOT already there
-		Global.World.getRoomByID(roomID)._onEnter()
+		#Global.World.getRoomByID(roomID)._onEnter()
 
 func addDebugCmds():
 	DbgConsole.addCommand("getversion",GR,"getGameVersionString",[],["version"],"")

@@ -7,7 +7,6 @@ func _init():
 	ID="Skill_Steady"
 	tags.push_back(SkillTagEnum.ModeCombat)
 
-
 func getName()->String:
 	return "Steady"
 

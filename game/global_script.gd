@@ -4,7 +4,7 @@ var hud: Hud
 var toolTip:TooltipSystem
 var main: MainScene
 var pc: Player
-var World: GameWorld
+#var World: GameWorld
 var ES: EventSystem
 var QS: QuestSystem
 var Setup:Settings

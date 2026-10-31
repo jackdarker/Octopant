@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://bk8nat7kd2kvy"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_qmaql"]
+
+[resource]
+script = ExtResource("1_qmaql")
+ID = "basic_combat"
+title = "Combat"
+text = "Each enemy has its own moveset like a set of card. One of those cards is choosen randomly each turn and disposed. At the same time you have to select a move for you to play. If you guessed right your move blocks the enemys.
+The fight is lost for whoever hits the pain threshold first.
+[b]Attack[/b] Try to deal some pain to the enemy. The attacks chance to hit increases with your built up advantage.
+[B]Block[/B] Block an ATTACK to minimze increase of pain.
+[B][/B]
+
+Advantage is created when you deal a move and is doubled when you counter the enemys move.
+
+If you run out of poise, the enemy will grapple you."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"
