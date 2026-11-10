@@ -28,6 +28,15 @@ var combat_beh:=["Skill_Attack","Skill_Attack","Skill_Trip"]
 var grapple_beh:=["Skill_Grope","Skill_Grope"]
 var moves=combat_beh.duplicate()
 
+var intoGrapple:Callable = defaultIntoGrapple
+var outofGrapple:Callable = defaultOutofGrapple
+
+func defaultIntoGrapple(scene:CombatScene):
+	moves=grapple_beh.duplicate()
+
+func defaultOutofGrapple(scene:CombatScene):
+	moves=combat_beh.duplicate()
+
 ## override this; default will just choose a random target and try to find a random Attack-Skill to use
 func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->CombatSkillResult:
 	var _res:CombatSkillResult=CombatSkillResult.create(true,"")
@@ -36,7 +45,7 @@ func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->
 	if(scene.mode==scene.MODE.grapple):
 		if(skillid=="Skill_SpecialGrab"):
 			moves=grapple_beh.duplicate()
-			Inventory.filter_by_tag(char.skills.getItems(),[SkillTagEnum.Special])
+			#Inventory.filter_by_tag(char.skills.getItems(),[SkillTagEnum.Special])
 		elif(moves.size()==0):
 			moves=["Skill_SpecialGrab"]
 	else:

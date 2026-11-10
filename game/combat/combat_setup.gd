@@ -8,6 +8,7 @@ var background:Texture=null
 var adv_start:=30
 var adv_gain:=8
 var poise_start:=50
+var poise_gain:=10
 
 var playerParty:Array[Character]=[]
 var enemyParty:Array[Character]=[]

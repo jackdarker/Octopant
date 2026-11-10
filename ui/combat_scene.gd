@@ -156,6 +156,8 @@ func checkDefeat():
 		next_state=STATE.battleEnd
 	elif(mode==MODE.combat && playerParty[0].getStat(StatEnum.Poise).value<=0):
 		next_state=STATE.startGrapple
+	elif(mode==MODE.grapple && playerParty[0].getStat(StatEnum.Poise).value>=100): #TODO
+		next_state=STATE.exitGrapple
 	else:
 		next_state=STATE.selectActor
 
@@ -247,7 +249,6 @@ func execSkill():
 			Global.hud.say(enemy.getName() + "tripped you.")
 			actor.getStat(StatEnum.Poise).modify(-1*e_skill._damage)
 			actor.getStat(StatEnum.Advantage).modify(combatSetup.adv_gain)
-			
 	if(!e_interrupted && e_skill.ID=="Skill_Tease"):
 		if (skill.ID=="Skill_Focus"):
 			Global.hud.say(enemy.getName() + "teased you but failed.")
@@ -256,6 +257,17 @@ func execSkill():
 			Global.hud.say(enemy.getName() + "teased you.")
 			actor.getStat(StatEnum.Advantage).modify(combatSetup.adv_gain)
 			actor.getStat(StatEnum.Lust).modify(e_skill._damage)
+	if(!e_interrupted && e_skill.ID=="Skill_Grope"):
+		if (skill.ID=="Skill_Struggle"):
+			Global.hud.say(enemy.getName() + "groped at you.")	#TODO flavour
+			actor.getStat(StatEnum.Poise).modify(combatSetup.poise_gain)
+			actor.getStat(StatEnum.Lust).modify(e_skill._damage)
+		if (skill.ID=="Skill_Breakfree"):
+			if(actor.getStat(StatEnum.Poise).value>(rnd)):
+				actor.getStat(StatEnum.Poise).value=100 #TODO see checkdefeat
+				Global.hud.say("You struggle against "+ enemy.getName()+" and escaped their grip!") #TODO flavour
+			else:
+				Global.hud.say("You struggle against "+ enemy.getName()+" but failed!")
 	if(!e_interrupted && e_skill.ID=="Skill_Special"):
 		Global.hud.say(enemy.getName() + "hit you with their special.")
 		#TODO Special depends on mode and mob. Where to put it?
@@ -263,22 +275,25 @@ func execSkill():
 	_postExecute()
 
 func startGrapple():
-	Global.hud.say("They got hold on you.")	#TODO flavour
 	mode=MODE.grapple
+	var enemy=enemyParty[0]
+	Global.hud.say("They got hold on you.")	#TODO flavour
+	enemy.combatAI.intoGrapple(self)
 	Global.hud.addButton("Continue","",func():next_state=STATE.checkDefeat )
 
 func exitGrapple():
-	Global.hud.say("You broke from the grapple.") #TODO flavour
 	mode=MODE.combat
-	var actor=playerParty[0]
+	var enemy=enemyParty[0]
+	Global.hud.say("You broke from the grapple.") #TODO flavour
+	enemy.combatAI.outOfGrapple(self)
 	actor.getStat(StatEnum.Advantage).value=combatSetup.adv_start
-	actor.getStat(StatEnum.Poise).value==combatSetup.poise_start
+	actor.getStat(StatEnum.Poise).value=combatSetup.poise_start
 	
 	Global.hud.addButton("Continue","",func():next_state=STATE.checkDefeat )
 
 func _printSkillList():
 	Global.hud.clearInput()
-	Global.hud.addButton("Skip","",_postExecute)
+	#Global.hud.addButton("Skip","",_postExecute)
 
 	for _skill in actor.skills.getItems():
 		if _skill.canUseInCombat() && \
