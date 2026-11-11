@@ -1,5 +1,6 @@
 extends Character
 
+var combat_scene = preload("res://modules/__default/character/combat_scene/mob_jellyfish_scenes.gd")
 
 func _init():
 	super()
@@ -12,6 +13,7 @@ func _init():
 	skills.addItem(GR.createSkill("Skill_Attack"))
 	skills.addItem(GR.createSkill("Skill_Trip"))
 	skills.addItem(GR.createSkill("Skill_Special"))
+	skills.addItem(GR.createSkill("Skill_SpecialGrab"))
 	skills.addItem(GR.createSkill("Skill_Grope"))
 
 func getBustImage()->Texture2D:

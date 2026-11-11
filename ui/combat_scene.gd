@@ -101,8 +101,10 @@ func battleInit():
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
 	mode=MODE.combat
-	playerParty[0].getStat(StatEnum.Advantage).value=combatSetup.adv_start
-	playerParty[0].getStat(StatEnum.Poise).value=combatSetup.poise_start
+	actor=playerParty[0] #actor is always player
+	actor.getStat(StatEnum.Advantage).value=combatSetup.adv_start
+	actor.getStat(StatEnum.Poise).value=combatSetup.poise_start
+	enemyParty[0].combatAI.battleInit(self)
 	next_state=STATE.preTurn
 
 func battleEnd():
@@ -209,10 +211,10 @@ func selectTarget():
 func execSkill():
 	# actor is always player !
 	var enemy=enemyParty[0]
-	enemy.combatAI.scene=self
 	var _res=enemy.combatAI.selectCombatSkill(playerParty,enemyParty)
 	var e_skill=_res.skill
 	var rnd = randi()%100
+	var out:int=0
 	var e_interrupted=false
 	if (skill.ID=="Skill_Attack"):
 		if(e_skill.ID=="Skill_Special" && actor.getStat(StatEnum.Advantage).value>(rnd/2)):
@@ -232,33 +234,39 @@ func execSkill():
 	# attack-block | trip-steady | tease-focus
 	if(!e_interrupted && e_skill.ID=="Skill_Attack"):
 		if (skill.ID=="Skill_Block"):
-			Global.hud.say(enemy.getName() + "attack was blocked by you.")
+			Global.hud.say(enemy.getName() + " attack was blocked by you.")
 			actor.getStat(StatEnum.Pain).modify(1)
 			actor.getStat(StatEnum.Advantage).modify(2*combatSetup.adv_gain)
 		else:
-			Global.hud.say("You got hit by the enemy.")	#Todo flavour
+			out=enemy.combatAI.combat_flavour.hitByEnemy(skill,e_skill)
+			if(out==0):
+				Global.hud.say("You got hit by the enemy.")	#Todo flavour
 			actor.getStat(StatEnum.Pain).modify(e_skill._damage)
 			actor.getStat(StatEnum.Advantage).modify(combatSetup.adv_gain)
 	if(!e_interrupted && e_skill.ID=="Skill_Trip"):
 		if (skill.ID=="Skill_Steady"):
-			Global.hud.say(enemy.getName() + "tripped you but failed.")
+			Global.hud.say(enemy.getName() + " tripped you but failed.")
 			actor.getStat(StatEnum.Advantage).modify(2*combatSetup.adv_gain)
 		else:
-			Global.hud.say(enemy.getName() + "tripped you.")
+			out=enemy.combatAI.combat_flavour.hitByEnemy(skill,e_skill)
+			if(out==0):
+				Global.hud.say(enemy.getName() + " tripped you.")
 			actor.getStat(StatEnum.Poise).modify(-1*e_skill._damage)
 			actor.getStat(StatEnum.Advantage).modify(combatSetup.adv_gain)
-			
 	if(!e_interrupted && e_skill.ID=="Skill_Tease"):
 		if (skill.ID=="Skill_Focus"):
-			Global.hud.say(enemy.getName() + "teased you but failed.")
+			Global.hud.say(enemy.getName() + " teased you but failed.")
 			actor.getStat(StatEnum.Advantage).modify(2*combatSetup.adv_gain)
 		else:
-			Global.hud.say(enemy.getName() + "teased you.")
+			out=enemy.combatAI.combat_flavour.hitByEnemy(skill,e_skill)
+			if(out==0):
+				Global.hud.say(enemy.getName() + " teased you.")
 			actor.getStat(StatEnum.Advantage).modify(combatSetup.adv_gain)
 			actor.getStat(StatEnum.Lust).modify(e_skill._damage)
 	if(!e_interrupted && e_skill.ID=="Skill_Special"):
-		Global.hud.say(enemy.getName() + "hit you with their special.")
-		#TODO Special depends on mode and mob. Where to put it?
+		out=enemy.combatAI.combat_flavour.hitByEnemy(skill,e_skill)
+		if(out==0):
+			Global.hud.say(enemy.getName() + " hit you with their special.")
 			
 	_postExecute()
 
