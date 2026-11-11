@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://dsxcottpsatc7"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_75lgf"]
+
+[resource]
+script = ExtResource("1_75lgf")
+ID = "basic_grapple"
+title = "Grapple"
+text = "When your poise hits 0 or under certain circumstances, the foe takes you into grapple.
+You cannot attack in this state and are vulnerable.
+
+[b]Break free[/b] Use this to get out of grapple and back to fighting. However, your chances are bad if you are low on poise.
+
+[b]Struggle[/b] Wrestle with the attacker to loosen his grip. This increases poise.
+
+[b]Endure[/b] Just bear with it. I dont see the point choosing this."
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

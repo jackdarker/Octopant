@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TutorialData" load_steps=2 format=3 uid="uid://b35d3s8ucnn73"]
+
+[ext_resource type="Script" uid="uid://dlwkvnowhdyt3" path="res://game/tutorial/tutorial_data.gd" id="1_i518i"]
+
+[resource]
+script = ExtResource("1_i518i")
+ID = "basic_skillpoints"
+title = "Skillpoints"
+text = "Skillpoints can be used to unlock upgrades in the upgrade-shop.
+They are earned by exploring the missions. Even if you cannot finish a run succesfully, you might earn some points. F.e. by finishing a part of the mission, exploring a number of roooms, defeating a though opponent,... "
+metadata/_custom_type_script = "uid://dlwkvnowhdyt3"

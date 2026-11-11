@@ -17,7 +17,7 @@ func getName()->String:
 
 func react(_triggerID,_location,_args)->bool:
 	Global.hud.clearInput()
-	var _rnd=0 #randi()%100
+	var _rnd=randi()%100
 	if(_rnd<=50):
 		style=1
 		Global.hud.say("Some JellyFish suddenly appears.")
@@ -45,6 +45,8 @@ func _engage():
 	_setup.adv_start=50
 	if(style==1):
 		_mob=GR.createCharacter("JellyFish")
+	elif(style==2):
+		_mob=GR.createCharacter("Lizardman")
 	else:
 		_mob=GR.createCharacter("Otter")
 		_mob.getStat(StatEnum.Lust).modify(20)

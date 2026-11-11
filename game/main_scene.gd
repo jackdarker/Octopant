@@ -298,10 +298,12 @@ func beforeLoad():
 
 func postLoad():
 	# because stats are recreated on load, events also need to be reconnected
-	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"pain")		
-	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"fatigue")
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Pain)		
+	#Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,"fatigue")
 	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Lust)
-	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Insanity)
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Poise)
+	Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Advantage)
+	#Global.pc.status.registerSignalItemChanged(Global.hud.on_pc_stat_update,StatEnum.Insanity)
 	Global.pc.effects.registerSignalItemsChanged(Global.hud.on_pc_effect_update)
 	Global.pc.inventory.item_added.connect(func(itemID): Global.toolTip.showNotification("Item added",itemID))
 	Global.pc.inventory.item_removed.connect(func(itemID): Global.toolTip.showNotification("Item removed",itemID))

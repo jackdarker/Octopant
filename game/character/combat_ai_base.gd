@@ -27,12 +27,14 @@ class CombatSkillResult extends Result:
 		_n.Msg=msg
 		return _n
 
-var wrefCharacter:WeakRef=null
-var char:Character:
+var combatFlavour:CombatFlavour
+
+var wrefChar:WeakRef=null
+var char:Character:		#this is char the AI is controlling
 	set(value):
-		wrefCharacter=weakref(value)
+		wrefChar=weakref(value)
 	get:
-		return(wrefCharacter.get_ref() if wrefCharacter else null)
+		return(wrefChar.get_ref() if wrefChar else null)
 
 var wrefScene:WeakRef=null
 var scene:CombatScene:
@@ -43,15 +45,21 @@ var scene:CombatScene:
 
 var combat_beh:=["Skill_Attack","Skill_Attack","Skill_Trip"]
 var grapple_beh:=["Skill_Grope","Skill_Grope"]
-var moves=combat_beh.duplicate()
+var moves	#remaining set of moves
 
-var combat_flavour:CombatFlavour
+func intoGrapple():
+	moves=grapple_beh.duplicate()
+
+func outofGrapple():
+	moves=combat_beh.duplicate()
 
 func battleInit(combatScene):
 	scene=combatScene
-	combat_flavour=char.combat_scene.new()
-	combat_flavour.enemy=char
-	combat_flavour.player=scene.actor
+	char=scene.enemy #assuming there is only 1
+	moves=combat_beh.duplicate()
+	combatFlavour=char.combat_scene.new()
+	combatFlavour.enemy=char
+	combatFlavour.player=scene.actor
 
 ## override this; default will just choose a random target and try to find a random Attack-Skill to use
 func selectCombatSkill(enemyParty:Array[Character],_ownParty:Array[Character])->CombatSkillResult:

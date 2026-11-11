@@ -2,7 +2,7 @@ class_name Status extends Node
 
 # Character value
 
-signal changed(ID:String,value:float)
+signal changed(ID:String,change:float)
 
 static func create(_ID:StringName,_value:float,_ll:float,_ul:float)->Status:
 	assert(_ul>_ll)
@@ -27,10 +27,11 @@ var modifys=[]	#{ID:"Health"}
 var modifier=[]	#{ID:"SuperPotion" bonus:5.0 lmax:20} 
 var limits=[]
 var base:float=0
-var value:float=0:	#do not set this!
+var value:float=0:
 	set(v):
+		var before=value
 		value = v
-		changed.emit(ID,v)
+		changed.emit(ID,value-before)
 	get():
 		return value
 ## sets/gets value related to limits
@@ -40,7 +41,7 @@ var value_percent:float:	# 50% -> 50
 			value = min(ul,max(ll,v*ul/100.0))
 		else:
 			value = min(ul,max(ll,v*ll/-100.0))
-		changed.emit(ID,value)
+			
 	get():
 		# ll	v	ul	perc
 		# 0		20	60	33
@@ -74,11 +75,11 @@ var atLL:bool:
 func modify(change:float, _args:={}):
 	var _ul=min(ul,_args["ul"] if _args.has("ul") else ul)
 	var _ll=max(ll,_args["ll"] if _args.has("ll") else ll)
+
 	if(change>=0):
 		value=min(_ul,(value+change))
 	else:
 		value=max(_ll,value+change)
-	changed.emit(ID,value)
 
 
 ## this is called to update value of the stat and will trigger calculation of dependend stats; 

@@ -8,6 +8,8 @@ var background:Texture=null
 var adv_start:=30
 var adv_gain:=8
 var poise_start:=50
+var poise_gain:=10
+var min_damage_blocked:=1
 
 var playerParty:Array[Character]=[]
 var enemyParty:Array[Character]=[]
@@ -30,7 +32,9 @@ static func defaultDefeat(scene:CombatScene):
 	Global.hud.clearOutput()
 	Global.hud.clearInput()
 	Global.hud.say("You lost")
-	Global.hud.addButton("Next","",func():Global.main.defaultGameOver(scene))
+	Global.hud.addButton("Next","",func():
+		Global.main.clearSceneStack()
+		Global.main.runScene("nav_dungeon_1_exit"))
 
 static func defaultFlee(scene:CombatScene):
 	Global.hud.clearOutput()

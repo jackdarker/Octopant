@@ -67,9 +67,15 @@ func getFlags():
 		"Cliff_Ropes": flag(FlagType.Number),	# how many ropes are installed from bottom to up
 		"ExploreCards_Beach": flag(FlagType.Number),
 		"ExploreCards_Forest": flag(FlagType.Number),
-		"Dungeon_Depth":flag(FlagType.Number), # todays explore count
-		"Dungeon_Path1":flag(FlagType.Text), # 
-		"Dungeon_Path2":flag(FlagType.Text), # 
+		"Dungeon_Name":flag(FlagType.Text), # 
+		"Dungeon_RoomsExplored":flag(FlagType.Dict), # todays explore count
+		"SP_EarnedTotal":flag(FlagType.Number), # 
+		"SP_EarnedRun":flag(FlagType.Number), # 
+		"SP_Unspent":flag(FlagType.Number), #
+		# ohno this is dungeon dependent
+		"BossKilled":flag(FlagType.Number), #
+		"RoomsExplored":flag(FlagType.Number), #
+		"ExitFound":flag(FlagType.Number), # 1=exit located, 255=used the exit
 		}
 		
 func resetFlagsOnNewDay():

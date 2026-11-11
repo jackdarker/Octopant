@@ -22,10 +22,12 @@ func get_buttons(menuid:String,buttons:Array):
 				buttons.push_back(Button_Config.new(Util.pickRandomFromArray([_evt.getName(),"???"]),
 					"",_evt.react.bind(EventSystem.TRIGGER.Explore).bind(_evtName).bind([])))
 
+		buttons.push_back(Button_Config.new("...","",parent_scene.menu.bind("other")))
 		#buttons.push_back(Button_Config.new("explore","",parent_scene._on_bt_explore_pressed))
-	if(menuid=="walk"):
-		Global.hud.say("Where would you like to go?")
-		buttons.push_back(Button_Config.new("your bedding","",parent_scene.navigate_home))
+	if(menuid=="other"):
+		Global.hud.say("What else could you do?")
+		Global.hud.say("Also check your inventory.")
+		buttons.push_back(Button_Config.new("Give up","",CombatSetup.defaultDefeat.bind(null)))
 		if(GR.getModuleFlag("Default","Found_Library",0)>0):
 			buttons.push_back(Button_Config.new("Library","",Global.main.runScene.bind("nav_castle_library")))
 		
