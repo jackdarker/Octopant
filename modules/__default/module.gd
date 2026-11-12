@@ -68,13 +68,16 @@ func getFlags():
 		"ExploreCards_Beach": flag(FlagType.Number),
 		"ExploreCards_Forest": flag(FlagType.Number),
 		"Dungeon_Name":flag(FlagType.Text), # 
-		"Dungeon_RoomsExplored":flag(FlagType.Dict), # todays explore count
+		"Dungeon_Room":flag(FlagType.Text), # room name the player is located
+		"Dungeon_TargetRoom":flag(FlagType.Text), # room name the player is going
+		"Dungeon_Rooms":flag(FlagType.Dict), #
+		"Dungeon_Items":flag(FlagType.Dict), # room & item TODO only 1 item per room?
+		"Dungeon_RoomsExplored":flag(FlagType.Dict), #
 		"SP_EarnedTotal":flag(FlagType.Number), # 
 		"SP_EarnedRun":flag(FlagType.Number), # 
 		"SP_Unspent":flag(FlagType.Number), #
 		# ohno this is dungeon dependent
 		"BossKilled":flag(FlagType.Number), #
-		"RoomsExplored":flag(FlagType.Number), #
 		"ExitFound":flag(FlagType.Number), # 1=exit located, 255=used the exit
 		}
 		

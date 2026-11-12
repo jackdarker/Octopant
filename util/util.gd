@@ -18,13 +18,13 @@ static func join(arr: Array, separator: String = ",") -> String:
 # input splitOnFirst("Test.Meow.Woof", ".")
 # output ["Test", "Meow.Woof"]
 static func splitOnFirst(text: String, separator: String):
-	var stuff = text.split(separator)
+	var stuff:Array = text.split(separator)
 	
 	if(stuff.size() <= 1):
 		return stuff
 	
 	var firstEntry = stuff[0]
-	stuff.remove(0)
+	stuff.remove_at(0)
 	
 	return [firstEntry, join(stuff, separator)]
 
@@ -82,6 +82,20 @@ static func pickMultipleRandomFromArray(amount:int,items:Array,weights:Array=[])
 		_result.push_back(_item)
 	return _result
 
+## returns normal distributed random value, mu= mean, 0 by default; sigma= stdev, 1 by default; nsamples= more samples creates better approximation, 3 by default
+static func randomNormal(mu, sigma, nsamples)->float:
+	if(!nsamples):
+		nsamples = 3 # how many throws f.e. 3dies
+	if(!mu):
+			mu=0 # mean of all throws  2dies=2..12-> 7
+	if(!sigma):
+		sigma = 1 # span from mean to max value 5
+
+	var run_total = 0
+	for _i in nsamples:
+		run_total += randf()
+		
+	return (sigma*(run_total - nsamples/2)/(nsamples/2) + mu)  # 5*(3.0-3/2)/(3/2)+7=12  5*(0.0-3/2)/(3/2)+7=2  
 
 ## creates a silhouette-image from image
 static func createSilhouette(src_texture:Texture2D)->Texture2D:

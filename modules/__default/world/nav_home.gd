@@ -11,10 +11,12 @@ func _on_bt_sleep_pressed() -> void:
 
 func _start_run(where:String):
 	GR.setModuleFlag("Default","Dungeon_Name",where)
+	GR.setModuleFlag("Default","Dungeon_Room","")
+	GR.setModuleFlag("Default","Dungeon_Rooms",{})
+	GR.setModuleFlag("Default","Dungeon_Items",{})
 	GR.setModuleFlag("Default","Dungeon_RoomsExplored",{})
 	GR.setModuleFlag("Default","BossKilled",0)
 	GR.setModuleFlag("Default","SP_EarnedRun",0)
-	GR.setModuleFlag("Default","RoomsExplored",0)
 	Global.main.runScene(where)
 
 func _on_bt_craft_pressed() -> void:
